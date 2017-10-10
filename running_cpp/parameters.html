@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Input parameters &mdash; WarpX  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="WarpX  documentation" href="../index.html"/>
+        <link rel="up" title="Running WarpX as an executable" href="running_cpp.html"/>
+        <link rel="next" title="Running WarpX from Python" href="../running_python/running_python.html"/>
+        <link rel="prev" title="Example input files" href="examples.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> WarpX
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="running_cpp.html">Running WarpX as an executable</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="how_to_run.html">How to run a new simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Example input files</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Input parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overall-simulation-parameters">Overall simulation parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-field-mesh">Setting up the field mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distribution-across-mpi-ranks-and-parallelization">Distribution across MPI ranks and parallelization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#particle-initialization">Particle initialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#numerics-and-algorithms">Numerics and algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#diagnostics-and-output">Diagnostics and output</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization.html">Visualizing the simulation results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theoretical background</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">WarpX</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="running_cpp.html">Running WarpX as an executable</a> &raquo;</li>
+        
+      <li>Input parameters</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/running_cpp/parameters.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="input-parameters">
+<h1>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This section is currently in development.</p>
+</div>
+<div class="section" id="overall-simulation-parameters">
+<h2>Overall simulation parameters<a class="headerlink" href="#overall-simulation-parameters" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">max_step</span></code> (<cite>integer</cite>)</dt>
+<dd>The number of PIC cycles to perform.</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="setting-up-the-field-mesh">
+<h2>Setting up the field mesh<a class="headerlink" href="#setting-up-the-field-mesh" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">amr.n_cell</span></code> (<cite>2 integers in 2D</cite>, <cite>3 integers in 3D</cite>)</dt>
+<dd><p class="first last">The number of grid points along each direction (on the <strong>coarsest level</strong>)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">amr.max_level</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">When using mesh refinement, the number of refinement levels that will be used.</p>
+<p class="last">Use 0 in order to disable mesh refinement.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">geometry.is_periodic</span></code> (<cite>2 integers in 2D</cite>, <cite>3 integers in 3D</cite>)</dt>
+<dd><p class="first">Whether the boundary conditions are periodic, in each direction.</p>
+<p class="last">For each direction, use 1 for periodic conditions, 0 otherwise.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">geometry.prob_lo</span></code> and <code class="docutils literal"><span class="pre">geometry.prob_hi</span></code> (<cite>2 floats in 2D</cite>, <cite>3 integers in 3D</cite>; in meters)</dt>
+<dd><p class="first last">The extent of the full simulation box. This box is rectangular, and thus its
+extent is given here by the coordinates of the lower corner (<code class="docutils literal"><span class="pre">geometry.prob_lo</span></code>) and
+upper corner (<code class="docutils literal"><span class="pre">geometry.prob_hi</span></code>).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">warpx.fine_tag_lo</span></code> and <code class="docutils literal"><span class="pre">warpx.fine_tag_hi</span></code> (<cite>2 floats in 2D</cite>, <cite>3 integers in 3D</cite>; in meters)</dt>
+<dd><p class="first last"><strong>When using static mesh refinement with 1 level</strong>, the extent of the refined patch.
+This patch is rectangular, and thus its extent is given here by the coordinates
+of the lower corner (<code class="docutils literal"><span class="pre">warpx.fine_tag_lo</span></code>) and upper corner (<code class="docutils literal"><span class="pre">warpx.fine_tag_hi</span></code>).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="distribution-across-mpi-ranks-and-parallelization">
+<h2>Distribution across MPI ranks and parallelization<a class="headerlink" href="#distribution-across-mpi-ranks-and-parallelization" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">amr.max_grid_size</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">Maximum allowable size of each <strong>subdomain</strong>
+(expressed in number of grid points, in each direction).
+Each subdomain has its own ghost cells, and can be handled by a
+different MPI rank.</p>
+<p>If <code class="docutils literal"><span class="pre">max_grid_size</span></code> is such that the total number of subdomains is
+<strong>larger</strong> that the number of MPI ranks used, than some MPI ranks
+will handle several subdomains, thereby providing additional flexibility
+for <strong>load balancing</strong>.</p>
+<p class="last">When using mesh refinement, this number applies to the subdomains
+of the coarsest level, but also to any of the finer level.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">warpx.load_balance_int</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">How often WarpX should try to redistribution the work across MPI ranks,
+in order to have better load balancing (expressed in number of PIC cycles
+inbetween two consecutive attempts at redistributing the work).
+Use 0 to disable load_balancing.</p>
+<p class="last">When performing load balancing, WarpX measures the wall time for
+computational parts of the PIC cycle. It then uses this data to decide
+how to redistribute the subdomains across MPI ranks. (Each subdomain
+is unchanged, but its owner is changed in order to have better performance.)
+This relies on each MPI rank handling several (in fact many) subdomains
+(see <code class="docutils literal"><span class="pre">max_grid_size</span></code>).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="particle-initialization">
+<h2>Particle initialization<a class="headerlink" href="#particle-initialization" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="numerics-and-algorithms">
+<h2>Numerics and algorithms<a class="headerlink" href="#numerics-and-algorithms" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">warpx.use_filter</span></code> (<cite>0 or 1</cite>)</dt>
+<dd><p class="first last">Whether to smooth the charge and currents on the mesh, after depositing
+them from the macroparticles. This uses a bilinear filter
+(see the sub-section <strong>Filtering</strong> in <a class="reference internal" href="../theory/theory.html"><span class="doc">Theoretical background</span></a>).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">algo.current_deposition</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The algorithm for current deposition:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">0</span></code>: Esirkepov deposition, vectorized</li>
+<li><code class="docutils literal"><span class="pre">1</span></code>: Esirkepov deposition, non-optimized</li>
+<li><code class="docutils literal"><span class="pre">2</span></code>: Direct deposition, vectorized</li>
+<li><code class="docutils literal"><span class="pre">3</span></code>: Direct deposition, non-optimized</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">algo.charge_deposition</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The algorithm for the charge density deposition:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">0</span></code>: Vectorized version</li>
+<li><code class="docutils literal"><span class="pre">1</span></code>: Non-optimized version</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">algo.field_gathering</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The algorithm for field gathering:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">0</span></code>: Vectorized version</li>
+<li><code class="docutils literal"><span class="pre">1</span></code>: Non-optimized version</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">algo.particle_pusher</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The algorithm for the particle pusher:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">0</span></code>: Boris pusher</li>
+<li><code class="docutils literal"><span class="pre">1</span></code>: Vay pusher</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">interpolation.nox</span></code>, <code class="docutils literal"><span class="pre">interpolation.noy</span></code>, <code class="docutils literal"><span class="pre">interpolation.noz</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The order of the shape factors for the macroparticles, for the 3 dimensions of space. Lower-order shape factors result in faster simulations, but more noisy results,</p>
+<p class="last">Note that the implementation in WarpX is more efficient when these 3 numbers are equal, and when they are between 1 and 3.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="diagnostics-and-output">
+<h2>Diagnostics and output<a class="headerlink" href="#diagnostics-and-output" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">amr.plot_int</span></code> (<cite>integer</cite>)</dt>
+<dd>The number of PIC cycles inbetween two consecutive data dumps. Use a
+negative number to disable data dumping.</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../running_python/running_python.html" class="btn btn-neutral float-right" title="Running WarpX from Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="examples.html" class="btn btn-neutral" title="Example input files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, WarpX collaboration.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
