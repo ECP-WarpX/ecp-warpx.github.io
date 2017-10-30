@@ -89,8 +89,9 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#downloading-the-code">Downloading the code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#compiling-the-code">Compiling the code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#compiling-the-code-for-cori">Compiling the code for Cori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-warpx-as-an-executable">Compiling WarpX as an executable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-warpx-as-a-python-package">Compiling WarpX as a Python package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-warpx-for-cori">Compiling WarpX for Cori</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
@@ -180,10 +181,10 @@ single directory (e.g. <code class="docutils literal"><span class="pre">warpx_di
 </pre></div>
 </div>
 </div>
-<div class="section" id="compiling-the-code">
-<h2>Compiling the code<a class="headerlink" href="#compiling-the-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="compiling-warpx-as-an-executable">
+<h2>Compiling WarpX as an executable<a class="headerlink" href="#compiling-warpx-as-an-executable" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">cd</span></code> into the directory <code class="docutils literal"><span class="pre">warpx</span></code> and type</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
 </pre></div>
 </div>
 <p>This will generate an executable file in the <code class="docutils literal"><span class="pre">Bin</span></code> directory.</p>
@@ -200,11 +201,11 @@ options in this file in order to (for instance):</p>
 <li>Choose a given compiler</li>
 </ul>
 </div></blockquote>
-<p>For a description of these different options, see section 3 of the
-<a class="reference external" href="https://amrex-codes.github.io/AMReXUsersGuide.pdf">AMReX User’s Guide</a>.</p>
+<p>For a description of these different options, see the <a class="reference external" href="https://amrex-codes.github.io/amrex/BuildingAMReX.html#building-with-gnu-make">corresponding page</a> in
+the AMReX documentation.</p>
 <p>Alternatively, instead of modifying the file <code class="docutils literal"><span class="pre">GNUmakefile</span></code>, you can
 directly pass the options in command line ; for instance:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="n">USE_OMP</span><span class="o">=</span><span class="n">FALSE</span>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_OMP</span><span class="o">=</span><span class="n">FALSE</span>
 </pre></div>
 </div>
 </div>
@@ -212,9 +213,23 @@ directly pass the options in command line ; for instance:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">realclean</span>
 </pre></div>
 </div>
+<p>In order to learn how to use the executable, see the section <a class="reference internal" href="running_cpp/running_cpp.html"><span class="doc">Running WarpX as an executable</span></a>.</p>
 </div>
-<div class="section" id="compiling-the-code-for-cori">
-<h2>Compiling the code for Cori<a class="headerlink" href="#compiling-the-code-for-cori" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="compiling-warpx-as-a-python-package">
+<h2>Compiling WarpX as a Python package<a class="headerlink" href="#compiling-warpx-as-a-python-package" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">cd</span></code> into the directory <code class="docutils literal"><span class="pre">warpx/Python</span></code> (instead of <code class="docutils literal"><span class="pre">warpx</span></code>
+in the previous section) and type</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<p>This will compile the code, and install the Python bindings as a package (named
+<code class="docutils literal"><span class="pre">pywarpx</span></code>) in your standard Python installation (i.e. in your
+<code class="docutils literal"><span class="pre">site-packages</span></code> directory). The note on compiler options from the previous
+section also hold when compiling the Python package.</p>
+<p>In order to learn how to use the Python package, see the section <a class="reference internal" href="running_python/running_python.html"><span class="doc">Running WarpX from Python</span></a>.</p>
+</div>
+<div class="section" id="compiling-warpx-for-cori">
+<h2>Compiling WarpX for Cori<a class="headerlink" href="#compiling-warpx-for-cori" title="Permalink to this headline">¶</a></h2>
 <p>For the <a class="reference external" href="http://www.nersc.gov/users/computational-systems/cori/">Cori cluster</a> at NERSC,
 you need to type the following command when compiling:</p>
 <p>In order to compile for the <strong>Haswell architecture</strong>:</p>

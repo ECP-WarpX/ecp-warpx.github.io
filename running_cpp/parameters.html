@@ -180,10 +180,32 @@
 </div>
 <div class="section" id="overall-simulation-parameters">
 <h2>Overall simulation parameters<a class="headerlink" href="#overall-simulation-parameters" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
+<ul>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">max_step</span></code> (<cite>integer</cite>)</dt>
-<dd>The number of PIC cycles to perform.</dd>
+<dd><p class="first last">The number of PIC cycles to perform.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">warpx.gamma_boost</span></code> (<cite>float</cite>)</dt>
+<dd><p class="first">The Lorentz factor of the boosted frame in which the simulation is run.
+(The corresponding Lorentz transformation is assumed to be along <code class="docutils literal"><span class="pre">warpx.boost_direction</span></code>.)</p>
+<p>When using this parameter, some of the input parameters are automatically
+converted to the boosted frame. (See the corresponding documentation of each
+input parameters.)</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For now, only the laser parameters will be converted.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">warpx.boost_direction</span></code> (<cite>3 floats in 3D</cite>)</dt>
+<dd><p class="first last">The coordinates of a vector that points in the propagation direction of
+the Lorentz transform. The norm of this vector is unimportant, only its direction matters.</p>
+</dd>
 </dl>
 </li>
 </ul>
@@ -237,7 +259,8 @@ of the lower corner (<code class="docutils literal"><span class="pre">warpx.fine
 <dd><p class="first">Maximum allowable size of each <strong>subdomain</strong>
 (expressed in number of grid points, in each direction).
 Each subdomain has its own ghost cells, and can be handled by a
-different MPI rank.</p>
+different MPI rank ; several OpenMP threads can work simultaneously on the
+same subdomain.</p>
 <p>If <code class="docutils literal"><span class="pre">max_grid_size</span></code> is such that the total number of subdomains is
 <strong>larger</strong> that the number of MPI ranks used, than some MPI ranks
 will handle several subdomains, thereby providing additional flexibility
@@ -292,8 +315,11 @@ implemented are:</p>
 <dd><p class="first">Peak amplitude of the laser field.</p>
 <p>For a laser with a wavelength <span class="math">\(\lambda = 0.8\,\mu m\)</span>, the peak amplitude
 is related to <span class="math">\(a_0\)</span> by:</p>
-<div class="last math">
+<div class="math">
 \[E_{max} = a_0 \frac{2 \pi m_e c}{e\lambda} = a_0 \times (4.0 \cdot 10^{12} \;V.m^{-1})\]</div>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of <code class="docutils literal"><span class="pre">laser.e_max</span></code>
+in the laboratory frame, and use <code class="docutils literal"><span class="pre">warpx.gamma_boost</span></code> to automatically
+perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
@@ -306,17 +332,24 @@ for the laser tranverse profile. For instance, for a Gaussian laser profile,
 the peak of intensity will be at the position given by <code class="docutils literal"><span class="pre">laser.position</span></code>.
 This variable can thus be used to shift the position of the laser pulse
 transversally.</p>
-<div class="last admonition note">
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In 2D, <code class="docutils literal"><span class="pre">laser.position</span></code> is still given by 3 numbers, but the second number is ignored.</p>
 </div>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
+<code class="docutils literal"><span class="pre">laser.position</span></code> in the laboratory frame, and use <code class="docutils literal"><span class="pre">warpx.gamma_boost</span></code>
+to automatically perform the conversion to the boosted frame. Note that,
+in this case, the laser antenna will be moving, in the boosted frame.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">laser.profile_t_peak</span></code> (<cite>float</cite>; in seconds)</dt>
-<dd><p class="first last">The time at which the laser reaches its peak intensity, at the position
+<dd><p class="first">The time at which the laser reaches its peak intensity, at the position
 given by <code class="docutils literal"><span class="pre">laser.position</span></code> (only used for the <code class="docutils literal"><span class="pre">&quot;gaussian&quot;</span></code> profile)</p>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
+<code class="docutils literal"><span class="pre">laser.profile_t_peak</span></code> in the laboratory frame, and use <code class="docutils literal"><span class="pre">warpx.gamma_boost</span></code>
+to automatically perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
@@ -332,21 +365,26 @@ given by <code class="docutils literal"><span class="pre">laser.position</span><
 <li>For the <code class="docutils literal"><span class="pre">&quot;harris&quot;</span></code> profile:</li>
 </ul>
 <div class="math">
-\[E(\boldsymbol{x},t) \propto \frac{1}{32}\left[10 - 15 \cos\left(\frac{2\pi t}{\tau}\right) + 6 \cos\left(\frac{4\pi t}{\tau}\right) - \cos\left(\frac{6\pi t}{\tau}\right) \right]\]</div>
+\[E(\boldsymbol{x},t) \propto \frac{1}{32}\left[10 - 15 \cos\left(\frac{2\pi t}{\tau}\right) + 6 \cos\left(\frac{4\pi t}{\tau}\right) - \cos\left(\frac{6\pi t}{\tau}\right) \right]\Theta(\tau - t)\]</div>
+<p>When running a <strong>boosted-frame simulation</strong>, provide the value of
+<code class="docutils literal"><span class="pre">laser.profile_duration</span></code> in the laboratory frame, and use <code class="docutils literal"><span class="pre">warpx.gamma_boost</span></code>
+to automatically perform the conversion to the boosted frame.</p>
 </div></blockquote>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">laser.profile_waist</span></code> (<cite>float</cite> ; in meters)</dt>
 <dd><p class="first">The waist of the transverse Gaussian laser profile, defined as <span class="math">\(w_0\)</span> :</p>
-<div class="math">
+<div class="last math">
 \[E(\boldsymbol{x},t) \propto \exp\left( -\frac{\boldsymbol{x}_\perp^2}{w_0^2} \right)\]</div>
-<p class="last">For <span class="math">\(t&gt;\tau\)</span>, <span class="math">\(E(\boldsymbol{x},t)=0\)</span>.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">laser.wavelength</span></code> (<cite>float</cite>; in meters)</dt>
-<dd><p class="first last">The wavelength of the laser in vacuum.</p>
+<dd><p class="first">The wavelength of the laser in vacuum.</p>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
+<code class="docutils literal"><span class="pre">laser.wavelength</span></code> in the laboratory frame, and use <code class="docutils literal"><span class="pre">warpx.gamma_boost</span></code>
+to automatically perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
@@ -366,7 +404,12 @@ the polarization can be orthogonal to the plane of the simulation).</p>
 <dt><code class="docutils literal"><span class="pre">laser.direction</span></code> (<cite>3 floats in 3D</cite>)</dt>
 <dd><p class="first">The coordinates of a vector that points in the propagation direction of
 the laser. The norm of this vector is unimportant, only its direction matters.</p>
-<p class="last">The plane of the antenna that will emit the laser is orthogonal to this vector.</p>
+<p>The plane of the antenna that will emit the laser is orthogonal to this vector.</p>
+<div class="last admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When running <strong>boosted-frame simulations</strong>, <code class="docutils literal"><span class="pre">laser.direction</span></code> should
+be parallel to <code class="docutils literal"><span class="pre">warpx.boost_direction</span></code>, for now.</p>
+</div>
 </dd>
 </dl>
 </li>
@@ -374,7 +417,10 @@ the laser. The norm of this vector is unimportant, only its direction matters.</
 <dt><code class="docutils literal"><span class="pre">laser.profile_focal_distance</span></code> (<cite>float</cite>; in meters)</dt>
 <dd><p class="first">The distance from <code class="docutils literal"><span class="pre">laser_position</span></code> to the focal plane.
 (where the distance is defined along the direction given by <code class="docutils literal"><span class="pre">laser.direction</span></code>.)</p>
-<p class="last">Use a negative number for a defocussing laser instead of a focussing laser.</p>
+<p>Use a negative number for a defocussing laser instead of a focussing laser.</p>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
+<code class="docutils literal"><span class="pre">laser.profile_focal_distance</span></code> in the laboratory frame, and use <code class="docutils literal"><span class="pre">warpx.gamma_boost</span></code>
+to automatically perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
@@ -401,6 +447,12 @@ them from the macroparticles. This uses a bilinear filter
 <li><code class="docutils literal"><span class="pre">2</span></code>: Direct deposition, vectorized</li>
 <li><code class="docutils literal"><span class="pre">3</span></code>: Direct deposition, non-optimized</li>
 </ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The vectorized Esirkepov deposition
+(<code class="docutils literal"><span class="pre">algo.current_deposition=0</span></code>) is currently not functional in WarpX.
+All the other methods (<code class="docutils literal"><span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">2</span></code> and <code class="docutils literal"><span class="pre">3</span></code>) are functional.</p>
+</div>
 </div></blockquote>
 </dd>
 </dl>
@@ -452,11 +504,12 @@ them from the macroparticles. This uses a bilinear filter
 </div>
 <div class="section" id="diagnostics-and-output">
 <h2>Diagnostics and output<a class="headerlink" href="#diagnostics-and-output" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
+<ul>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">amr.plot_int</span></code> (<cite>integer</cite>)</dt>
-<dd>The number of PIC cycles inbetween two consecutive data dumps. Use a
-negative number to disable data dumping.</dd>
+<dd><p class="first last">The number of PIC cycles inbetween two consecutive data dumps. Use a
+negative number to disable data dumping.</p>
+</dd>
 </dl>
 </li>
 </ul>
