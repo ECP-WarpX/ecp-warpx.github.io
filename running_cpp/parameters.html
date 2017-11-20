@@ -105,7 +105,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../visualization.html">Visualizing the simulation results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization/visualization.html">Visualizing the simulation results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theoretical background</a></li>
 </ul>
 
@@ -504,12 +504,31 @@ All the other methods (<code class="docutils literal"><span class="pre">1</span>
 </div>
 <div class="section" id="diagnostics-and-output">
 <h2>Diagnostics and output<a class="headerlink" href="#diagnostics-and-output" title="Permalink to this headline">¶</a></h2>
-<ul>
+<ul class="simple">
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">amr.plot_int</span></code> (<cite>integer</cite>)</dt>
-<dd><p class="first last">The number of PIC cycles inbetween two consecutive data dumps. Use a
-negative number to disable data dumping.</p>
-</dd>
+<dd>The number of PIC cycles inbetween two consecutive data dumps. Use a
+negative number to disable data dumping.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> (<cite>0 or 1</cite>)</dt>
+<dd>Whether to use the <strong>back-transformed diagnostics</strong> (i.e. diagnostics that
+perform on-the-fly conversion to the laboratory frame, when running
+boosted-frame simulations)</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">warpx.num_snapshots_lab</span></code> (<cite>integer</cite>)</dt>
+<dd>Only used when <code class="docutils literal"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal"><span class="pre">1</span></code>.
+The number of lab-frame snapshots that will be written.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">warpx.dt_snapshots_lab</span></code> (<cite>float</cite>, in seconds)</dt>
+<dd>Only used when <code class="docutils literal"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal"><span class="pre">1</span></code>.
+The time interval inbetween the lab-frame snapshots (where this
+time interval is expressed in the laboratory frame).</dd>
 </dl>
 </li>
 </ul>
