@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PySide-based GUI &mdash; WarpX  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="WarpX  documentation" href="../index.html"/>
+        <link rel="up" title="Visualizing the simulation results" href="visualization.html"/>
+        <link rel="next" title="Theoretical background" href="../theory/theory.html"/>
+        <link rel="prev" title="Visualization with Visit" href="visit.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> WarpX
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="visualization.html">Visualizing the simulation results</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="yt.html">Visualization with yt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visit.html">Visualization with Visit</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PySide-based GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generic-instructions">Generic instructions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#instructions-for-nersc-and-alcf">Instructions for NERSC and ALCF</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-gui">Using the GUI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theoretical background</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">WarpX</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="visualization.html">Visualizing the simulation results</a> &raquo;</li>
+        
+      <li>PySide-based GUI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/visualization/pyside.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pyside-based-gui">
+<h1>PySide-based GUI<a class="headerlink" href="#pyside-based-gui" title="Permalink to this headline">¶</a></h1>
+<div class="figure">
+<img alt="picture" src="../_images/sample_image.jpg" />
+</div>
+<p>The toolkit provides various easy-to-use functions for data analysis of
+Warp/WarpX simulations. Figure shows a snapshot of the existing
+prototype GUI widget toolkit, which includes several widget tools in the
+left side and multi-plot panels in the right side. This GUI is still
+under development to include several functionalities.</p>
+<p>To run it, go to a folder where your WarpX simulation data files are
+located, and type in the terminal window,</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">~/</span><span class="n">warpx_pyside</span><span class="o">/</span><span class="n">warpx_analysis</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generic-instructions">
+<h3>Generic instructions<a class="headerlink" href="#generic-instructions" title="Permalink to this headline">¶</a></h3>
+<p>Before you run it, check if you have installed the following python libraries,</p>
+<ol class="arabic">
+<li><p class="first">h5py</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">h5py</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">matplotlib</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">matplotlib</span>
+</pre></div>
+</div>
+<p>To open Warp simulation data, the GUI uses openPMD-viewer.</p>
+</li>
+<li><p class="first">openPMD-viewer</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">rlehe</span> <span class="n">openpmd_viewer</span>
+</pre></div>
+</div>
+<p>To open WarpX simulation data, the GUI uses yt</p>
+</li>
+<li><p class="first">yt</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">yt</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">PySide</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">pyside</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="instructions-for-nersc-and-alcf">
+<h3>Instructions for NERSC and ALCF<a class="headerlink" href="#instructions-for-nersc-and-alcf" title="Permalink to this headline">¶</a></h3>
+<p>Caution: PySide may not be installed on NERSC or other clusters by
+typing the command above in (5). Instead, you can install “pyside” in
+the following way:</p>
+<ol class="arabic">
+<li><p class="first">download miniconda2</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">continuum</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">miniconda</span><span class="o">/</span><span class="n">Miniconda2</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">install miniconda2</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bash</span> <span class="n">Miniconda2</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">activate miniconda2</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">miniconda2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">finally, install “pyside” using conda,</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">pyside</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>If you are using ALCF clusters, you can install “pyside” on Cooley,
+and you should comment out the path of miniconda2 from .bashrc file,</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#export PATH=$HOME/miniconda2/bin:$PATH</span>
+</pre></div>
+</div>
+<p>due to version collision between python 2.6 and 2.7.</p>
+</div>
+</div>
+<div class="section" id="using-the-gui">
+<h2>Using the GUI<a class="headerlink" href="#using-the-gui" title="Permalink to this headline">¶</a></h2>
+<p>If you have installed all the libraries, git clone the GUI source files.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">jaehong2013</span><span class="nd">@bitbucket</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">jaehong2013</span><span class="o">/</span><span class="n">warpx_pyside</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>and go to the folder where your simulation data files are located, and
+then</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">~/</span><span class="n">warpx_pyside</span><span class="o">/</span><span class="n">warpx_analysis</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>The python package may be located at $HOME/warpx_pyside/ depending on
+your download folder.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../theory/theory.html" class="btn btn-neutral float-right" title="Theoretical background" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="visit.html" class="btn btn-neutral" title="Visualization with Visit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, WarpX collaboration.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
