@@ -103,6 +103,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="visit.html">Visualization with Visit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyside.html">PySide-based GUI</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theoretical background</a></li>
@@ -179,11 +180,11 @@ to use yt within a <a class="reference external" href="http://jupyter.org/">Jupy
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>From the terminal:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">yt</span> <span class="n">jupyter</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">yt</span> <span class="n">jupyter</span>
 </pre></div>
 </div>
 <p>or with the <a class="reference external" href="https://anaconda.org/">Anaconda distribution</a> of python (recommended):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">yt</span> <span class="n">jupyter</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">yt</span> <span class="n">jupyter</span>
 </pre></div>
 </div>
 </div>
@@ -191,41 +192,41 @@ to use yt within a <a class="reference external" href="http://jupyter.org/">Jupy
 <h2>Visualizing the data<a class="headerlink" href="#visualizing-the-data" title="Permalink to this headline">¶</a></h2>
 <p>Once data (“plot files”) has been created by the simulation, open a Jupyter notebook from
 the terminal:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
 </pre></div>
 </div>
 <p>Then use the following commands in the first cell of the notebook to import yt
 and load the first plot file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yt</span>
 <span class="n">ds</span> <span class="o">=</span> <span class="n">yt</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./plt00000/&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="field-data">
 <h3>Field data<a class="headerlink" href="#field-data" title="Permalink to this headline">¶</a></h3>
-<p>Field data can be visualized using <code class="docutils literal"><span class="pre">yt.SlicePlot</span></code> (see the docstring of
+<p>Field data can be visualized using <code class="docutils literal notranslate"><span class="pre">yt.SlicePlot</span></code> (see the docstring of
 this function <a class="reference external" href="http://yt-project.org/doc/reference/api/yt.visualization.plot_window.html#yt.visualization.plot_window.SlicePlot">here</a>)</p>
-<p>For instance, in order to plot the field <code class="docutils literal"><span class="pre">Ex</span></code> in a slice orthogonal to <code class="docutils literal"><span class="pre">y</span></code> (<code class="docutils literal"><span class="pre">1</span></code>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yt</span><span class="o">.</span><span class="n">SlicePlot</span><span class="p">(</span> <span class="n">ds</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Ex&#39;</span> <span class="p">)</span>
+<p>For instance, in order to plot the field <code class="docutils literal notranslate"><span class="pre">Ex</span></code> in a slice orthogonal to <code class="docutils literal notranslate"><span class="pre">y</span></code> (<code class="docutils literal notranslate"><span class="pre">1</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yt</span><span class="o">.</span><span class="n">SlicePlot</span><span class="p">(</span> <span class="n">ds</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Ex&#39;</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>Alternatively, the data can be obtained as a <a class="reference external" href="http://www.numpy.org/">numpy</a> array.</p>
 <p>For instance, in order to obtain the field <cite>jz</cite> (on level 0) as a numpy array:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ad0</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">covering_grid</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">left_edge</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">domain_left_edge</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">domain_dimensions</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ad0</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">covering_grid</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">left_edge</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">domain_left_edge</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">domain_dimensions</span><span class="p">)</span>
 <span class="n">jz_array</span> <span class="o">=</span> <span class="n">ad0</span><span class="p">[</span><span class="s1">&#39;jz&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="particle-data">
 <h3>Particle data<a class="headerlink" href="#particle-data" title="Permalink to this headline">¶</a></h3>
-<p>Particle data can be visualized using <code class="docutils literal"><span class="pre">yt.ParticlePhasePlot</span></code> (see the docstring
+<p>Particle data can be visualized using <code class="docutils literal notranslate"><span class="pre">yt.ParticlePhasePlot</span></code> (see the docstring
 <a class="reference external" href="http://yt-project.org/doc/reference/api/yt.visualization.particle_plots.html?highlight=particlephaseplot#yt.visualization.particle_plots.ParticlePhasePlot">here</a>).</p>
-<p>For instance, in order to plot the particles’ <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> positions:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yt</span><span class="o">.</span><span class="n">ParticlePhasePlot</span><span class="p">(</span> <span class="n">ds</span><span class="o">.</span><span class="n">all_data</span><span class="p">(),</span> <span class="s1">&#39;particle_position_x&#39;</span><span class="p">,</span> <span class="s1">&#39;particle_position_y&#39;</span><span class="p">,</span> <span class="s1">&#39;particle_weight&#39;</span><span class="p">)</span>
+<p>For instance, in order to plot the particles’ <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> positions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yt</span><span class="o">.</span><span class="n">ParticlePhasePlot</span><span class="p">(</span> <span class="n">ds</span><span class="o">.</span><span class="n">all_data</span><span class="p">(),</span> <span class="s1">&#39;particle_position_x&#39;</span><span class="p">,</span> <span class="s1">&#39;particle_position_y&#39;</span><span class="p">,</span> <span class="s1">&#39;particle_weight&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Alternatively, the data can be obtained as a <a class="reference external" href="http://www.numpy.org/">numpy</a> array.</p>
 <p>For instance, in order to obtain the array of position <cite>x</cite> as a numpy array:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ad</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">all_data</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ad</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">all_data</span><span class="p">()</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">ad</span><span class="p">[</span><span class="s1">&#39;particle_position_x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span>
 </pre></div>
 </div>

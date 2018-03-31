@@ -166,16 +166,16 @@
 <div class="section" id="downloading-the-code">
 <h2>Downloading the code<a class="headerlink" href="#downloading-the-code" title="Permalink to this headline">¶</a></h2>
 <p>You should clone the source codes of AMReX, PICSAR and WarpX into one
-single directory (e.g. <code class="docutils literal"><span class="pre">warpx_directory</span></code>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">warpx_directory</span>
+single directory (e.g. <code class="docutils literal notranslate"><span class="pre">warpx_directory</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">warpx_directory</span>
 <span class="n">cd</span> <span class="n">warpx_directory</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">berkeleylab</span><span class="o">/</span><span class="n">amrex</span><span class="o">.</span><span class="n">git</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">berkeleylab</span><span class="o">/</span><span class="n">warpx</span><span class="o">.</span><span class="n">git</span>
 <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">berkeleylab</span><span class="o">/</span><span class="n">picsar</span><span class="o">.</span><span class="n">git</span>
 <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AMReX</span><span class="o">-</span><span class="n">Codes</span><span class="o">/</span><span class="n">amrex</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
-<p>You should then switch to the branch <code class="docutils literal"><span class="pre">development</span></code> of AMReX</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">amrex</span><span class="o">/</span>
+<p>You should then switch to the branch <code class="docutils literal notranslate"><span class="pre">development</span></code> of AMReX</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">amrex</span><span class="o">/</span>
 <span class="n">git</span> <span class="n">checkout</span> <span class="n">development</span>
 <span class="n">cd</span> <span class="o">..</span>
 </pre></div>
@@ -183,14 +183,14 @@ single directory (e.g. <code class="docutils literal"><span class="pre">warpx_di
 </div>
 <div class="section" id="compiling-warpx-as-an-executable">
 <h2>Compiling WarpX as an executable<a class="headerlink" href="#compiling-warpx-as-an-executable" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">cd</span></code> into the directory <code class="docutils literal"><span class="pre">warpx</span></code> and type</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
+<p><code class="docutils literal notranslate"><span class="pre">cd</span></code> into the directory <code class="docutils literal notranslate"><span class="pre">warpx</span></code> and type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
 </pre></div>
 </div>
-<p>This will generate an executable file in the <code class="docutils literal"><span class="pre">Bin</span></code> directory.</p>
+<p>This will generate an executable file in the <code class="docutils literal notranslate"><span class="pre">Bin</span></code> directory.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>The compilation options are set in the file <code class="docutils literal"><span class="pre">GNUmakefile</span></code>. The default
+<p>The compilation options are set in the file <code class="docutils literal notranslate"><span class="pre">GNUmakefile</span></code>. The default
 options correspond to an optimized code for 3D geometry. You can modify the
 options in this file in order to (for instance):</p>
 <blockquote>
@@ -203,28 +203,28 @@ options in this file in order to (for instance):</p>
 </div></blockquote>
 <p>For a description of these different options, see the <a class="reference external" href="https://amrex-codes.github.io/amrex/BuildingAMReX.html#building-with-gnu-make">corresponding page</a> in
 the AMReX documentation.</p>
-<p>Alternatively, instead of modifying the file <code class="docutils literal"><span class="pre">GNUmakefile</span></code>, you can
+<p>Alternatively, instead of modifying the file <code class="docutils literal notranslate"><span class="pre">GNUmakefile</span></code>, you can
 directly pass the options in command line ; for instance:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_OMP</span><span class="o">=</span><span class="n">FALSE</span>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_OMP</span><span class="o">=</span><span class="n">FALSE</span>
 </pre></div>
 </div>
 </div>
 <p>In order to clean a previously compiled version:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">realclean</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">realclean</span>
 </pre></div>
 </div>
 <p>In order to learn how to use the executable, see the section <a class="reference internal" href="running_cpp/running_cpp.html"><span class="doc">Running WarpX as an executable</span></a>.</p>
 </div>
 <div class="section" id="compiling-warpx-as-a-python-package">
 <h2>Compiling WarpX as a Python package<a class="headerlink" href="#compiling-warpx-as-a-python-package" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">cd</span></code> into the directory <code class="docutils literal"><span class="pre">warpx/Python</span></code> (instead of <code class="docutils literal"><span class="pre">warpx</span></code>
+<p><code class="docutils literal notranslate"><span class="pre">cd</span></code> into the directory <code class="docutils literal notranslate"><span class="pre">warpx/Python</span></code> (instead of <code class="docutils literal notranslate"><span class="pre">warpx</span></code>
 in the previous section) and type</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
 </pre></div>
 </div>
 <p>This will compile the code, and install the Python bindings as a package (named
-<code class="docutils literal"><span class="pre">pywarpx</span></code>) in your standard Python installation (i.e. in your
-<code class="docutils literal"><span class="pre">site-packages</span></code> directory). The note on compiler options from the previous
+<code class="docutils literal notranslate"><span class="pre">pywarpx</span></code>) in your standard Python installation (i.e. in your
+<code class="docutils literal notranslate"><span class="pre">site-packages</span></code> directory). The note on compiler options from the previous
 section also hold when compiling the Python package.</p>
 <p>In order to learn how to use the Python package, see the section <a class="reference internal" href="running_python/running_python.html"><span class="doc">Running WarpX from Python</span></a>.</p>
 </div>
@@ -237,13 +237,13 @@ you need to type the following command when compiling:</p>
 <div><ul class="simple">
 <li>with the Intel compiler</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>with the GNU compiler</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">gnu</span>
 </pre></div>
 </div>
@@ -253,14 +253,14 @@ you need to type the following command when compiling:</p>
 <div><ul class="simple">
 <li>with the Intel compiler</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>with the GNU compiler</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
 <span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">gnu</span>
 </pre></div>

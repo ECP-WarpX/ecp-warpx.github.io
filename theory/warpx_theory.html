@@ -192,22 +192,22 @@
 <h1>Mesh refinement<a class="headerlink" href="#mesh-refinement" title="Permalink to this headline">¶</a></h1>
 <div class="figure" id="id1">
 <a class="reference internal image-reference" href="../_images/ICNSP_2011_Vay_fig1.png"><img alt="Sketches of the implementation of mesh refinement in WarpX with the electrostatic (left) and electromagnetic (right) solvers. In both cases, the charge/current from particles are deposited at the finest levels first, then interpolated recursively to coarser levels. In the electrostatic case, the potential is calculated first at the coarsest level :math:`L_0`, the solution interpolated to the boundaries of the refined patch :math:`r` at the next level :math:`L_{1}` and the potential calculated at :math:`L_1`. The procedure is repeated iteratively up to the highest level. In the electromagnetic case, the fields are computed independently on each grid and patch without interpolation at boundaries. Patches are terminated by absorbing layers (PML) to prevent the reflection of electromagnetic waves. Additional coarse patch :math:`c` and fine grid :math:`a` are needed so that the full solution is obtained by substitution on :math:`a` as :math:`F_{n+1}(a)=F_{n+1}(r)+I[F_n( s )-F_{n+1}( c )]` where :math:`F` is the field, and :math:`I` is a coarse-to-fine interpolation operator. In both cases, the field solution at a given level :math:`L_n` is unaffected by the solution at higher levels :math:`L_{n+1}` and up, allowing for mitigation of some spurious effects (see text) by providing a transition zone via extension of the patches by a few cells beyond the desired refined area (red &amp; orange rectangles) in which the field is interpolated onto particles from the coarser parent level only." src="../_images/ICNSP_2011_Vay_fig1.png" style="width: 15.00000cm;" /></a>
-<p class="caption"><span class="caption-text">Sketches of the implementation of mesh refinement in WarpX with the electrostatic (left) and electromagnetic (right) solvers. In both cases, the charge/current from particles are deposited at the finest levels first, then interpolated recursively to coarser levels. In the electrostatic case, the potential is calculated first at the coarsest level <span class="math">\(L_0\)</span>, the solution interpolated to the boundaries of the refined patch <span class="math">\(r\)</span> at the next level <span class="math">\(L_{1}\)</span> and the potential calculated at <span class="math">\(L_1\)</span>. The procedure is repeated iteratively up to the highest level. In the electromagnetic case, the fields are computed independently on each grid and patch without interpolation at boundaries. Patches are terminated by absorbing layers (PML) to prevent the reflection of electromagnetic waves. Additional coarse patch <span class="math">\(c\)</span> and fine grid <span class="math">\(a\)</span> are needed so that the full solution is obtained by substitution on <span class="math">\(a\)</span> as <span class="math">\(F_{n+1}(a)=F_{n+1}(r)+I[F_n( s )-F_{n+1}( c )]\)</span> where <span class="math">\(F\)</span> is the field, and <span class="math">\(I\)</span> is a coarse-to-fine interpolation operator. In both cases, the field solution at a given level <span class="math">\(L_n\)</span> is unaffected by the solution at higher levels <span class="math">\(L_{n+1}\)</span> and up, allowing for mitigation of some spurious effects (see text) by providing a transition zone via extension of the patches by a few cells beyond the desired refined area (red &amp; orange rectangles) in which the field is interpolated onto particles from the coarser parent level only.</span></p>
+<p class="caption"><span class="caption-text">Sketches of the implementation of mesh refinement in WarpX with the electrostatic (left) and electromagnetic (right) solvers. In both cases, the charge/current from particles are deposited at the finest levels first, then interpolated recursively to coarser levels. In the electrostatic case, the potential is calculated first at the coarsest level <span class="math notranslate">\(L_0\)</span>, the solution interpolated to the boundaries of the refined patch <span class="math notranslate">\(r\)</span> at the next level <span class="math notranslate">\(L_{1}\)</span> and the potential calculated at <span class="math notranslate">\(L_1\)</span>. The procedure is repeated iteratively up to the highest level. In the electromagnetic case, the fields are computed independently on each grid and patch without interpolation at boundaries. Patches are terminated by absorbing layers (PML) to prevent the reflection of electromagnetic waves. Additional coarse patch <span class="math notranslate">\(c\)</span> and fine grid <span class="math notranslate">\(a\)</span> are needed so that the full solution is obtained by substitution on <span class="math notranslate">\(a\)</span> as <span class="math notranslate">\(F_{n+1}(a)=F_{n+1}(r)+I[F_n( s )-F_{n+1}( c )]\)</span> where <span class="math notranslate">\(F\)</span> is the field, and <span class="math notranslate">\(I\)</span> is a coarse-to-fine interpolation operator. In both cases, the field solution at a given level <span class="math notranslate">\(L_n\)</span> is unaffected by the solution at higher levels <span class="math notranslate">\(L_{n+1}\)</span> and up, allowing for mitigation of some spurious effects (see text) by providing a transition zone via extension of the patches by a few cells beyond the desired refined area (red &amp; orange rectangles) in which the field is interpolated onto particles from the coarser parent level only.</span></p>
 </div>
 <p>The mesh refinement methods that have been implemented in WarpX were developed following the following principles: i) avoidance of spurious effects from mesh refinement, or minimization of such effects; ii) user controllability of the spurious effects’ relative magnitude; iii) simplicity of implementation. The two main generic issues that were identified are: a) spurious self-force on macroparticles close to the mesh refinement interface (Vay et al. 2002; Colella and Norgaard 2010); b) reflection (and possible amplification) of short wavelength electromagnetic waves at the mesh refinement interface (Vay 2001). The two effects are due to the loss of translation invariance introduced by the asymmetry of the grid on each side of the mesh refinement interface.</p>
 <p>In addition, for some implementations where the field that is computed at a given level is affected by the solution at finer levels, there are cases where the procedure violates the integral of Gauss’ Law around the refined patch, leading to long range errors (Vay et al. 2002; Colella and Norgaard 2010). As will be shown below, in the procedure that has been developed in WarpX, the field at a given refinement level is not affected by the solution at finer levels, and is thus not affected by this type of error.</p>
 <div class="section" id="electrostatic">
 <h2>Electrostatic<a class="headerlink" href="#electrostatic" title="Permalink to this headline">¶</a></h2>
 <p>A cornerstone of the Particle-In-Cell method is that assuming a particle lying in a hypothetical infinite grid, then if the grid is regular and symmetrical, and if the order of field gathering matches the order of charge (or current) deposition, then there is no self-force of the particle acting on itself: a) anywhere if using the so-called “momentum conserving” gathering scheme; b) on average within one cell if using the “energy conserving” gathering scheme (Birdsall and Langdon 1991). A breaking of the regularity and/or symmetry in the grid, whether it is from the use of irregular meshes or mesh refinement, and whether one uses finite difference, finite volume or finite elements, results in a net spurious self-force (which does not average to zero over one cell) for a macroparticle close to the point of irregularity (mesh refinement interface for the current purpose) (Vay et al. 2002; Colella and Norgaard 2010).</p>
-<p>A sketch of the implementation of mesh refinement in WarpX is given in Figure&nbsp;[fig:ESAMR] (left). Given the solution of the electric potential at a refinement level <span class="math">\(L_n\)</span>, it is interpolated onto the boundaries of the grid patch(es) at the next refined level <span class="math">\(L_{n+1}\)</span>. The electric potential is then computed at level <span class="math">\(L_{n+1}\)</span> by solving the Poisson equation. This procedure necessitates the knowledge of the charge density at every level of refinement. For efficiency, the macroparticle charge is deposited on the highest level patch that contains them, and the charge density of each patch is added recursively to lower levels, down to the lowest.</p>
+<p>A sketch of the implementation of mesh refinement in WarpX is given in Figure&nbsp;[fig:ESAMR] (left). Given the solution of the electric potential at a refinement level <span class="math notranslate">\(L_n\)</span>, it is interpolated onto the boundaries of the grid patch(es) at the next refined level <span class="math notranslate">\(L_{n+1}\)</span>. The electric potential is then computed at level <span class="math notranslate">\(L_{n+1}\)</span> by solving the Poisson equation. This procedure necessitates the knowledge of the charge density at every level of refinement. For efficiency, the macroparticle charge is deposited on the highest level patch that contains them, and the charge density of each patch is added recursively to lower levels, down to the lowest.</p>
 <div class="figure" id="id2">
 <a class="reference internal image-reference" href="../_images/ICNSP_2011_Vay_fig2.png"><img alt="Position history of one charged particle attracted by its image induced by a nearby metallic (dirichlet) boundary. The particle is initialized at rest. Without refinement patch (reference case), the particle is accelerated by its image, is reflected specularly at the wall, then decelerates until it reaches its initial position at rest. If the particle is initialized inside a refinement patch, the particle is initially accelerated toward the wall but is spuriously reflected before it reaches the boundary of the patch whether using the method implemented in WarpX or the MC method. Providing a surrounding transition region 2 or 4 cells wide in which the potential is interpolated from the parent coarse solution reduces significantly the effect of the spurious self-force." src="../_images/ICNSP_2011_Vay_fig2.png" style="width: 15.00000cm;" /></a>
 <p class="caption"><span class="caption-text">Position history of one charged particle attracted by its image induced by a nearby metallic (dirichlet) boundary. The particle is initialized at rest. Without refinement patch (reference case), the particle is accelerated by its image, is reflected specularly at the wall, then decelerates until it reaches its initial position at rest. If the particle is initialized inside a refinement patch, the particle is initially accelerated toward the wall but is spuriously reflected before it reaches the boundary of the patch whether using the method implemented in WarpX or the MC method. Providing a surrounding transition region 2 or 4 cells wide in which the potential is interpolated from the parent coarse solution reduces significantly the effect of the spurious self-force.</span></p>
 </div>
-<p>The presence of the self-force is illustrated on a simple test case that was introduced in (Vay et al. 2002) and also used in (Colella and Norgaard 2010): a single macroparticle is initialized at rest within a single refinement patch four cells away from the patch refinement boundary. The patch at level <span class="math">\(L_1\)</span> has <span class="math">\(32\times32\)</span> cells and is centered relative to the lowest <span class="math">\(64\times64\)</span> grid at level <span class="math">\(L_0\)</span> (“main grid”), while the macroparticle is centered in one direction but not in the other. The boundaries of the main grid are perfectly conducting, so that the macroparticle is attracted to the closest wall by its image. Specular reflection is applied when the particle reaches the boundary so that the motion is cyclic. The test was performed with WarpX using either linear or quadratic interpolation when gathering the main grid solution onto the refined patch boundary. It was also performed using another method from P. McCorquodale et al (labeled “MC” in this paper) based on the algorithm given in (Mccorquodale et al. 2004), which employs a more elaborate procedure involving two-ways interpolations between the main grid and the refined patch. A reference case was also run using a single <span class="math">\(128\times128\)</span> grid with no refined patch, in which it is observed that the particle propagates toward the closest boundary at an accelerated pace, is reflected specularly at the boundary, then slows down until it reaches its initial position at zero velocity. The particle position histories are shown for the various cases in Fig. [fig:ESselfforce]. In all the cases using the refinement patch, the particle was spuriously reflected near the patch boundary and was effectively trapped in the patch. We notice that linear interpolation performs better than quadratic, and that the simple method implemented in WarpX performs better than the other proposed method for this test (see discussion below).</p>
+<p>The presence of the self-force is illustrated on a simple test case that was introduced in (Vay et al. 2002) and also used in (Colella and Norgaard 2010): a single macroparticle is initialized at rest within a single refinement patch four cells away from the patch refinement boundary. The patch at level <span class="math notranslate">\(L_1\)</span> has <span class="math notranslate">\(32\times32\)</span> cells and is centered relative to the lowest <span class="math notranslate">\(64\times64\)</span> grid at level <span class="math notranslate">\(L_0\)</span> (“main grid”), while the macroparticle is centered in one direction but not in the other. The boundaries of the main grid are perfectly conducting, so that the macroparticle is attracted to the closest wall by its image. Specular reflection is applied when the particle reaches the boundary so that the motion is cyclic. The test was performed with WarpX using either linear or quadratic interpolation when gathering the main grid solution onto the refined patch boundary. It was also performed using another method from P. McCorquodale et al (labeled “MC” in this paper) based on the algorithm given in (Mccorquodale et al. 2004), which employs a more elaborate procedure involving two-ways interpolations between the main grid and the refined patch. A reference case was also run using a single <span class="math notranslate">\(128\times128\)</span> grid with no refined patch, in which it is observed that the particle propagates toward the closest boundary at an accelerated pace, is reflected specularly at the boundary, then slows down until it reaches its initial position at zero velocity. The particle position histories are shown for the various cases in Fig. [fig:ESselfforce]. In all the cases using the refinement patch, the particle was spuriously reflected near the patch boundary and was effectively trapped in the patch. We notice that linear interpolation performs better than quadratic, and that the simple method implemented in WarpX performs better than the other proposed method for this test (see discussion below).</p>
 <div class="figure" id="id3">
 <a class="reference internal image-reference" href="../_images/ICNSP_2011_Vay_fig3.png"><img alt="(left) Maps of the magnitude of the spurious self-force :math:`\epsilon` in arbitrary units within one quarter of the refined patch, defined as :math:`\epsilon=\sqrt{(E_x-E_x^{ref})^2+(E_y-E_y^{ref})^2}`, where :math:`E_x` and :math:`E_y` are the electric field components within the patch experienced by one particle at a given location and :math:`E_x^{ref}` and :math:`E_y^{ref}` are the electric field from a reference solution. The map is given for the WarpX and the MC mesh refinement algorithms and for linear and quadratic interpolation at the patch refinement boundary. (right) Lineouts of the maximum (taken over neighboring cells) of the spurious self-force. Close to the interface boundary (x=0), the spurious self-force decreases at a rate close to one order of magnitude per cell (red line), then at about one order of magnitude per six cells (green line)." src="../_images/ICNSP_2011_Vay_fig3.png" style="width: 15.00000cm;" /></a>
-<p class="caption"><span class="caption-text">(left) Maps of the magnitude of the spurious self-force <span class="math">\(\epsilon\)</span> in arbitrary units within one quarter of the refined patch, defined as <span class="math">\(\epsilon=\sqrt{(E_x-E_x^{ref})^2+(E_y-E_y^{ref})^2}\)</span>, where <span class="math">\(E_x\)</span> and <span class="math">\(E_y\)</span> are the electric field components within the patch experienced by one particle at a given location and <span class="math">\(E_x^{ref}\)</span> and <span class="math">\(E_y^{ref}\)</span> are the electric field from a reference solution. The map is given for the WarpX and the MC mesh refinement algorithms and for linear and quadratic interpolation at the patch refinement boundary. (right) Lineouts of the maximum (taken over neighboring cells) of the spurious self-force. Close to the interface boundary (x=0), the spurious self-force decreases at a rate close to one order of magnitude per cell (red line), then at about one order of magnitude per six cells (green line).</span></p>
+<p class="caption"><span class="caption-text">(left) Maps of the magnitude of the spurious self-force <span class="math notranslate">\(\epsilon\)</span> in arbitrary units within one quarter of the refined patch, defined as <span class="math notranslate">\(\epsilon=\sqrt{(E_x-E_x^{ref})^2+(E_y-E_y^{ref})^2}\)</span>, where <span class="math notranslate">\(E_x\)</span> and <span class="math notranslate">\(E_y\)</span> are the electric field components within the patch experienced by one particle at a given location and <span class="math notranslate">\(E_x^{ref}\)</span> and <span class="math notranslate">\(E_y^{ref}\)</span> are the electric field from a reference solution. The map is given for the WarpX and the MC mesh refinement algorithms and for linear and quadratic interpolation at the patch refinement boundary. (right) Lineouts of the maximum (taken over neighboring cells) of the spurious self-force. Close to the interface boundary (x=0), the spurious self-force decreases at a rate close to one order of magnitude per cell (red line), then at about one order of magnitude per six cells (green line).</span></p>
 </div>
 <p>The magnitude of the spurious self-force as a function of the macroparticle position was mapped and is shown in Fig. [fig:ESselfforcemap] for the WarpX and MC algorithms using linear or quadratic interpolations between grid levels. It is observed that the magnitude of the spurious self-force decreases rapidly with the distance between the particle and the refined patch boundary, at a rate approaching one order of magnitude per cell for the four cells closest to the boundary and about one order of magnitude per six cells beyond. The method implemented in WarpX offers a weaker spurious force on average and especially at the cells that are the closest to the coarse-fine interface where it is the largest and thus matters most.
 We notice that the magnitude of the spurious self-force depends strongly on the distance to the edge of the patch and to the nodes of the underlying coarse grid, but weakly on the order of deposition and size of the patch.</p>
@@ -218,7 +218,7 @@ We note that an alternative method was devised for reducing the magnitude of sel
 <div class="section" id="electromagnetic">
 <h2>Electromagnetic<a class="headerlink" href="#electromagnetic" title="Permalink to this headline">¶</a></h2>
 <p>The method that is used for electrostatic mesh refinement is not directly applicable to electromagnetic calculations. As was shown in section 3.4 of (Vay 2001), refinement schemes relying solely on interpolation between coarse and fine patches lead to the reflection with amplification of the short wavelength modes that fall below the cutoff of the Nyquist frequency of the coarse grid. Unless these modes are damped heavily or prevented from occurring at their source, they may affect particle motion and their effect can escalate if trapped within a patch, via multiple successive reflections with amplification.</p>
-<p>To circumvent this issue, an additional coarse patch (with the same resolution as the parent grid) is added, as shown in Fig.&nbsp;[fig:ESAMR]-right and described in (Vay, Adam, and Heron 2004). Both the fine and the coarse grid patches are terminated by Perfectly Matched Layers, reducing wave reflection by orders of magnitude, controllable by the user (Berenger 1996; Vay 2002). The source current resulting from the motion of charged macroparticles within the refined region is accumulated on the fine patch and is then interpolated onto the coarse patch and added onto the parent grid. The process is repeated recursively from the finest level down to the coarsest. The Maxwell equations are then solved for one time interval on the entire set of grids, by default for one time step using the time step of the finest grid. The field on the coarse and fine patches only contain the contributions from the particles that have evolved within the refined area but not from the current sources outside the area. The total contribution of the field from sources within and outside the refined area is obtained by adding the field from the refined grid <span class="math">\(F(r)\)</span>, and adding an interpolation <span class="math">\(I\)</span> of the difference between the relevant subset <span class="math">\(s\)</span> of the field in the parent grid <span class="math">\(F(s)\)</span> and the field of the coarse grid <span class="math">\(F( c )\)</span>, on an auxiliary grid <span class="math">\(a\)</span>, i.e. <span class="math">\(F(a)=F(r)+I[F(s)-F( c )]\)</span>. The field on the parent grid subset <span class="math">\(F(s)\)</span> contains contributions from sources from both within and outside of the refined area. Thus, in effect, there is substitution of the coarse field resulting from sources within the patch area by its fine resolution counterpart. The operation is carried out recursively starting at the coarsest level up to the finest.
+<p>To circumvent this issue, an additional coarse patch (with the same resolution as the parent grid) is added, as shown in Fig.&nbsp;[fig:ESAMR]-right and described in (Vay, Adam, and Heron 2004). Both the fine and the coarse grid patches are terminated by Perfectly Matched Layers, reducing wave reflection by orders of magnitude, controllable by the user (Berenger 1996; Vay 2002). The source current resulting from the motion of charged macroparticles within the refined region is accumulated on the fine patch and is then interpolated onto the coarse patch and added onto the parent grid. The process is repeated recursively from the finest level down to the coarsest. The Maxwell equations are then solved for one time interval on the entire set of grids, by default for one time step using the time step of the finest grid. The field on the coarse and fine patches only contain the contributions from the particles that have evolved within the refined area but not from the current sources outside the area. The total contribution of the field from sources within and outside the refined area is obtained by adding the field from the refined grid <span class="math notranslate">\(F(r)\)</span>, and adding an interpolation <span class="math notranslate">\(I\)</span> of the difference between the relevant subset <span class="math notranslate">\(s\)</span> of the field in the parent grid <span class="math notranslate">\(F(s)\)</span> and the field of the coarse grid <span class="math notranslate">\(F( c )\)</span>, on an auxiliary grid <span class="math notranslate">\(a\)</span>, i.e. <span class="math notranslate">\(F(a)=F(r)+I[F(s)-F( c )]\)</span>. The field on the parent grid subset <span class="math notranslate">\(F(s)\)</span> contains contributions from sources from both within and outside of the refined area. Thus, in effect, there is substitution of the coarse field resulting from sources within the patch area by its fine resolution counterpart. The operation is carried out recursively starting at the coarsest level up to the finest.
 An option has been implemented in which various grid levels are pushed with different time steps, given as a fixed fraction of the individual grid Courant conditions (assuming same cell aspect ratio for all grids and refinement by integer factors). In this case, the fields from the coarse levels, which are advanced less often, are interpolated in time.</p>
 <p>The substitution method has two potential drawbacks due to the inexact cancellation between the coarse and fine patches of : (i) the remnants of ghost fixed charges created by the particles entering and leaving the patches (this effect is due to the use of the electromagnetic solver and is different from the spurious self-force that was described for the electrostatic case); (ii) if using a Maxwell solver with a low-order stencil, the electromagnetic waves traveling on each patch at slightly different velocity due to numerical dispersion.
 The first issue results in an effective spurious multipole field whose magnitude decreases very rapidly with the distance to the patch boundary, similarly to the spurious self-force in the electrostatic case. Hence, adding a few extra transition cells surrounding the patches mitigates this effect very effectively.
@@ -232,7 +232,7 @@ Both effects and their mitigation are described in more detail in (Vay, Adam, an
 <div class="section" id="open-boundary-condition-for-electromagnetic-waves">
 <h2>Open boundary condition for electromagnetic waves<a class="headerlink" href="#open-boundary-condition-for-electromagnetic-waves" title="Permalink to this headline">¶</a></h2>
 <p>For the TE case, the original Berenger’s Perfectly Matched Layer (PML) writes</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 \varepsilon _{0}\frac{\partial E_{x}}{\partial t}+\sigma _{y}E_{x} = &amp; \frac{\partial H_{z}}{\partial y}\label{PML_def_1} \\
 \varepsilon _{0}\frac{\partial E_{y}}{\partial t}+\sigma _{x}E_{y} = &amp; -\frac{\partial H_{z}}{\partial x}\label{PML_def_2} \\
@@ -240,126 +240,126 @@ Both effects and their mitigation are described in more detail in (Vay, Adam, an
 \mu _{0}\frac{\partial H_{zy}}{\partial t}+\sigma ^{*}_{y}H_{zy} = &amp; \frac{\partial E_{x}}{\partial y}\label{PML_def_4} \\
 H_{z}  = &amp; H_{zx}+H_{zy}\label{PML_def_5} \end{aligned}\end{split}\]</div>
 <p>This can be generalized to</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 \varepsilon _{0}\frac{\partial E_{x}}{\partial t}+\sigma _{y}E_{x} = &amp; \frac{c_{y}}{c}\frac{\partial H_{z}}{\partial y}+\overline{\sigma }_{y}H_{z}\label{APML_def_1} \\
 \varepsilon _{0}\frac{\partial E_{y}}{\partial t}+\sigma _{x}E_{y} = &amp; -\frac{c_{x}}{c}\frac{\partial H_{z}}{\partial x}+\overline{\sigma }_{x}H_{z}\label{APML_def_2} \\
 \mu _{0}\frac{\partial H_{zx}}{\partial t}+\sigma ^{*}_{x}H_{zx} = &amp; -\frac{c^{*}_{x}}{c}\frac{\partial E_{y}}{\partial x}+\overline{\sigma }_{x}^{*}E_{y}\label{APML_def_3} \\
 \mu _{0}\frac{\partial H_{zy}}{\partial t}+\sigma ^{*}_{y}H_{zy} = &amp; \frac{c^{*}_{y}}{c}\frac{\partial E_{x}}{\partial y}+\overline{\sigma }_{y}^{*}E_{x}\label{APML_def_4} \\
 H_{z} = &amp; H_{zx}+H_{zy}\label{APML_def_5} \end{aligned}\end{split}\]</div>
-<p>For <span class="math">\(c_{x}=c_{y}=c^{*}_{x}=c^{*}_{y}=c\)</span> and <span class="math">\(\overline{\sigma }_{x}=\overline{\sigma }_{y}=\overline{\sigma }_{x}^{*}=\overline{\sigma }_{y}^{*}=0\)</span>,
+<p>For <span class="math notranslate">\(c_{x}=c_{y}=c^{*}_{x}=c^{*}_{y}=c\)</span> and <span class="math notranslate">\(\overline{\sigma }_{x}=\overline{\sigma }_{y}=\overline{\sigma }_{x}^{*}=\overline{\sigma }_{y}^{*}=0\)</span>,
 this system reduces to the Berenger PML medium, while adding the additional
-constraint <span class="math">\(\sigma _{x}=\sigma _{y}=\sigma _{x}^{*}=\sigma _{y}^{*}=0\)</span>
+constraint <span class="math notranslate">\(\sigma _{x}=\sigma _{y}=\sigma _{x}^{*}=\sigma _{y}^{*}=0\)</span>
 leads to the system of Maxwell equations in vacuum.</p>
 <div class="section" id="sec-analytic-theory-propa-plane-wave-propagation-of-a-plane-wave-in-an-apml-medium">
 <h3>[Sec:analytic theory, propa plane wave]Propagation of a Plane Wave in an APML Medium<a class="headerlink" href="#sec-analytic-theory-propa-plane-wave-propagation-of-a-plane-wave-in-an-apml-medium" title="Permalink to this headline">¶</a></h3>
 <p>We consider a plane wave of magnitude (:math:` E_{0},H_{zx0},H_{zy0} <cite>)
 and pulsation :math:</cite>omega` propagating in the APML medium with an
-angle <span class="math">\(\varphi\)</span> relative to the x axis</p>
-<div class="math">
+angle <span class="math notranslate">\(\varphi\)</span> relative to the x axis</p>
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 E_{x} = &amp; -E_{0}\sin \varphi e^{i\omega \left( t-\alpha x-\beta y\right) }\label{Plane_wave_APML_def_1} \\
 E_{y} = &amp; E_{0}\cos \varphi e^{i\omega \left( t-\alpha x-\beta y\right) }\label{Plane_wave_APML_def_2} \\
 H_{zx} = &amp; H_{zx0}e^{i\omega \left( t-\alpha x-\beta y\right) }\label{Plane_wave_AMPL_def_3} \\
 H_{zy} = &amp; H_{zy0}e^{i\omega \left( t-\alpha x-\beta y\right) }\label{Plane_wave_APML_def_4} \end{aligned}\end{split}\]</div>
-<p>where <span class="math">\(\alpha\)</span> and<span class="math">\(\beta\)</span> are two complex constants to
+<p>where <span class="math notranslate">\(\alpha\)</span> and<span class="math notranslate">\(\beta\)</span> are two complex constants to
 be determined.</p>
 <p>Introducing ([Plane_wave_APML_def_1]), ([Plane_wave_APML_def_2]),
 ([Plane_wave_AMPL_def_3]) and ([Plane_wave_APML_def_4])
 into ([APML_def_1]), ([APML_def_2]), ([APML_def_3])
 and ([APML_def_4]) gives</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 \varepsilon _{0}E_{0}\sin \varphi -i\frac{\sigma _{y}}{\omega }E_{0}\sin \varphi  = &amp; \beta \frac{c_{y}}{c}\left( H_{zx0}+H_{zy0}\right) +i\frac{\overline{\sigma }_{y}}{\omega }\left( H_{zx0}+H_{zy0}\right) \label{Plane_wave_APML_1_1} \\
 \varepsilon _{0}E_{0}\cos \varphi -i\frac{\sigma _{x}}{\omega }E_{0}\cos \varphi  = &amp; \alpha \frac{c_{x}}{c}\left( H_{zx0}+H_{zy0}\right) -i\frac{\overline{\sigma }_{x}}{\omega }\left( H_{zx0}+H_{zy0}\right) \label{Plane_wave_APML_1_2} \\
 \mu _{0}H_{zx0}-i\frac{\sigma ^{*}_{x}}{\omega }H_{zx0} = &amp; \alpha \frac{c^{*}_{x}}{c}E_{0}\cos \varphi -i\frac{\overline{\sigma }^{*}_{x}}{\omega }E_{0}\cos \varphi \label{Plane_wave_APML_1_3} \\
 \mu _{0}H_{zy0}-i\frac{\sigma ^{*}_{y}}{\omega }H_{zy0} = &amp; \beta \frac{c^{*}_{y}}{c}E_{0}\sin \varphi +i\frac{\overline{\sigma }^{*}_{y}}{\omega }E_{0}\sin \varphi \label{Plane_wave_APML_1_4} \end{aligned}\end{split}\]</div>
-<p>Defining <span class="math">\(Z=E_{0}/\left( H_{zx0}+H_{zy0}\right)\)</span> and using ([Plane_wave_APML_1_1])
+<p>Defining <span class="math notranslate">\(Z=E_{0}/\left( H_{zx0}+H_{zy0}\right)\)</span> and using ([Plane_wave_APML_1_1])
 and ([Plane_wave_APML_1_2]), we get</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 \beta  = &amp; \left[ Z\left( \varepsilon _{0}-i\frac{\sigma _{y}}{\omega }\right) \sin \varphi -i\frac{\overline{\sigma }_{y}}{\omega }\right] \frac{c}{c_{y}}\label{Plane_wave_APML_beta_of_g} \\
 \alpha  = &amp; \left[ Z\left( \varepsilon _{0}-i\frac{\sigma _{x}}{\omega }\right) \cos \varphi +i\frac{\overline{\sigma }_{x}}{\omega }\right] \frac{c}{c_{x}}\label{Plane_wave_APML_alpha_of_g} \end{aligned}\end{split}\]</div>
-<p>Adding <span class="math">\(H_{zx0}\)</span> and <span class="math">\(H_{zy0}\)</span> from ([Plane_wave_APML_1_3])
+<p>Adding <span class="math notranslate">\(H_{zx0}\)</span> and <span class="math notranslate">\(H_{zy0}\)</span> from ([Plane_wave_APML_1_3])
 and ([Plane_wave_APML_1_4]) and substituting the expressions
-for <span class="math">\(\alpha\)</span> and <span class="math">\(\beta\)</span> from ([Plane_wave_APML_beta_of_g])
+for <span class="math notranslate">\(\alpha\)</span> and <span class="math notranslate">\(\beta\)</span> from ([Plane_wave_APML_beta_of_g])
 and ([Plane_wave_APML_alpha_of_g]) yields</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 \frac{1}{Z} = &amp; \frac{Z\left( \varepsilon _{0}-i\frac{\sigma _{x}}{\omega }\right) \cos \varphi \frac{c^{*}_{x}}{c_{x}}+i\frac{\overline{\sigma }_{x}}{\omega }\frac{c^{*}_{x}}{c_{x}}-i\frac{\overline{\sigma }^{*}_{x}}{\omega }}{\mu _{0}-i\frac{\sigma ^{*}_{x}}{\omega }}\cos \varphi \nonumber \\
  + &amp; \frac{Z\left( \varepsilon _{0}-i\frac{\sigma _{y}}{\omega }\right) \sin \varphi \frac{c^{*}_{y}}{c_{y}}-i\frac{\overline{\sigma }_{y}}{\omega }\frac{c^{*}_{y}}{c_{y}}+i\frac{\overline{\sigma }^{*}_{y}}{\omega }}{\mu _{0}-i\frac{\sigma ^{*}_{y}}{\omega }}\sin \varphi \end{aligned}\end{split}\]</div>
-<p>If <span class="math">\(c_{x}=c^{*}_{x}\)</span>, <span class="math">\(c_{y}=c^{*}_{y}\)</span>, <span class="math">\(\overline{\sigma }_{x}=\overline{\sigma }^{*}_{x}\)</span>, <span class="math">\(\overline{\sigma }_{y}=\overline{\sigma }^{*}_{y}\)</span>, <span class="math">\(\frac{\sigma _{x}}{\varepsilon _{0}}=\frac{\sigma ^{*}_{x}}{\mu _{0}}\)</span> and <span class="math">\(\frac{\sigma _{y}}{\varepsilon _{0}}=\frac{\sigma ^{*}_{y}}{\mu _{0}}\)</span> then</p>
-<div class="math">
+<p>If <span class="math notranslate">\(c_{x}=c^{*}_{x}\)</span>, <span class="math notranslate">\(c_{y}=c^{*}_{y}\)</span>, <span class="math notranslate">\(\overline{\sigma }_{x}=\overline{\sigma }^{*}_{x}\)</span>, <span class="math notranslate">\(\overline{\sigma }_{y}=\overline{\sigma }^{*}_{y}\)</span>, <span class="math notranslate">\(\frac{\sigma _{x}}{\varepsilon _{0}}=\frac{\sigma ^{*}_{x}}{\mu _{0}}\)</span> and <span class="math notranslate">\(\frac{\sigma _{y}}{\varepsilon _{0}}=\frac{\sigma ^{*}_{y}}{\mu _{0}}\)</span> then</p>
+<div class="math notranslate">
 \[\begin{aligned}
 Z = &amp; \pm \sqrt{\frac{\mu _{0}}{\varepsilon _{0}}}\label{APML_impedance} \end{aligned}\]</div>
 <p>which is the impedance of vacuum. Hence, like the PML, given some
 restrictions on the parameters, the APML does not generate any reflection
 at any angle and any frequency. As for the PML, this property is not
 retained after discretization, as shown subsequently in this paper.</p>
-<p>Calling <span class="math">\(\psi\)</span> any component of the field and <span class="math">\(\psi _{0}\)</span>
+<p>Calling <span class="math notranslate">\(\psi\)</span> any component of the field and <span class="math notranslate">\(\psi _{0}\)</span>
 its magnitude, we get from ([Plane_wave_APML_def_1]), ([Plane_wave_APML_beta_of_g]),
 ([Plane_wave_APML_alpha_of_g]) and ([APML_impedance]) that</p>
-<div class="math">
+<div class="math notranslate">
 \[\label{Plane_wave_absorption}
 \psi =\psi _{0}e^{i\omega \left( t\mp x\cos \varphi /c_{x}\mp y\sin \varphi /c_{y}\right) }e^{-\left( \pm \frac{\sigma _{x}\cos \varphi }{\varepsilon _{0}c_{x}}+\overline{\sigma }_{x}\frac{c}{c_{x}}\right) x}e^{-\left( \pm \frac{\sigma _{y}\sin \varphi }{\varepsilon _{0}c_{y}}+\overline{\sigma }_{y}\frac{c}{c_{y}}\right) y}\]</div>
-<p>We assume that we have an APML layer of thickness <span class="math">\(\delta\)</span> (measured
-along <span class="math">\(x\)</span>) and that <span class="math">\(\sigma _{y}=\overline{\sigma }_{y}=0\)</span>
-and <span class="math">\(c_{y}=c.\)</span> Using ([Plane_wave_absorption]), we determine
+<p>We assume that we have an APML layer of thickness <span class="math notranslate">\(\delta\)</span> (measured
+along <span class="math notranslate">\(x\)</span>) and that <span class="math notranslate">\(\sigma _{y}=\overline{\sigma }_{y}=0\)</span>
+and <span class="math notranslate">\(c_{y}=c.\)</span> Using ([Plane_wave_absorption]), we determine
 that the coefficient of reflection given by this layer is</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 R_{APML}\left( \theta \right)  = &amp; e^{-\left( \sigma _{x}\cos \varphi /\varepsilon _{0}c_{x}+\overline{\sigma }_{x}c/c_{x}\right) \delta }e^{-\left( \sigma _{x}\cos \varphi /\varepsilon _{0}c_{x}-\overline{\sigma }_{x}c/c_{x}\right) \delta }\nonumber \\
  = &amp; e^{-2\left( \sigma _{x}\cos \varphi /\varepsilon _{0}c_{x}\right) \delta }\end{aligned}\end{split}\]</div>
 <p>which happens to be the same as the PML theoretical coefficient of
-reflection if we assume <span class="math">\(c_{x}=c\)</span>. Hence, it follows that for
-the purpose of wave absorption, the term <span class="math">\(\overline{\sigma }_{x}\)</span>
+reflection if we assume <span class="math notranslate">\(c_{x}=c\)</span>. Hence, it follows that for
+the purpose of wave absorption, the term <span class="math notranslate">\(\overline{\sigma }_{x}\)</span>
 seems to be of no interest. However, although this conclusion is true
 at the infinitesimal limit, it does not hold for the discretized counterpart.</p>
 </div>
 <div class="section" id="discretization">
 <h3>Discretization<a class="headerlink" href="#discretization" title="Permalink to this headline">¶</a></h3>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 \frac{E_x|^{n+1}_{j+1/2,k,l}-E_x|^{n}_{j+1/2,k,l}}{\Delta t} + \sigma_y \frac{E_x|^{n+1}_{j+1/2,k,l}+E_x|^{n}_{j+1/2,k,l}}{2} = &amp; \frac{H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j+1/2,k-1/2,l}}{\Delta y} \\
 \frac{E_y|^{n+1}_{j,k+1/2,l}-E_y|^{n}_{j,k+1/2,l}}{\Delta t} + \sigma_x \frac{E_y|^{n+1}_{j,k+1/2,l}+E_y|^{n}_{j,k+1/2,l}}{2} = &amp; - \frac{H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j-1/2,k+1/2,l}}{\Delta x} \\
 \frac{H_{zx}|^{n+3/2}_{j+1/2,k+1/2,l}-H_{zx}|^{n}_{j+1/2,k+1/2,l}}{\Delta t} + \sigma^*_x \frac{H_{zx}|^{n+3/2}_{j+1/2,k+1/2,l}+H_{zx}|^{n}_{j+1/2,k+1/2,l}}{2} = &amp; - \frac{E_y|^{n+1}_{j+1,k+1/2,l}-E_y|^{n+1}_{j,k+1/2,l}}{\Delta x} \\
 \frac{H_{zy}|^{n+3/2}_{j+1/2,k+1/2,l}-H_{zy}|^{n}_{j+1/2,k+1/2,l}}{\Delta t} + \sigma^*_y \frac{H_{zy}|^{n+3/2}_{j+1/2,k+1/2,l}+H_{zy}|^{n}_{j+1/2,k+1/2,l}}{2} = &amp; \frac{E_x|^{n+1}_{j+1/2,k+1,l}-E_x|^{n+1}_{j+1/2,k,l}}{\Delta y} \\
 H_z = &amp; H_{zx}+H_{zy}\end{aligned}\end{split}\]</div>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 E_x|^{n+1}_{j+1/2,k,l} = &amp; \left(\frac{1-\sigma_y \Delta t/2}{1+\sigma_y \Delta t/2}\right) E_x|^{n}_{j+1/2,k,l} + \frac{\Delta t/\Delta y}{1+\sigma_y \Delta t/2} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j+1/2,k-1/2,l}\right) \\
 E_y|^{n+1}_{j,k+1/2,l} = &amp; \left(\frac{1-\sigma_x \Delta t/2}{1+\sigma_x \Delta t/2}\right) E_y|^{n}_{j,k+1/2,l} - \frac{\Delta t/\Delta x}{1+\sigma_x \Delta t/2} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j-1/2,k+1/2,l}\right) \\
 H_{zx}|^{n+3/2}_{j+1/2,k+1/2,l} = &amp; \left(\frac{1-\sigma^*_x \Delta t/2}{1+\sigma^*_x \Delta t/2}\right) H_{zx}|^{n}_{j+1/2,k+1/2,l} - \frac{\Delta t/\Delta x}{1+\sigma^*_x \Delta t/2} \left(E_y|^{n+1}_{j+1,k+1/2,l}-E_y|^{n+1}_{j,k+1/2,l}\right) \\
 H_{zy}|^{n+3/2}_{j+1/2,k+1/2,l} = &amp; \left(\frac{1-\sigma^*_y \Delta t/2}{1+\sigma^*_y \Delta t/2}\right) H_{zy}|^{n}_{j+1/2,k+1/2,l} + \frac{\Delta t/\Delta y}{1+\sigma^*_y \Delta t/2} \left(E_x|^{n+1}_{j+1/2,k+1,l}-E_x|^{n+1}_{j+1/2,k,l}\right) \\
 H_z = &amp; H_{zx}+H_{zy}\end{aligned}\end{split}\]</div>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 E_x|^{n+1}_{j+1/2,k,l} = &amp; e^{-\sigma_y\Delta t} E_x|^{n}_{j+1/2,k,l} + \frac{1-e^{-\sigma_y\Delta t}}{\sigma_y \Delta y} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j+1/2,k-1/2,l}\right) \\
 E_y|^{n+1}_{j,k+1/2,l} = &amp; e^{-\sigma_x\Delta t} E_y|^{n}_{j,k+1/2,l} - \frac{1-e^{-\sigma_x\Delta t}}{\sigma_x \Delta x} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j-1/2,k+1/2,l}\right) \\
 H_{zx}|^{n+3/2}_{j+1/2,k+1/2,l} = &amp; e^{-\sigma^*_x\Delta t} H_{zx}|^{n}_{j+1/2,k+1/2,l} - \frac{1-e^{-\sigma^*_x\Delta t}}{\sigma^*_x \Delta x} \left(E_y|^{n+1}_{j+1,k+1/2,l}-E_y|^{n+1}_{j,k+1/2,l}\right) \\
 H_{zy}|^{n+3/2}_{j+1/2,k+1/2,l} = &amp; e^{-\sigma^*_y\Delta t} H_{zy}|^{n}_{j+1/2,k+1/2,l} + \frac{1-e^{-\sigma^*_y\Delta t}}{\sigma^*_y \Delta y} \left(E_x|^{n+1}_{j+1/2,k+1,l}-E_x|^{n+1}_{j+1/2,k,l}\right) \\
 H_z = &amp; H_{zx}+H_{zy}\end{aligned}\end{split}\]</div>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 E_x|^{n+1}_{j+1/2,k,l} = &amp; e^{-\sigma_y\Delta t} E_x|^{n}_{j+1/2,k,l} + \frac{1-e^{-\sigma_y\Delta t}}{\sigma_y \Delta y}\frac{c_y}{c} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j+1/2,k-1/2,l}\right) \\
 E_y|^{n+1}_{j,k+1/2,l} = &amp; e^{-\sigma_x\Delta t} E_y|^{n}_{j,k+1/2,l} - \frac{1-e^{-\sigma_x\Delta t}}{\sigma_x \Delta x}\frac{c_x}{c} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j-1/2,k+1/2,l}\right) \\
 H_{zx}|^{n+3/2}_{j+1/2,k+1/2,l} = &amp; e^{-\sigma^*_x\Delta t} H_{zx}|^{n}_{j+1/2,k+1/2,l} - \frac{1-e^{-\sigma^*_x\Delta t}}{\sigma^*_x \Delta x}\frac{c^*_x}{c} \left(E_y|^{n+1}_{j+1,k+1/2,l}-E_y|^{n+1}_{j,k+1/2,l}\right) \\
 H_{zy}|^{n+3/2}_{j+1/2,k+1/2,l} = &amp; e^{-\sigma^*_y\Delta t} H_{zy}|^{n}_{j+1/2,k+1/2,l} + \frac{1-e^{-\sigma^*_y\Delta t}}{\sigma^*_y \Delta y}\frac{c^*_y}{c} \left(E_x|^{n+1}_{j+1/2,k+1,l}-E_x|^{n+1}_{j+1/2,k,l}\right) \\
 H_z = &amp; H_{zx}+H_{zy}\end{aligned}\end{split}\]</div>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 c_x = &amp; c e^{-\sigma_x\Delta t} \frac{\sigma_x \Delta x}{1-e^{-\sigma_x\Delta t}} \\
 c_y = &amp; c e^{-\sigma_y\Delta t} \frac{\sigma_y \Delta y}{1-e^{-\sigma_y\Delta t}} \\
 c^*_x = &amp; c e^{-\sigma^*_x\Delta t} \frac{\sigma^*_x \Delta x}{1-e^{-\sigma^*_x\Delta t}} \\
 c^*_y = &amp; c e^{-\sigma^*_y\Delta t} \frac{\sigma^*_y \Delta y}{1-e^{-\sigma^*_y\Delta t}} \end{aligned}\end{split}\]</div>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 E_x|^{n+1}_{j+1/2,k,l} = &amp; e^{-\sigma_y\Delta t} \left[ E_x|^{n}_{j+1/2,k,l} + \frac{\Delta t}{\Delta y} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j+1/2,k-1/2,l}\right) \right] \\
 E_y|^{n+1}_{j,k+1/2,l} = &amp; e^{-\sigma_x\Delta t} \left[ E_y|^{n}_{j,k+1/2,l} - \frac{\Delta t}{\Delta x}  \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j-1/2,k+1/2,l}\right) \right] \\
 H_{zx}|^{n+3/2}_{j+1/2,k+1/2,l} = &amp; e^{-\sigma^*_x\Delta t} \left[ H_{zx}|^{n}_{j+1/2,k+1/2,l} - \frac{\Delta t}{\Delta x}  \left(E_y|^{n+1}_{j+1,k+1/2,l}-E_y|^{n+1}_{j,k+1/2,l}\right) \right] \\
 H_{zy}|^{n+3/2}_{j+1/2,k+1/2,l} = &amp; e^{-\sigma^*_y\Delta t} \left[ H_{zy}|^{n}_{j+1/2,k+1/2,l} + \frac{\Delta t}{\Delta y}  \left(E_x|^{n+1}_{j+1/2,k+1,l}-E_x|^{n+1}_{j+1/2,k,l}\right) \right] \\
 H_z = &amp; H_{zx}+H_{zy}\end{aligned}\end{split}\]</div>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 E_x|^{n+1}_{j+1/2,k,l} = &amp; E_x|^{n}_{j+1/2,k,l} + \frac{\Delta t}{\Delta y} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j+1/2,k-1/2,l}\right) \\
 E_y|^{n+1}_{j,k+1/2,l} = &amp; E_y|^{n}_{j,k+1/2,l} - \frac{\Delta t}{\Delta x} \left(H_z|^{n+1/2}_{j+1/2,k+1/2,l}-H_z|^{n+1/2}_{j-1/2,k+1/2,l}\right) \\
@@ -376,7 +376,7 @@ H_z = &amp; H_{zx}+H_{zy}\end{aligned}\end{split}\]</div>
 <img alt="[fig:PIC] A first principle simulation of a short driver beam (laser or charged particles) propagating through a plasma that is orders of magnitude longer necessitates a very large number of time steps. Recasting the simulation in a frame of reference that is moving close to the speed of light in the direction of the driver beam leads to simulating a driver beam that appears longer propagating through a plasma that appears shorter than in the laboratory. Thus, this relativistic transformation of space and time reduces the disparity of scales, and thereby the number of time steps to complete the simulation, by orders of magnitude." src="../_images/Boosted_frame.png" />
 <p class="caption"><span class="caption-text">[fig:PIC] A first principle simulation of a short driver beam (laser or charged particles) propagating through a plasma that is orders of magnitude longer necessitates a very large number of time steps. Recasting the simulation in a frame of reference that is moving close to the speed of light in the direction of the driver beam leads to simulating a driver beam that appears longer propagating through a plasma that appears shorter than in the laboratory. Thus, this relativistic transformation of space and time reduces the disparity of scales, and thereby the number of time steps to complete the simulation, by orders of magnitude.</span></p>
 </div>
-<p>Even using a moving window, however, a full PIC simulation of a plasma accelerator can be extraordinarily demanding computationally, as many time steps are needed to resolve the crossing of the short driver beam with the plasma column. As it turns out, choosing an optimal frame of reference that travels close to the speed of light in the direction of the laser or particle beam (as opposed to the usual choice of the laboratory frame) enables speedups by orders of magnitude (Vay 2007; J -L. Vay et al. 2011). This is a result of the properties of Lorentz contraction and dilation of space and time. In the frame of the laboratory, a very short driver (laser or particle) beam propagates through a much longer plasma column, necessitating millions to tens of millions of time steps for parameters in the range of the BELLA or FACET-II experiments. As sketched in Fig. [fig:PIC], in a frame moving with the driver beam in the plasma at velocity <span class="math">\(v=\beta c\)</span> (where <span class="math">\(c\)</span> is the speed of light in vacuum), the beam length is now elongated by <span class="math">\(\approx(1+\beta)\gamma\)</span> while the plasma contracts by <span class="math">\(\gamma\)</span> (where <span class="math">\(\gamma=1/\sqrt{1-\beta^2}\)</span> is the relativistic factor associated with the frame velocity). The number of time steps that is needed to simulate a “longer” beam through a “shorter” plasma is now reduced by up to <span class="math">\(\approx(1+\beta) \gamma^2\)</span> (a detailed derivation of the speedup is given below).</p>
+<p>Even using a moving window, however, a full PIC simulation of a plasma accelerator can be extraordinarily demanding computationally, as many time steps are needed to resolve the crossing of the short driver beam with the plasma column. As it turns out, choosing an optimal frame of reference that travels close to the speed of light in the direction of the laser or particle beam (as opposed to the usual choice of the laboratory frame) enables speedups by orders of magnitude (Vay 2007; J -L. Vay et al. 2011). This is a result of the properties of Lorentz contraction and dilation of space and time. In the frame of the laboratory, a very short driver (laser or particle) beam propagates through a much longer plasma column, necessitating millions to tens of millions of time steps for parameters in the range of the BELLA or FACET-II experiments. As sketched in Fig. [fig:PIC], in a frame moving with the driver beam in the plasma at velocity <span class="math notranslate">\(v=\beta c\)</span> (where <span class="math notranslate">\(c\)</span> is the speed of light in vacuum), the beam length is now elongated by <span class="math notranslate">\(\approx(1+\beta)\gamma\)</span> while the plasma contracts by <span class="math notranslate">\(\gamma\)</span> (where <span class="math notranslate">\(\gamma=1/\sqrt{1-\beta^2}\)</span> is the relativistic factor associated with the frame velocity). The number of time steps that is needed to simulate a “longer” beam through a “shorter” plasma is now reduced by up to <span class="math notranslate">\(\approx(1+\beta) \gamma^2\)</span> (a detailed derivation of the speedup is given below).</p>
 <p>The modeling of a plasma acceleration stage in a boosted frame
 involves the fully electromagnetic modeling of a plasma propagating at near the speed of light, for which Numerical Cerenkov
 (Boris and Lee 1973; Haber et al. 1973) is a potential issue, as explained in more details below.
@@ -396,22 +396,22 @@ comparison between explicit codes which include both forward and backward waves 
 <h2>Theoretical speedup dependency with the frame boost<a class="headerlink" href="#theoretical-speedup-dependency-with-the-frame-boost" title="Permalink to this headline">¶</a></h2>
 <p>The derivation that is given here reproduces the one given in (J -L. Vay et al. 2011), where the obtainable speedup is derived as an extension of the formula that was derived earlier(Vay 2007), taking in addition into account the group velocity of the laser as it traverses the plasma.</p>
 <p>Assuming that the simulation box is a fixed number of plasma periods long, which implies the use (which is standard) of a moving window following
-the wake and accelerated beam, the speedup is given by the ratio of the time taken by the laser pulse and the plasma to cross each other, divided by the shortest time scale of interest, that is the laser period. To first order, the wake velocity <span class="math">\(v_w\)</span> is set by the 1D group velocity of the laser driver, which in the linear (low intensity) limit, is given by (Esarey, Schroeder, and Leemans 2009):</p>
-<div class="math">
+the wake and accelerated beam, the speedup is given by the ratio of the time taken by the laser pulse and the plasma to cross each other, divided by the shortest time scale of interest, that is the laser period. To first order, the wake velocity <span class="math notranslate">\(v_w\)</span> is set by the 1D group velocity of the laser driver, which in the linear (low intensity) limit, is given by (Esarey, Schroeder, and Leemans 2009):</p>
+<div class="math notranslate">
 \[v_w/c=\beta_w=\left(1-\frac{\omega_p^2}{\omega^2}\right)^{1/2}\]</div>
-<p>where <span class="math">\(\omega_p=\sqrt{(n_e e^2)/(\epsilon_0 m_e)}\)</span> is the plasma frequency, <span class="math">\(\omega=2\pi c/\lambda\)</span> is the laser frequency, <span class="math">\(n_e\)</span> is the plasma density, <span class="math">\(\lambda\)</span> is the laser wavelength in vacuum, <span class="math">\(\epsilon_0\)</span> is the permittivity of vacuum, <span class="math">\(c\)</span> is the speed of light in vacuum, and <span class="math">\(e\)</span> and <span class="math">\(m_e\)</span> are respectively the charge and mass of the electron.</p>
+<p>where <span class="math notranslate">\(\omega_p=\sqrt{(n_e e^2)/(\epsilon_0 m_e)}\)</span> is the plasma frequency, <span class="math notranslate">\(\omega=2\pi c/\lambda\)</span> is the laser frequency, <span class="math notranslate">\(n_e\)</span> is the plasma density, <span class="math notranslate">\(\lambda\)</span> is the laser wavelength in vacuum, <span class="math notranslate">\(\epsilon_0\)</span> is the permittivity of vacuum, <span class="math notranslate">\(c\)</span> is the speed of light in vacuum, and <span class="math notranslate">\(e\)</span> and <span class="math notranslate">\(m_e\)</span> are respectively the charge and mass of the electron.</p>
 <p>In practice, the runs are typically stopped when the last electron beam macro-particle exits the plasma, and a measure of the total time of the simulation is then given by</p>
-<div class="math">
+<div class="math notranslate">
 \[T=\frac{L+\eta \lambda_p}{v_w-v_p}\]</div>
-<p>where <span class="math">\(\lambda_p\approx 2\pi c/\omega_p\)</span> is the wake wavelength, <span class="math">\(L\)</span> is the plasma length, <span class="math">\(v_w\)</span> and <span class="math">\(v_p=\beta_p c\)</span> are respectively the velocity of the wake and of the plasma relative to the frame of reference, and <span class="math">\(\eta\)</span> is an adjustable parameter for taking into account the fraction of the wake which exited the plasma at the end of the simulation.
-For a beam injected into the <span class="math">\(n^{th}\)</span> bucket, <span class="math">\(\eta\)</span> would be set to <span class="math">\(n-1/2\)</span>. If positrons were considered, they would be injected half a wake period ahead of the location of the electrons injection position for a given period, and one would have <span class="math">\(\eta=n-1\)</span>. The numerical cost <span class="math">\(R_t\)</span> scales as the ratio of the total time to the shortest timescale of interest, which is the inverse of the laser frequency, and is thus given by</p>
-<div class="math">
+<p>where <span class="math notranslate">\(\lambda_p\approx 2\pi c/\omega_p\)</span> is the wake wavelength, <span class="math notranslate">\(L\)</span> is the plasma length, <span class="math notranslate">\(v_w\)</span> and <span class="math notranslate">\(v_p=\beta_p c\)</span> are respectively the velocity of the wake and of the plasma relative to the frame of reference, and <span class="math notranslate">\(\eta\)</span> is an adjustable parameter for taking into account the fraction of the wake which exited the plasma at the end of the simulation.
+For a beam injected into the <span class="math notranslate">\(n^{th}\)</span> bucket, <span class="math notranslate">\(\eta\)</span> would be set to <span class="math notranslate">\(n-1/2\)</span>. If positrons were considered, they would be injected half a wake period ahead of the location of the electrons injection position for a given period, and one would have <span class="math notranslate">\(\eta=n-1\)</span>. The numerical cost <span class="math notranslate">\(R_t\)</span> scales as the ratio of the total time to the shortest timescale of interest, which is the inverse of the laser frequency, and is thus given by</p>
+<div class="math notranslate">
 \[R_t=\frac{T c}{\lambda}=\frac{\left(L+\eta \lambda_p\right)}{\left(\beta_w-\beta_p\right) \lambda}\]</div>
-<p>In the laboratory, <span class="math">\(v_p=0\)</span> and the expression simplifies to</p>
-<div class="math">
+<p>In the laboratory, <span class="math notranslate">\(v_p=0\)</span> and the expression simplifies to</p>
+<div class="math notranslate">
 \[R_{lab}=\frac{T c}{\lambda}=\frac{\left(L+\eta \lambda_p\right)}{\beta_w \lambda}\]</div>
-<p>In a frame moving at <span class="math">\(\beta c\)</span>, the quantities become</p>
-<div class="math">
+<p>In a frame moving at <span class="math notranslate">\(\beta c\)</span>, the quantities become</p>
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 \lambda_p^*&amp;=&amp;\lambda_p/\left[\gamma \left(1-\beta_w \beta\right)\right] \\
 L^*&amp;=&amp;L/\gamma \\
@@ -420,31 +420,31 @@ L^*&amp;=&amp;L/\gamma \\
 v_p^*&amp;=&amp;-\beta c \\
 T^*&amp;=&amp;\frac{L^*+\eta \lambda_p^*}{v_w^*-v_p^*} \\
 R_t^*&amp;=&amp;\frac{T^* c}{\lambda^*} = \frac{\left(L^*+\eta \lambda_p^*\right)}{\left(\beta_w^*+\beta\right) \lambda^*}\end{aligned}\end{split}\]</div>
-<p>where <span class="math">\(\gamma=1/\sqrt{1-\beta^2}\)</span>.</p>
-<p>The expected speedup from performing the simulation in a boosted frame is given by the ratio of <span class="math">\(R_{lab}\)</span> and <span class="math">\(R_t^*\)</span></p>
-<div class="math">
+<p>where <span class="math notranslate">\(\gamma=1/\sqrt{1-\beta^2}\)</span>.</p>
+<p>The expected speedup from performing the simulation in a boosted frame is given by the ratio of <span class="math notranslate">\(R_{lab}\)</span> and <span class="math notranslate">\(R_t^*\)</span></p>
+<div class="math notranslate">
 \[S=\frac{R_{lab}}{R_t^*}=\frac{\left(1+\beta\right)\left(L+\eta \lambda_p\right)}{\left(1-\beta\beta_w\right)L+\eta \lambda_p}
 \label{Eq_scaling1d0}\]</div>
-<p>We note that assuming that <span class="math">\(\beta_w\approx1\)</span> (which is a valid approximation for most practical cases of interest) and that <span class="math">\(\gamma&lt;&lt;\gamma_w\)</span>, this expression is consistent with the expression derived earlier (Vay 2007) for the laser-plasma acceleration case, which states that <span class="math">\(R_t^*=\alpha R_t/\left(1+\beta\right)\)</span> with <span class="math">\(\alpha=\left(1-\beta+l/L\right)/\left(1+l/L\right)\)</span>, where <span class="math">\(l\)</span> is the laser length which is generally proportional to <span class="math">\(\eta \lambda_p\)</span>, and <span class="math">\(S=R_t/R_T^*\)</span>. However, higher values of <span class="math">\(\gamma\)</span> are of interest for maximum speedup, as shown below.</p>
-<p>For intense lasers (<span class="math">\(a\sim 1\)</span>) typically used for acceleration, the energy gain is limited by dephasing (Schroeder et al. 2011), which occurs over a scale length <span class="math">\(L_d \sim \lambda_p^3/2\lambda^2\)</span>.
-Acceleration is compromised beyond <span class="math">\(L_d\)</span> and in practice, the plasma length is proportional to the dephasing length, i.e. <span class="math">\(L= \xi L_d\)</span>. In most cases, <span class="math">\(\gamma_w^2&gt;&gt;1\)</span>, which allows the approximations <span class="math">\(\beta_w\approx1-\lambda^2/2\lambda_p^2\)</span>, and <span class="math">\(L=\xi \lambda_p^3/2\lambda^2\approx \xi \gamma_w^2 \lambda_p/2&gt;&gt;\eta \lambda_p\)</span>, so that Eq.([Eq_scaling1d0]) becomes</p>
-<div class="math">
+<p>We note that assuming that <span class="math notranslate">\(\beta_w\approx1\)</span> (which is a valid approximation for most practical cases of interest) and that <span class="math notranslate">\(\gamma&lt;&lt;\gamma_w\)</span>, this expression is consistent with the expression derived earlier (Vay 2007) for the laser-plasma acceleration case, which states that <span class="math notranslate">\(R_t^*=\alpha R_t/\left(1+\beta\right)\)</span> with <span class="math notranslate">\(\alpha=\left(1-\beta+l/L\right)/\left(1+l/L\right)\)</span>, where <span class="math notranslate">\(l\)</span> is the laser length which is generally proportional to <span class="math notranslate">\(\eta \lambda_p\)</span>, and <span class="math notranslate">\(S=R_t/R_T^*\)</span>. However, higher values of <span class="math notranslate">\(\gamma\)</span> are of interest for maximum speedup, as shown below.</p>
+<p>For intense lasers (<span class="math notranslate">\(a\sim 1\)</span>) typically used for acceleration, the energy gain is limited by dephasing (Schroeder et al. 2011), which occurs over a scale length <span class="math notranslate">\(L_d \sim \lambda_p^3/2\lambda^2\)</span>.
+Acceleration is compromised beyond <span class="math notranslate">\(L_d\)</span> and in practice, the plasma length is proportional to the dephasing length, i.e. <span class="math notranslate">\(L= \xi L_d\)</span>. In most cases, <span class="math notranslate">\(\gamma_w^2&gt;&gt;1\)</span>, which allows the approximations <span class="math notranslate">\(\beta_w\approx1-\lambda^2/2\lambda_p^2\)</span>, and <span class="math notranslate">\(L=\xi \lambda_p^3/2\lambda^2\approx \xi \gamma_w^2 \lambda_p/2&gt;&gt;\eta \lambda_p\)</span>, so that Eq.([Eq_scaling1d0]) becomes</p>
+<div class="math notranslate">
 \[S=\left(1+\beta\right)^2\gamma^2\frac{\xi\gamma_w^2}{\xi\gamma_w^2+\left(1+\beta\right)\gamma^2\left(\xi\beta/2+2\eta\right)}
 \label{Eq_scaling1d}\]</div>
-<p>For low values of <span class="math">\(\gamma\)</span>, i.e. when <span class="math">\(\gamma&lt;&lt;\gamma_w\)</span>, Eq.([Eq_scaling1d]) reduces to</p>
-<div class="math">
+<p>For low values of <span class="math notranslate">\(\gamma\)</span>, i.e. when <span class="math notranslate">\(\gamma&lt;&lt;\gamma_w\)</span>, Eq.([Eq_scaling1d]) reduces to</p>
+<div class="math notranslate">
 \[S_{\gamma&lt;&lt;\gamma_w}=\left(1+\beta\right)^2\gamma^2
 \label{Eq_scaling1d_simpl2}\]</div>
-<p>Conversely, if <span class="math">\(\gamma\rightarrow\infty\)</span>, Eq.([Eq_scaling1d]) becomes</p>
-<div class="math">
+<p>Conversely, if <span class="math notranslate">\(\gamma\rightarrow\infty\)</span>, Eq.([Eq_scaling1d]) becomes</p>
+<div class="math notranslate">
 \[S_{\gamma\rightarrow\infty}=\frac{4}{1+4\eta/\xi}\gamma_w^2
 \label{Eq_scaling_gamma_inf}\]</div>
-<p>Finally, in the frame of the wake, i.e. when <span class="math">\(\gamma=\gamma_w\)</span>, assuming that <span class="math">\(\beta_w\approx1\)</span>, Eq.([Eq_scaling1d]) gives</p>
-<div class="math">
+<p>Finally, in the frame of the wake, i.e. when <span class="math notranslate">\(\gamma=\gamma_w\)</span>, assuming that <span class="math notranslate">\(\beta_w\approx1\)</span>, Eq.([Eq_scaling1d]) gives</p>
+<div class="math notranslate">
 \[S_{\gamma=\gamma_w}\approx\frac{2}{1+2\eta/\xi}\gamma_w^2
 \label{Eq_scaling_gamma_wake}\]</div>
-<p>Since <span class="math">\(\eta\)</span> and <span class="math">\(\xi\)</span> are of order unity, and the practical regimes of most interest satisfy <span class="math">\(\gamma_w^2&gt;&gt;1\)</span>, the speedup that is obtained by using the frame of the wake will be near the maximum obtainable value given by Eq.([Eq_scaling_gamma_inf]).</p>
-<p>Note that without the use of a moving window, the relativistic effects that are at play in the time domain would also be at play in the spatial domain (Vay 2007), and the <span class="math">\(\gamma^2\)</span> scaling would transform to <span class="math">\(\gamma^4\)</span>. Hence, it is important to use a moving window even in simulations in a Lorentz boosted frame. For very high values of the boosted frame, the optimal velocity of the moving window may vanish (i.e. no moving window) or even reverse.</p>
+<p>Since <span class="math notranslate">\(\eta\)</span> and <span class="math notranslate">\(\xi\)</span> are of order unity, and the practical regimes of most interest satisfy <span class="math notranslate">\(\gamma_w^2&gt;&gt;1\)</span>, the speedup that is obtained by using the frame of the wake will be near the maximum obtainable value given by Eq.([Eq_scaling_gamma_inf]).</p>
+<p>Note that without the use of a moving window, the relativistic effects that are at play in the time domain would also be at play in the spatial domain (Vay 2007), and the <span class="math notranslate">\(\gamma^2\)</span> scaling would transform to <span class="math notranslate">\(\gamma^4\)</span>. Hence, it is important to use a moving window even in simulations in a Lorentz boosted frame. For very high values of the boosted frame, the optimal velocity of the moving window may vanish (i.e. no moving window) or even reverse.</p>
 </div>
 <div class="section" id="numerical-stability-and-alternate-formulation-in-a-galilean-frame">
 <h2>Numerical Stability and alternate formulation in a Galilean frame<a class="headerlink" href="#numerical-stability-and-alternate-formulation-in-a-galilean-frame" title="Permalink to this headline">¶</a></h2>
@@ -473,12 +473,12 @@ applying a wide-band smoothing of the current components (Vay et al. 2010; J L V
 involve scaling the deposited
 currents by a carefully-designed wavenumber-dependent factor
 (Godfrey and Vay 2014; Brendan B. Godfrey, Vay, and Haber 2014b) or slightly modifying the
-ratio of electric and magnetic fields (<span class="math">\(E/B\)</span>) before gathering their
+ratio of electric and magnetic fields (<span class="math notranslate">\(E/B\)</span>) before gathering their
 value onto the macroparticles
 (Brendan B. Godfrey, Vay, and Haber 2014a; Godfrey and Vay 2015).
 Yet another set of NCI-specific corrections
 (Yu, Xu, Decyk, et al. 2015; Yu, Xu, Tableman, et al. 2015) consists
-in combining a small timestep <span class="math">\(\Delta t\)</span>, a sharp low-pass spatial filter,
+in combining a small timestep <span class="math notranslate">\(\Delta t\)</span>, a sharp low-pass spatial filter,
 and a spectral or high-order scheme that is tuned so as to
 create a small, artificial “bump” in the dispersion relation
 (Yu, Xu, Decyk, et al. 2015). While most mitigation methods have only been applied
@@ -501,18 +501,18 @@ analytically, using only natural hypotheses, within the PSATD
 framework (Pseudo-Spectral-Analytical-Time-Domain (Haber et al. 1973; Vay, Haber, and Godfrey 2013)).</p>
 <p>The idea of the proposed scheme is to perform a Galilean change of
 coordinates, and to carry out the simulation in the new coordinates:</p>
-<div class="math">
+<div class="math notranslate">
 \[\label{eq:change-var}
 {\boldsymbol{x}}' = {\boldsymbol{x}} - {{\boldsymbol{v}}_{gal}}t\]</div>
-<p>where <span class="math">\({\boldsymbol{x}} = x\,{\boldsymbol{u}}_x + y\,{\boldsymbol{u}}_y + z\,{\boldsymbol{u}}_z\)</span> and
-<span class="math">\({\boldsymbol{x}}' = x'\,{\boldsymbol{u}}_x + y'\,{\boldsymbol{u}}_y + z'\,{\boldsymbol{u}}_z\)</span> are the
+<p>where <span class="math notranslate">\({\boldsymbol{x}} = x\,{\boldsymbol{u}}_x + y\,{\boldsymbol{u}}_y + z\,{\boldsymbol{u}}_z\)</span> and
+<span class="math notranslate">\({\boldsymbol{x}}' = x'\,{\boldsymbol{u}}_x + y'\,{\boldsymbol{u}}_y + z'\,{\boldsymbol{u}}_z\)</span> are the
 position vectors in the standard and Galilean coordinates
 respectively.</p>
-<p>When choosing <span class="math">\({{\boldsymbol{v}}_{gal}}= {\boldsymbol{v}}_0\)</span>, where
-<span class="math">\({\boldsymbol{v}}_0\)</span> is the speed of the bulk of the relativistic
+<p>When choosing <span class="math notranslate">\({{\boldsymbol{v}}_{gal}}= {\boldsymbol{v}}_0\)</span>, where
+<span class="math notranslate">\({\boldsymbol{v}}_0\)</span> is the speed of the bulk of the relativistic
 plasma, the plasma does not move with respect to the grid in the Galilean
-coordinates <span class="math">\({\boldsymbol{x}}'\)</span> – or, equivalently, in the standard
-coordinates <span class="math">\({\boldsymbol{x}}\)</span>, the grid moves along with the plasma. The heuristic intuition behind this scheme
+coordinates <span class="math notranslate">\({\boldsymbol{x}}'\)</span> – or, equivalently, in the standard
+coordinates <span class="math notranslate">\({\boldsymbol{x}}\)</span>, the grid moves along with the plasma. The heuristic intuition behind this scheme
 is that these coordinates should prevent the discrepancy between the Lagrangian and
 Eulerian point of view, which gives rise to the NCI (Godfrey 1975).</p>
 <p>An important remark is that the Galilean change of
@@ -527,23 +527,23 @@ moving window, gridpoints are added and removed so as to effectively
 translate the boundaries, in the Galilean scheme the gridpoints
 <em>themselves</em> are not only translated but in this case, the physical equations
 are modified accordingly. Most importantly, the assumed time evolution of
-the current <span class="math">\({\boldsymbol{J}}\)</span> within one timestep is different in a standard PSATD scheme with moving
+the current <span class="math notranslate">\({\boldsymbol{J}}\)</span> within one timestep is different in a standard PSATD scheme with moving
 window and in a Galilean PSATD scheme (Lehe et al. 2016).</p>
-<p>In the Galilean coordinates <span class="math">\({\boldsymbol{x}}'\)</span>, the equations of particle
+<p>In the Galilean coordinates <span class="math notranslate">\({\boldsymbol{x}}'\)</span>, the equations of particle
 motion and the Maxwell equations take the form</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 \frac{d{\boldsymbol{x}}'}{dt} &amp;= \frac{{\boldsymbol{p}}}{\gamma m} - {{\boldsymbol{v}}_{gal}}\label{eq:motion1} \\
 \frac{d{\boldsymbol{p}}}{dt} &amp;= q \left( {\boldsymbol{E}} +
 \frac{{\boldsymbol{p}}}{\gamma m} \times {\boldsymbol{B}} \right) \label{eq:motion2}\\
 \left( { \frac{\partial \;}{\partial t}} - {{\boldsymbol{v}}_{gal}}\cdot{{\boldsymbol{\nabla'}}}\right){\boldsymbol{B}} &amp;= -{{\boldsymbol{\nabla'}}}\times{\boldsymbol{E}} \label{eq:maxwell1}\\
 \frac{1}{c^2}\left( { \frac{\partial \;}{\partial t}} - {{\boldsymbol{v}}_{gal}}\cdot{{\boldsymbol{\nabla'}}}\right){\boldsymbol{E}} &amp;= {{\boldsymbol{\nabla'}}}\times{\boldsymbol{B}} - \mu_0{\boldsymbol{J}} \label{eq:maxwell2}\end{aligned}\end{split}\]</div>
-<p>where <span class="math">\({{\boldsymbol{\nabla'}}}\)</span> denotes a spatial derivative with respect to the
-Galilean coordinates <span class="math">\({\boldsymbol{x}}'\)</span>.</p>
-<p>Integrating these equations from <span class="math">\(t=n\Delta
-t\)</span> to <span class="math">\(t=(n+1)\Delta t\)</span> results in the following update equations (see
+<p>where <span class="math notranslate">\({{\boldsymbol{\nabla'}}}\)</span> denotes a spatial derivative with respect to the
+Galilean coordinates <span class="math notranslate">\({\boldsymbol{x}}'\)</span>.</p>
+<p>Integrating these equations from <span class="math notranslate">\(t=n\Delta
+t\)</span> to <span class="math notranslate">\(t=(n+1)\Delta t\)</span> results in the following update equations (see
 (Lehe et al. 2016) for the details of the derivation):</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 {\mathbf{\tilde{B}}}^{n+1} &amp;= \theta^2 C {\mathbf{\tilde{B}}}^n
  -\frac{\theta^2 S}{ck}i{\boldsymbol{k}}\times {\mathbf{\tilde{E}}}^n \nonumber \\
@@ -554,10 +554,10 @@ t\)</span> to <span class="math">\(t=(n+1)\Delta t\)</span> results in the follo
 &amp; +\frac{i\nu \theta \chi_1 - \theta^2S}{\epsilon_0 ck} \; {\mathbf{\tilde{J}}}^{n+1/2}\nonumber \\
 &amp; - \frac{1}{\epsilon_0k^2}\left(\; \chi_2\;{\hat{\mathcal{\rho}}}^{n+1} -
   \theta^2\chi_3\;{\hat{\mathcal{\rho}}}^{n} \;\right) i{\boldsymbol{k}} \label{eq:disc-maxwell2}\end{aligned}\end{split}\]</div>
-<p>where we used the short-hand notations <span class="math">\({\mathbf{\tilde{E}}}^n \equiv
-{\mathbf{\tilde{E}}}({\boldsymbol{k}}, n\Delta t)\)</span>, <span class="math">\({\mathbf{\tilde{B}}}^n \equiv
+<p>where we used the short-hand notations <span class="math notranslate">\({\mathbf{\tilde{E}}}^n \equiv
+{\mathbf{\tilde{E}}}({\boldsymbol{k}}, n\Delta t)\)</span>, <span class="math notranslate">\({\mathbf{\tilde{B}}}^n \equiv
 {\mathbf{\tilde{B}}}({\boldsymbol{k}}, n\Delta t)\)</span> as well as:</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 &amp;C = \cos(ck\Delta t) \quad S = \sin(ck\Delta t) \quad k
 = |{\boldsymbol{k}}| \label{eq:def-C-S}\\&amp;
@@ -568,7 +568,7 @@ t\)</span> to <span class="math">\(t=(n+1)\Delta t\)</span> results in the follo
   \nu \theta S \right) \label{eq:def-chi1}\\&amp;
 \chi_2 = \frac{\chi_1 - \theta(1-C)}{\theta^*-\theta} \quad
 \chi_3 = \frac{\chi_1-\theta^*(1-C)}{\theta^*-\theta} \label{eq:def-chi23}\end{aligned}\end{split}\]</div>
-<p>Note that, in the limit <span class="math">\({{\boldsymbol{v}}_{gal}}={\boldsymbol{0}}\)</span>,
+<p>Note that, in the limit <span class="math notranslate">\({{\boldsymbol{v}}_{gal}}={\boldsymbol{0}}\)</span>,
 ([eq:disc-maxwell1]) and ([eq:disc-maxwell2]) reduce to the standard PSATD
 equations (Haber et al. 1973), as expected.
 As shown in (Kirchen et al. 2016; Lehe et al. 2016),
@@ -593,10 +593,10 @@ frame. This section describes the procedures that have been implemented in the P
 <h3>Input in a boosted frame simulation<a class="headerlink" href="#input-in-a-boosted-frame-simulation" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="particles">
 <h4>Particles -<a class="headerlink" href="#particles" title="Permalink to this headline">¶</a></h4>
-<p>Particles are launched through a plane using a technique that is generic and applies to Lorentz boosted frame simulations in general, including plasma acceleration, and is illustrated using the case of a positively charged particle beam propagating through a background of cold electrons in an assumed continuous transverse focusing system, leading to a well-known growing transverse “electron cloud” instability (Vay 2007). In the laboratory frame, the electron background is initially at rest and a moving window is used to follow the beam progression. Traditionally, the beam macroparticles are initialized all at once in the window, while background electron macroparticles are created continuously in front of the beam on a plane that is perpendicular to the beam velocity. In a frame moving at some fraction of the beam velocity in the laboratory frame, the beam initial conditions at a given time in the calculation frame are generally unknown and one must initialize the beam differently. However, it can be taken advantage of the fact that the beam initial conditions are often known for a given plane in the laboratory, either directly, or via simple calculation or projection from the conditions at a given time in the labortory frame. Given the position and velocity <span class="math">\(\{x,y,z,v_x,v_y,v_z\}\)</span> for each beam macroparticle at time <span class="math">\(t=0\)</span> for a beam moving at the average velocity <span class="math">\(v_b=\beta_b c\)</span> (where <span class="math">\(c\)</span> is the speed of light) in the laboratory, and using the standard synchronization (<span class="math">\(z=z'=0\)</span> at <span class="math">\(t=t'=0\)</span>) between the laboratory and the calculation frames, the procedure for transforming the beam quantities for injection in a boosted frame moving at velocity <span class="math">\(\beta c\)</span> in the laboratory is as follows (the superscript <span class="math">\('\)</span> relates to quantities known in the boosted frame while the superscript <span class="math">\(^*\)</span> relates to quantities that are know at a given longitudinal position <span class="math">\(z^*\)</span> but different times of arrival):</p>
+<p>Particles are launched through a plane using a technique that is generic and applies to Lorentz boosted frame simulations in general, including plasma acceleration, and is illustrated using the case of a positively charged particle beam propagating through a background of cold electrons in an assumed continuous transverse focusing system, leading to a well-known growing transverse “electron cloud” instability (Vay 2007). In the laboratory frame, the electron background is initially at rest and a moving window is used to follow the beam progression. Traditionally, the beam macroparticles are initialized all at once in the window, while background electron macroparticles are created continuously in front of the beam on a plane that is perpendicular to the beam velocity. In a frame moving at some fraction of the beam velocity in the laboratory frame, the beam initial conditions at a given time in the calculation frame are generally unknown and one must initialize the beam differently. However, it can be taken advantage of the fact that the beam initial conditions are often known for a given plane in the laboratory, either directly, or via simple calculation or projection from the conditions at a given time in the labortory frame. Given the position and velocity <span class="math notranslate">\(\{x,y,z,v_x,v_y,v_z\}\)</span> for each beam macroparticle at time <span class="math notranslate">\(t=0\)</span> for a beam moving at the average velocity <span class="math notranslate">\(v_b=\beta_b c\)</span> (where <span class="math notranslate">\(c\)</span> is the speed of light) in the laboratory, and using the standard synchronization (<span class="math notranslate">\(z=z'=0\)</span> at <span class="math notranslate">\(t=t'=0\)</span>) between the laboratory and the calculation frames, the procedure for transforming the beam quantities for injection in a boosted frame moving at velocity <span class="math notranslate">\(\beta c\)</span> in the laboratory is as follows (the superscript <span class="math notranslate">\('\)</span> relates to quantities known in the boosted frame while the superscript <span class="math notranslate">\(^*\)</span> relates to quantities that are know at a given longitudinal position <span class="math notranslate">\(z^*\)</span> but different times of arrival):</p>
 <ol class="arabic">
-<li><p class="first">project positions at <span class="math">\(z^*=0\)</span> assuming ballistic propagation</p>
-<div class="math">
+<li><p class="first">project positions at <span class="math notranslate">\(z^*=0\)</span> assuming ballistic propagation</p>
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
     t^* &amp;=&amp; \left(z-\bar{z}\right)/v_z \label{Eq:t*}\\
     x^* &amp;=&amp; x-v_x t^* \label{Eq:x*}\\
@@ -605,7 +605,7 @@ frame. This section describes the procedures that have been implemented in the P
 <p>the velocity components being left unchanged,</p>
 </li>
 <li><p class="first">apply Lorentz transformation from laboratory frame to boosted frame</p>
-<div class="math">
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
     t'^* &amp;=&amp; -\gamma t^* \label{Eq:tp*}\\
     x'^* &amp;=&amp; x^* \label{Eq:xp*}\\
@@ -614,42 +614,42 @@ frame. This section describes the procedures that have been implemented in the P
     v'^*_x&amp;=&amp;\frac{v_x^*}{\gamma\left(1-\beta \beta_b\right)} \label{Eq:vxp*}\\
     v'^*_y&amp;=&amp;\frac{v_y^*}{\gamma\left(1-\beta \beta_b\right)} \label{Eq:vyp*}\\
     v'^*_z&amp;=&amp;\frac{v_z^*-\beta c}{1-\beta \beta_b} \label{Eq:vzp*}\end{aligned}\end{split}\]</div>
-<p>where <span class="math">\(\gamma=1/\sqrt{1-\beta^2}\)</span>. With the knowledge of the time at which each beam macroparticle crosses the plane into consideration, one can inject each beam macroparticle in the simulation at the appropriate location and time.</p>
+<p>where <span class="math notranslate">\(\gamma=1/\sqrt{1-\beta^2}\)</span>. With the knowledge of the time at which each beam macroparticle crosses the plane into consideration, one can inject each beam macroparticle in the simulation at the appropriate location and time.</p>
 </li>
-<li><p class="first">synchronize macroparticles in boosted frame, obtaining their positions at a fixed <span class="math">\(t'=0\)</span> (before any particle is injected)</p>
-<div class="math">
+<li><p class="first">synchronize macroparticles in boosted frame, obtaining their positions at a fixed <span class="math notranslate">\(t'=0\)</span> (before any particle is injected)</p>
+<div class="math notranslate">
 \[\begin{aligned}
     z' &amp;=&amp; z'^*-\bar{v}'^*_z t'^* \label{Eq:zp}\end{aligned}\]</div>
-<p>This additional step is needed for setting the electrostatic or electromagnetic fields at the plane of injection. In a Particle-In-Cell code, the three-dimensional fields are calculated by solving the Maxwell equations (or static approximation like Poisson, Darwin or other (Vay 2008)) on a grid on which the source term is obtained from the macroparticles distribution. This requires generation of a three-dimensional representation of the beam distribution of macroparticles at a given time before they cross the injection plane at <span class="math">\(z'^*\)</span>. This is accomplished by expanding the beam distribution longitudinally such that all macroparticles (so far known at different times of arrival at the injection plane) are synchronized to the same time in the boosted frame. To keep the beam shape constant, the particles are “frozen” until they cross that plane: the three velocity components and the two position components perpendicular to the boosted frame velocity are kept constant, while the remaining position component is advanced at the average beam velocity. As particles cross the plane of injection, they become regular “active” particles with full 6-D dynamics.</p>
+<p>This additional step is needed for setting the electrostatic or electromagnetic fields at the plane of injection. In a Particle-In-Cell code, the three-dimensional fields are calculated by solving the Maxwell equations (or static approximation like Poisson, Darwin or other (Vay 2008)) on a grid on which the source term is obtained from the macroparticles distribution. This requires generation of a three-dimensional representation of the beam distribution of macroparticles at a given time before they cross the injection plane at <span class="math notranslate">\(z'^*\)</span>. This is accomplished by expanding the beam distribution longitudinally such that all macroparticles (so far known at different times of arrival at the injection plane) are synchronized to the same time in the boosted frame. To keep the beam shape constant, the particles are “frozen” until they cross that plane: the three velocity components and the two position components perpendicular to the boosted frame velocity are kept constant, while the remaining position component is advanced at the average beam velocity. As particles cross the plane of injection, they become regular “active” particles with full 6-D dynamics.</p>
 </li>
 </ol>
 <p>Figure [Fig_inputoutput] (top) shows a snapshot of a beam that has passed partly through the injection plane. As the frozen beam macroparticles pass through the injection plane (which moves opposite to the beam in the boosted frame), they are converted to “active” macroparticles. The charge or current density is accumulated from the active and the frozen particles, thus ensuring that the fields at the plane of injection are consistent.</p>
 </div>
 <div class="section" id="laser">
 <h4>Laser -<a class="headerlink" href="#laser" title="Permalink to this headline">¶</a></h4>
-<p>Similarly to the particle beam, the laser is injected through a plane perpendicular to the axis of propagation of the laser (by default <span class="math">\(z\)</span>).
-The electric field <span class="math">\(E_\perp\)</span> that is to be emitted is given by the formula</p>
-<div class="math">
+<p>Similarly to the particle beam, the laser is injected through a plane perpendicular to the axis of propagation of the laser (by default <span class="math notranslate">\(z\)</span>).
+The electric field <span class="math notranslate">\(E_\perp\)</span> that is to be emitted is given by the formula</p>
+<div class="math notranslate">
 \[E_\perp\left(x,y,t\right)=E_0 f\left(x,y,t\right) \sin\left[\omega t+\phi\left(x,y,\omega\right)\right]\]</div>
-<p>where <span class="math">\(E_0\)</span> is the amplitude of the laser electric field, <span class="math">\(f\left(x,y,t\right)\)</span> is the laser envelope, <span class="math">\(\omega\)</span> is the laser frequency, <span class="math">\(\phi\left(x,y,\omega\right)\)</span> is a phase function to account for focusing, defocusing or injection at an angle, and <span class="math">\(t\)</span> is time. By default, the laser envelope is a three-dimensional gaussian of the form</p>
-<div class="math">
+<p>where <span class="math notranslate">\(E_0\)</span> is the amplitude of the laser electric field, <span class="math notranslate">\(f\left(x,y,t\right)\)</span> is the laser envelope, <span class="math notranslate">\(\omega\)</span> is the laser frequency, <span class="math notranslate">\(\phi\left(x,y,\omega\right)\)</span> is a phase function to account for focusing, defocusing or injection at an angle, and <span class="math notranslate">\(t\)</span> is time. By default, the laser envelope is a three-dimensional gaussian of the form</p>
+<div class="math notranslate">
 \[f\left(x,y,t\right)=e^{-\left(x^2/2 \sigma_x^2+y^2/2 \sigma_y^2+c^2t^2/2 \sigma_z^2\right)}\]</div>
-<p>where <span class="math">\(\sigma_x\)</span>, <span class="math">\(\sigma_y\)</span> and <span class="math">\(\sigma_z\)</span> are the dimensions of the laser pulse; or it can be defined arbitrarily by the user at runtime.
-If <span class="math">\(\phi\left(x,y,\omega\right)=0\)</span>, the laser is injected at a waist and parallel to the axis <span class="math">\(z\)</span>.</p>
-<p>If, for convenience, the injection plane is moving at constant velocity <span class="math">\(\beta_s c\)</span>, the formula is modified to take the Doppler effect on frequency and amplitude into account and becomes</p>
-<div class="math">
+<p>where <span class="math notranslate">\(\sigma_x\)</span>, <span class="math notranslate">\(\sigma_y\)</span> and <span class="math notranslate">\(\sigma_z\)</span> are the dimensions of the laser pulse; or it can be defined arbitrarily by the user at runtime.
+If <span class="math notranslate">\(\phi\left(x,y,\omega\right)=0\)</span>, the laser is injected at a waist and parallel to the axis <span class="math notranslate">\(z\)</span>.</p>
+<p>If, for convenience, the injection plane is moving at constant velocity <span class="math notranslate">\(\beta_s c\)</span>, the formula is modified to take the Doppler effect on frequency and amplitude into account and becomes</p>
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 E_\perp\left(x,y,t\right)&amp;=&amp;\left(1-\beta_s\right)E_0 f\left(x,y,t\right)\nonumber \\
 &amp;\times&amp; \sin\left[\left(1-\beta_s\right)\omega t+\phi\left(x,y,\omega\right)\right].\end{aligned}\end{split}\]</div>
-<p>The injection of a laser of frequency <span class="math">\(\omega\)</span> is considered for a simulation using a boosted frame moving at <span class="math">\(\beta c\)</span> with respect to the laboratory. Assuming that the laser is injected at a plane that is fixed in the laboratory, and thus moving at <span class="math">\(\beta_s=-\beta\)</span> in the boosted frame, the injection in the boosted frame is given by</p>
-<div class="math">
+<p>The injection of a laser of frequency <span class="math notranslate">\(\omega\)</span> is considered for a simulation using a boosted frame moving at <span class="math notranslate">\(\beta c\)</span> with respect to the laboratory. Assuming that the laser is injected at a plane that is fixed in the laboratory, and thus moving at <span class="math notranslate">\(\beta_s=-\beta\)</span> in the boosted frame, the injection in the boosted frame is given by</p>
+<div class="math notranslate">
 \[\begin{split}\begin{aligned}
 E_\perp\left(x',y',t'\right)&amp;=&amp;\left(1-\beta_s\right)E'_0 f\left(x',y',t'\right)\nonumber \\
 &amp;\times&amp;\sin\left[\left(1-\beta_s\right)\omega' t'+\phi\left(x',y',\omega'\right)\right]\\
 &amp;=&amp;\left(E_0/\gamma\right) f\left(x',y',t'\right) \nonumber\\
 &amp;\times&amp;\sin\left[\omega t'/\gamma+\phi\left(x',y',\omega'\right)\right]\end{aligned}\end{split}\]</div>
-<p>since <span class="math">\(E'_0/E_0=\omega'/\omega=1/\left(1+\beta\right)\gamma\)</span>.</p>
-<p>The electric field is then converted into currents that get injected via a 2D array of macro-particles, with one positive and one dual negative macro-particle for each array cell in the plane of injection, whose weights and motion are governed by <span class="math">\(E_\perp\left(x',y',t'\right)\)</span>. Injecting using this dual array of macroparticles offers the advantage of automatically including the longitudinal component that arises from emitting into a boosted frame, and to automatically verify the discrete Gauss’ law thanks to using charge conserving (e.g. Esirkepov) current deposition scheme (Esirkepov 2001).</p>
+<p>since <span class="math notranslate">\(E'_0/E_0=\omega'/\omega=1/\left(1+\beta\right)\gamma\)</span>.</p>
+<p>The electric field is then converted into currents that get injected via a 2D array of macro-particles, with one positive and one dual negative macro-particle for each array cell in the plane of injection, whose weights and motion are governed by <span class="math notranslate">\(E_\perp\left(x',y',t'\right)\)</span>. Injecting using this dual array of macroparticles offers the advantage of automatically including the longitudinal component that arises from emitting into a boosted frame, and to automatically verify the discrete Gauss’ law thanks to using charge conserving (e.g. Esirkepov) current deposition scheme (Esirkepov 2001).</p>
 </div>
 </div>
 <div class="section" id="output-in-a-boosted-frame-simulation">

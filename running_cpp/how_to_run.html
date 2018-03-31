@@ -93,6 +93,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">How to run a new simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">Example input files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="parameters.html">Input parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling.html">Profiling the code</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
@@ -166,18 +167,18 @@
   <div class="section" id="how-to-run-a-new-simulation">
 <h1>How to run a new simulation<a class="headerlink" href="#how-to-run-a-new-simulation" title="Permalink to this headline">¶</a></h1>
 <p>After compiling the code (see the section <a class="reference internal" href="../installation.html"><span class="doc">Installation</span></a>), the
-WarpX executable is stored in the folder <code class="docutils literal"><span class="pre">warpx/Bin</span></code>. (Its name starts
+WarpX executable is stored in the folder <code class="docutils literal notranslate"><span class="pre">warpx/Bin</span></code>. (Its name starts
 with <cite>main</cite> but depends on the compiler options.)</p>
 <p>In order to run a new simulation:</p>
 <ul class="simple">
 <li>Create a <strong>new directory</strong>, where the simulation will be run.</li>
 <li>Copy the <strong>executable</strong> to this directory:</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="n">warpx</span><span class="o">/</span><span class="n">Bin</span><span class="o">/&lt;</span><span class="n">warpx_executable</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">run_directory</span><span class="o">&gt;/</span><span class="n">warpx</span><span class="o">.</span><span class="n">exe</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="n">warpx</span><span class="o">/</span><span class="n">Bin</span><span class="o">/&lt;</span><span class="n">warpx_executable</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">run_directory</span><span class="o">&gt;/</span><span class="n">warpx</span><span class="o">.</span><span class="n">exe</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">&lt;warpx_executable&gt;</span></code> should be replaced by the actual name
-of the executable (see above) and <code class="docutils literal"><span class="pre">&lt;run_directory&gt;</span></code> by the actual
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;warpx_executable&gt;</span></code> should be replaced by the actual name
+of the executable (see above) and <code class="docutils literal notranslate"><span class="pre">&lt;run_directory&gt;</span></code> by the actual
 path to the run directory.</p>
 <ul class="simple">
 <li>Add an <strong>input file</strong> in the directory.</li>
@@ -190,10 +191,10 @@ The different parameters in these files are explained in the section
 <ul class="simple">
 <li><strong>Run</strong> the executable:</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="o">&lt;</span><span class="n">n_ranks</span><span class="o">&gt;</span> <span class="o">./</span><span class="n">warpx</span><span class="o">.</span><span class="n">exe</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="o">&lt;</span><span class="n">n_ranks</span><span class="o">&gt;</span> <span class="o">./</span><span class="n">warpx</span><span class="o">.</span><span class="n">exe</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">&lt;n_ranks&gt;</span></code> is the number of MPI ranks used, and <code class="docutils literal"><span class="pre">&lt;input_file&gt;</span></code>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;n_ranks&gt;</span></code> is the number of MPI ranks used, and <code class="docutils literal notranslate"><span class="pre">&lt;input_file&gt;</span></code>
 is the name of the input file.</p>
 </div>
 
