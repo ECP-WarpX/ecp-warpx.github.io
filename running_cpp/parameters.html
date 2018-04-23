@@ -273,7 +273,7 @@ of the coarsest level, but also to any of the finer level.</p>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.load_balance_int</span></code> (<cite>integer</cite>)</dt>
-<dd><p class="first">How often WarpX should try to redistribution the work across MPI ranks,
+<dd><p class="first">How often WarpX should try to redistribute the work across MPI ranks,
 in order to have better load balancing (expressed in number of PIC cycles
 inbetween two consecutive attempts at redistributing the work).
 Use 0 to disable load_balancing.</p>
@@ -283,6 +283,18 @@ how to redistribute the subdomains across MPI ranks. (Each subdomain
 is unchanged, but its owner is changed in order to have better performance.)
 This relies on each MPI rank handling several (in fact many) subdomains
 (see <code class="docutils literal notranslate"><span class="pre">max_grid_size</span></code>).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_dynamic_scheduling</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd><p class="first last">Whether to use OpenMP dynamic scheduling</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.alloc_level_0_aux</span></code></dt>
+<dd><p class="first last">Whether to allocate memory for the level 0 auxillary data or use an alias</p>
 </dd>
 </dl>
 </li>
@@ -316,20 +328,10 @@ in this documentation we use <cite>&lt;species_name&gt;</cite> as a placeholder.
 <dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.injection_style</span></code> (<cite>string</cite>)</dt>
 <dd>Determines how the particles will be injected in the simulation.
 The options are:<ul class="last">
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">NUniformPerCell</span></code>:</dt>
-<dd>injection with a fixed number of particles
-per cell, with particles being evenly-spaced in each direction within a cell.
-This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell_each_dim</span></code>.</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">NRandomPerCell</span></code>:</dt>
-<dd>injection with a fixed number of particles
-per cell, with particles being randomly distributed within each cell.
-This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell</span></code>.</dd>
-</dl>
-</li>
+<li><code class="docutils literal notranslate"><span class="pre">NUniformPerCell</span></code>: injection with a fixed number of evenly-spaced particles per cell.
+This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell_each_dim</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">NRandomPerCell</span></code>: injection with a fixed number of randomly-distributed particles per cell.
+This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell</span></code>.</li>
 </ul>
 </dd>
 </dl>
@@ -551,6 +553,20 @@ All the other methods (<code class="docutils literal notranslate"><span class="p
 <dt><code class="docutils literal notranslate"><span class="pre">interpolation.nox</span></code>, <code class="docutils literal notranslate"><span class="pre">interpolation.noy</span></code>, <code class="docutils literal notranslate"><span class="pre">interpolation.noz</span></code> (<cite>integer</cite>)</dt>
 <dd><p class="first">The order of the shape factors for the macroparticles, for the 3 dimensions of space. Lower-order shape factors result in faster simulations, but more noisy results,</p>
 <p class="last">Note that the implementation in WarpX is more efficient when these 3 numbers are equal, and when they are between 1 and 3.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">psatd.nox</span></code>, <code class="docutils literal notranslate"><span class="pre">psatd.noy</span></code>, <code class="docutils literal notranslate"><span class="pre">pstad.noz</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first last">The order of accuracy of the spatial derivatives, when using the code compiled with a PSATD solver.
+If this is not set, the default is <code class="docutils literal notranslate"><span class="pre">psatd.nox</span> <span class="pre">=</span> <span class="pre">psatd.noy</span> <span class="pre">=</span> <span class="pre">psatd.noz</span> <span class="pre">=</span> <span class="pre">16</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">psatd.ngroups_fft</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first last">The number of MPI groups that are created for the FFT, when using the code compiled with a PSATD solver.
+The FFTs are global with one MPI group and use guard cell exchanges inbetween MPI groups.</p>
 </dd>
 </dl>
 </li>

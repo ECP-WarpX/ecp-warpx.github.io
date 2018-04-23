@@ -89,7 +89,11 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#downloading-the-code">Downloading the code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#compiling-warpx-as-an-executable">Compiling WarpX as an executable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-warpx-as-an-executable">Compiling WarpX as an executable</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#generic-instructions">Generic instructions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compiling-with-a-spectral-solver">Compiling with a spectral solver</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#compiling-warpx-as-a-python-package">Compiling WarpX as a Python package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#compiling-warpx-for-cori">Compiling WarpX for Cori</a></li>
 </ul>
@@ -183,6 +187,8 @@ single directory (e.g. <code class="docutils literal notranslate"><span class="p
 </div>
 <div class="section" id="compiling-warpx-as-an-executable">
 <h2>Compiling WarpX as an executable<a class="headerlink" href="#compiling-warpx-as-an-executable" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generic-instructions">
+<h3>Generic instructions<a class="headerlink" href="#generic-instructions" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">cd</span></code> into the directory <code class="docutils literal notranslate"><span class="pre">warpx</span></code> and type</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
 </pre></div>
@@ -214,6 +220,33 @@ directly pass the options in command line ; for instance:</p>
 </pre></div>
 </div>
 <p>In order to learn how to use the executable, see the section <a class="reference internal" href="running_cpp/running_cpp.html"><span class="doc">Running WarpX as an executable</span></a>.</p>
+</div>
+<div class="section" id="compiling-with-a-spectral-solver">
+<h3>Compiling with a spectral solver<a class="headerlink" href="#compiling-with-a-spectral-solver" title="Permalink to this headline">¶</a></h3>
+<p>By default, the code is compiled with a finite-difference (FDTD) Maxwell solver.
+In order to run the code with a spectral solver, you need to:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Install (or load) an MPI-enabled version of FFTW.
+For instance, for Debian, this can be done with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libfftw3</span><span class="o">-</span><span class="n">dev</span> <span class="n">libfftw3</span><span class="o">-</span><span class="n">mpi</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Set the environment variable <code class="docutils literal notranslate"><span class="pre">FFTW_HOME</span></code> to the path for FFTW.
+For instance, for Debian, this is done with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">FFTW_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Set <code class="docutils literal notranslate"><span class="pre">USE_PSATD=TRUE</span></code> when compiling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_PSATD</span><span class="o">=</span><span class="n">TRUE</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</div>
 </div>
 <div class="section" id="compiling-warpx-as-a-python-package">
 <h2>Compiling WarpX as a Python package<a class="headerlink" href="#compiling-warpx-as-a-python-package" title="Permalink to this headline">¶</a></h2>
