@@ -96,10 +96,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#overall-simulation-parameters">Overall simulation parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setting-up-the-field-mesh">Setting up the field mesh</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#distribution-across-mpi-ranks-and-parallelization">Distribution across MPI ranks and parallelization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#math-parser-and-user-defined-constants">Math parser and user-defined constants</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#particle-initialization">Particle initialization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#laser-initialization">Laser initialization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#numerics-and-algorithms">Numerics and algorithms</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#diagnostics-and-output">Diagnostics and output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checkpoints-and-restart">Checkpoints and restart</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="profiling.html">Profiling the code</a></li>
@@ -288,14 +290,39 @@ This relies on each MPI rank handling several (in fact many) subdomains
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.do_dynamic_scheduling</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
-<dd><p class="first last">Whether to use OpenMP dynamic scheduling</p>
+<dd><p class="first last">Whether to use OpenMP dynamic scheduling.</p>
 </dd>
 </dl>
 </li>
+</ul>
+</div>
+<div class="section" id="math-parser-and-user-defined-constants">
+<h2>Math parser and user-defined constants<a class="headerlink" href="#math-parser-and-user-defined-constants" title="Permalink to this headline">¶</a></h2>
+<p>WarpX provides a math parser that reads expressions in the input file.
+It can be used to define the plasma density profile or the laser field
+(see below <cite>Particle initialization</cite> and <cite>Laser initialization</cite>).</p>
+<p>The parser reads python-style expressions between double quotes, for instance
+<code class="docutils literal notranslate"><span class="pre">&quot;a0*x**2</span> <span class="pre">*</span> <span class="pre">(1-y*1.e2)</span> <span class="pre">*</span> <span class="pre">(x&gt;0)&quot;</span></code> is a valid expression where <code class="docutils literal notranslate"><span class="pre">a0</span></code> is a
+user-defined constant and <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are variables. The factor
+<code class="docutils literal notranslate"><span class="pre">(x&gt;0)</span></code> is <cite>1</cite> where <cite>x&gt;0</cite> and <cite>0</cite> where <cite>x&lt;=0</cite>. It allows the user to</p>
+<blockquote>
+<div>define functions by intervals. User-defined constants can be used in parsed
+functions only (i.e., <code class="docutils literal notranslate"><span class="pre">density_function(x,y,z)</span></code> and <code class="docutils literal notranslate"><span class="pre">field_function(x,y,t)</span></code>,</div></blockquote>
+<p>see below). They are specified with:</p>
+<ul class="simple">
 <li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.alloc_level_0_aux</span></code></dt>
-<dd><p class="first last">Whether to allocate memory for the level 0 auxillary data or use an alias</p>
-</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">constants.use_my_constants</span></code> (<cite>bool</cite>)</dt>
+<dd>Whether to use user-defined constants.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">constants.constant_names</span></code> (<cite>strings, separated by spaces</cite>)</dt>
+<dd>A list of variables the user wants to define, e.g., <code class="docutils literal notranslate"><span class="pre">constants.constant_names</span> <span class="pre">=</span> <span class="pre">a0</span> <span class="pre">n0</span></code>.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">constants.constant_values</span></code> (<cite>floats, sepatated by spaces</cite>)</dt>
+<dd>Values for the user-defined constants., e.g., <code class="docutils literal notranslate"><span class="pre">constants.constant_values</span> <span class="pre">=</span> <span class="pre">3.</span> <span class="pre">1.e24</span></code>.</dd>
 </dl>
 </li>
 </ul>
@@ -312,6 +339,11 @@ This relies on each MPI rank handling several (in fact many) subdomains
 <dt><code class="docutils literal notranslate"><span class="pre">particles.species_names</span></code> (<cite>strings</cite>, separated by spaces)</dt>
 <dd>The name of each species. This is then used in the rest of the input deck ;
 in this documentation we use <cite>&lt;species_name&gt;</cite> as a placeholder.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">particles.use_fdtd_nci_corr</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd>Whether to activate the FDTD Numerical Cherenkov Instability corrector.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
@@ -336,6 +368,27 @@ This requires the additional parameter <code class="docutils literal notranslate
 </dd>
 </dl>
 </li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.profile</span></code> (<cite>string</cite>)</dt>
+<dd>Density profile for this species. The options are:<ul class="last">
+<li><code class="docutils literal notranslate"><span class="pre">constant</span></code>: Constant density profile within the box, or between <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.xmin</span></code>
+and <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.xmax</span></code> (and same in all directions). This requires additional
+parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.density</span></code>. i.e., the plasma density in <span class="math notranslate">\(m^{-3}\)</span>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">parse_density_function</span></code>: the density is given by a function in the input file.
+It requires additional argument <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.density_function(x,y,z)</span></code>, which is a
+mathematical expression for the density of the species, e.g.
+<code class="docutils literal notranslate"><span class="pre">electrons.density_function(x,y,z)</span> <span class="pre">=</span> <span class="pre">&quot;n0+n0*x**2*1.e12&quot;</span></code> where <code class="docutils literal notranslate"><span class="pre">n0</span></code> is a
+user-defined constant, see above. Note that using this density profile will turn
+<code class="docutils literal notranslate"><span class="pre">warpx.serialize_ics</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code>, which may slow down the simulation.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.serialize_ics</span></code> (<cite>0 or 1</cite>)</dt>
+<dd>Whether or not to use OpenMP threading for particle initialization.</dd>
+</dl>
+</li>
 </ul>
 </div>
 <div class="section" id="laser-initialization">
@@ -344,30 +397,6 @@ This requires the additional parameter <code class="docutils literal notranslate
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.use_laser</span></code> (<cite>0 or 1</cite>)</dt>
 <dd><p class="first last">Whether to activate the injection of a laser pulse in the simulation</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">laser.profile</span></code> (<cite>string</cite>)</dt>
-<dd><p class="first">The spatio-temporal shape of the laser. The options that are currently
-implemented are:</p>
-<ul class="last simple">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;Gaussian&quot;</span></code>: The transverse and longitudinal profiles are Gaussian.</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;Harris&quot;</span></code>: The transverse profile is Gaussian, but the longitudinal profile is given by the Harris function (see <code class="docutils literal notranslate"><span class="pre">laser.profile_duration</span></code> for more details)</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">laser.e_max</span></code> (<cite>float</cite> ; in V/m)</dt>
-<dd><p class="first">Peak amplitude of the laser field.</p>
-<p>For a laser with a wavelength <span class="math notranslate">\(\lambda = 0.8\,\mu m\)</span>, the peak amplitude
-is related to <span class="math notranslate">\(a_0\)</span> by:</p>
-<div class="math notranslate">
-\[E_{max} = a_0 \frac{2 \pi m_e c}{e\lambda} = a_0 \times (4.0 \cdot 10^{12} \;V.m^{-1})\]</div>
-<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of <code class="docutils literal notranslate"><span class="pre">laser.e_max</span></code>
-in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code> to automatically
-perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
@@ -388,6 +417,76 @@ transversally.</p>
 <code class="docutils literal notranslate"><span class="pre">laser.position</span></code> in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code>
 to automatically perform the conversion to the boosted frame. Note that,
 in this case, the laser antenna will be moving, in the boosted frame.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">laser.polarization</span></code> (<cite>3 floats in 3D and 2D</cite>)</dt>
+<dd><p class="first">The coordinates of a vector that points in the direction of polarization of
+the laser. The norm of this vector is unimportant, only its direction matters.</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Even in 2D, all the 3 components of this vectors are important (i.e.
+the polarization can be orthogonal to the plane of the simulation).</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">laser.direction</span></code> (<cite>3 floats in 3D</cite>)</dt>
+<dd><p class="first">The coordinates of a vector that points in the propagation direction of
+the laser. The norm of this vector is unimportant, only its direction matters.</p>
+<p>The plane of the antenna that will emit the laser is orthogonal to this vector.</p>
+<div class="last admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When running <strong>boosted-frame simulations</strong>, <code class="docutils literal notranslate"><span class="pre">laser.direction</span></code> should
+be parallel to <code class="docutils literal notranslate"><span class="pre">warpx.boost_direction</span></code>, for now.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">laser.e_max</span></code> (<cite>float</cite> ; in V/m)</dt>
+<dd><p class="first">Peak amplitude of the laser field.</p>
+<p>For a laser with a wavelength <span class="math notranslate">\(\lambda = 0.8\,\mu m\)</span>, the peak amplitude
+is related to <span class="math notranslate">\(a_0\)</span> by:</p>
+<div class="math notranslate">
+\[E_{max} = a_0 \frac{2 \pi m_e c}{e\lambda} = a_0 \times (4.0 \cdot 10^{12} \;V.m^{-1})\]</div>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of <code class="docutils literal notranslate"><span class="pre">laser.e_max</span></code>
+in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code> to automatically
+perform the conversion to the boosted frame.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">laser.wavelength</span></code> (<cite>float</cite>; in meters)</dt>
+<dd><p class="first">The wavelength of the laser in vacuum.</p>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
+<code class="docutils literal notranslate"><span class="pre">laser.wavelength</span></code> in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code>
+to automatically perform the conversion to the boosted frame.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">laser.profile</span></code> (<cite>string</cite>)</dt>
+<dd><p class="first">The spatio-temporal shape of the laser. The options that are currently
+implemented are:</p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;Gaussian&quot;</span></code>: The transverse and longitudinal profiles are Gaussian.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;Harris&quot;</span></code>: The transverse profile is Gaussian, but the longitudinal profile
+is given by the Harris function (see <code class="docutils literal notranslate"><span class="pre">laser.profile_duration</span></code> for more details)</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;parse_field_function&quot;</span></code>: the laser electric field is given by a function in the
+input file. It requires additional argument <code class="docutils literal notranslate"><span class="pre">laser.field_function(X,Y,t)</span></code>, which
+is a mathematical expression , e.g.
+<code class="docutils literal notranslate"><span class="pre">laser.field_function(X,Y,t)</span> <span class="pre">=</span> <span class="pre">&quot;a0*X**2</span> <span class="pre">*</span> <span class="pre">(X&gt;0)</span> <span class="pre">*</span> <span class="pre">cos(omega0*t)&quot;</span></code> where
+<code class="docutils literal notranslate"><span class="pre">a0</span></code> and <code class="docutils literal notranslate"><span class="pre">omega0</span></code> are a user-defined constant, see above. The profile passed
+here is the full profile, not only the laser envelope. <code class="docutils literal notranslate"><span class="pre">t</span></code> is time and <code class="docutils literal notranslate"><span class="pre">X</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Y</span></code> are coordinates orthogonal to <code class="docutils literal notranslate"><span class="pre">laser.direction</span></code> (not necessarily the
+x and y coordinates of the simulation). All parameters above are required, but
+none of the parameters below are used when <code class="docutils literal notranslate"><span class="pre">laser.parse_field_function=1</span></code>. Even
+though <code class="docutils literal notranslate"><span class="pre">laser.wavelength</span></code> and <code class="docutils literal notranslate"><span class="pre">laser.e_max</span></code> should be included in the laser
+function, they still have to be specified as they are used for numerical purposes.</li>
+</ul>
 </dd>
 </dl>
 </li>
@@ -424,40 +523,6 @@ to automatically perform the conversion to the boosted frame.</p>
 <dd><p class="first">The waist of the transverse Gaussian laser profile, defined as <span class="math notranslate">\(w_0\)</span> :</p>
 <div class="last math notranslate">
 \[E(\boldsymbol{x},t) \propto \exp\left( -\frac{\boldsymbol{x}_\perp^2}{w_0^2} \right)\]</div>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">laser.wavelength</span></code> (<cite>float</cite>; in meters)</dt>
-<dd><p class="first">The wavelength of the laser in vacuum.</p>
-<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
-<code class="docutils literal notranslate"><span class="pre">laser.wavelength</span></code> in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code>
-to automatically perform the conversion to the boosted frame.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">laser.polarization</span></code> (<cite>3 floats in 3D and 2D</cite>)</dt>
-<dd><p class="first">The coordinates of a vector that points in the direction of polarization of
-the laser. The norm of this vector is unimportant, only its direction matters.</p>
-<div class="last admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Even in 2D, all the 3 components of this vectors are important (i.e.
-the polarization can be orthogonal to the plane of the simulation).</p>
-</div>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">laser.direction</span></code> (<cite>3 floats in 3D</cite>)</dt>
-<dd><p class="first">The coordinates of a vector that points in the propagation direction of
-the laser. The norm of this vector is unimportant, only its direction matters.</p>
-<p>The plane of the antenna that will emit the laser is orthogonal to this vector.</p>
-<div class="last admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">When running <strong>boosted-frame simulations</strong>, <code class="docutils literal notranslate"><span class="pre">laser.direction</span></code> should
-be parallel to <code class="docutils literal notranslate"><span class="pre">warpx.boost_direction</span></code>, for now.</p>
-</div>
 </dd>
 </dl>
 </li>
@@ -551,8 +616,10 @@ All the other methods (<code class="docutils literal notranslate"><span class="p
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">interpolation.nox</span></code>, <code class="docutils literal notranslate"><span class="pre">interpolation.noy</span></code>, <code class="docutils literal notranslate"><span class="pre">interpolation.noz</span></code> (<cite>integer</cite>)</dt>
-<dd><p class="first">The order of the shape factors for the macroparticles, for the 3 dimensions of space. Lower-order shape factors result in faster simulations, but more noisy results,</p>
-<p class="last">Note that the implementation in WarpX is more efficient when these 3 numbers are equal, and when they are between 1 and 3.</p>
+<dd><p class="first">The order of the shape factors for the macroparticles, for the 3 dimensions of space.
+Lower-order shape factors result in faster simulations, but more noisy results,</p>
+<p class="last">Note that the implementation in WarpX is more efficient when these 3 numbers are equal,
+and when they are between 1 and 3.</p>
 </dd>
 </dl>
 </li>
@@ -566,7 +633,20 @@ If this is not set, the default is <code class="docutils literal notranslate"><s
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">psatd.ngroups_fft</span></code> (<cite>integer</cite>)</dt>
 <dd><p class="first last">The number of MPI groups that are created for the FFT, when using the code compiled with a PSATD solver.
-The FFTs are global with one MPI group and use guard cell exchanges inbetween MPI groups.</p>
+The FFTs are global within one MPI group and use guard cell exchanges in between MPI groups.
+(If <code class="docutils literal notranslate"><span class="pre">ngroups_fft</span></code> is larger than the number of MPI ranks used,
+than the actual number of MPI ranks is used instead.)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">psatd.fftw_plan_measure</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd><p class="first last">Defines whether the parameters of FFTW plans will be initialized by
+measuring and optimizing performance (<code class="docutils literal notranslate"><span class="pre">FFTW_MEASURE</span></code> mode; activated by default here).
+If <code class="docutils literal notranslate"><span class="pre">psatd.fftw_plan_measure</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, then the best parameters of FFTW
+plans will simply be estimated (<code class="docutils literal notranslate"><span class="pre">FFTW_ESTIMATE</span></code> mode).
+See <a class="reference external" href="http://www.fftw.org/fftw3_doc/Planner-Flags.html">this section of the FFTW documentation</a>
+for more information.</p>
 </dd>
 </dl>
 </li>
@@ -624,6 +704,24 @@ Whether to output the data of the fine patch, in the plot files.</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_crsepatch</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
 <dd>Only used when mesh refinement is activated and <code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
 Whether to output the data of the coarse patch, in the plot files.</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="checkpoints-and-restart">
+<h2>Checkpoints and restart<a class="headerlink" href="#checkpoints-and-restart" title="Permalink to this headline">¶</a></h2>
+<p>WarpX supports checkpoints/restart via AMReX.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.check_int</span></code> (<cite>integer</cite>)</dt>
+<dd>The number of iterations between two consecutive checkpoints. Use a
+negative number to disable checkpoints.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.restart</span></code> (<cite>string</cite>)</dt>
+<dd>Name of the checkpoint file to restart from. Returns an error if the folder does not exist
+or if it is not properly formatted.</dd>
 </dl>
 </li>
 </ul>

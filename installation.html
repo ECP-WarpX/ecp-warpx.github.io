@@ -265,6 +265,15 @@ section also hold when compiling the Python package.</p>
 <h2>Compiling WarpX for Cori<a class="headerlink" href="#compiling-warpx-for-cori" title="Permalink to this headline">¶</a></h2>
 <p>For the <a class="reference external" href="http://www.nersc.gov/users/computational-systems/cori/">Cori cluster</a> at NERSC,
 you need to type the following command when compiling:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>In order to compile the code with a spectral solver, type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">cray</span><span class="o">-</span><span class="n">fftw</span>
+</pre></div>
+</div>
+<p class="last">before typing any of the commands below, and add <code class="docutils literal notranslate"><span class="pre">USE_PSATD=TRUE</span></code>
+at the end of the command containing <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
+</div>
 <p>In order to compile for the <strong>Haswell architecture</strong>:</p>
 <blockquote>
 <div><ul class="simple">
