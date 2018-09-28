@@ -24,26 +24,18 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="WarpX  documentation" href="#"/>
-        <link rel="next" title="Installation" href="installation.html"/> 
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Building/installing WarpX" href="building/building.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -63,6 +55,10 @@
 
           
             
+            
+              <div class="version">
+                0.1.1
+              </div>
             
           
 
@@ -86,7 +82,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building/building.html">Building/installing WarpX</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running_python/running_python.html">Running WarpX from Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualization/visualization.html">Visualizing the simulation results</a></li>
@@ -102,7 +98,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="#">WarpX</a>
@@ -110,9 +106,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -156,16 +153,30 @@
             
   <div class="section" id="warpx-documentation">
 <h1>WarpX documentation<a class="headerlink" href="#warpx-documentation" title="Permalink to this headline">¶</a></h1>
-<p>WarpX is an advanced electromagnetic Particle-In-Cell code. It supports many
-features including Perfectly-Matched Layers (PML) and <strong>mesh refinement</strong>.
-For details on the algorithms that WarpX implements, see the section <a class="reference internal" href="theory/theory.html"><span class="doc">Theoretical background</span></a>.</p>
+<p>WarpX is an advanced <strong>electromagnetic Particle-In-Cell</strong> code.</p>
+<p>It supports many features including:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Perfectly-Matched Layers (PML)</li>
+<li>Boosted-frame simulations</li>
+<li>Mesh refinement</li>
+</ul>
+</div></blockquote>
+<p>For details on the algorithms that WarpX implements, see the section <a class="reference internal" href="theory/theory.html"><span class="doc">Theoretical background</span></a>.</p>
 <p>In addition, WarpX is a highly-parallel and highly-optimized code
 and features hybrid OpenMP/MPI parallelization, advanced vectorization
 techniques and load balancing capabilities.</p>
 <p>In order to learn to use the code, please see the sections below:</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This is an <strong>alpha release</strong> of WarpX.
+The code is still in active development.
+Stability and performance are not guaranteed at this stage.
+The input and output formats may evolve.</p>
+</div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building/building.html">Building/installing WarpX</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running_python/running_python.html">Running WarpX from Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualization/visualization.html">Visualizing the simulation results</a></li>
@@ -176,15 +187,13 @@ techniques and load balancing capabilities.</p>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="building/building.html" class="btn btn-neutral float-right" title="Building/installing WarpX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -198,7 +207,7 @@ techniques and load balancing capabilities.</p>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -217,6 +226,7 @@ techniques and load balancing capabilities.</p>
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -230,19 +240,13 @@ techniques and load balancing capabilities.</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
