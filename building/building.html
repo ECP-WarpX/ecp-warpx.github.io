@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -226,8 +226,11 @@ directly pass the options in command line ; for instance:</p>
 </div>
 <div class="section" id="installing-warpx-as-a-python-package">
 <h2>Installing WarpX as a Python package<a class="headerlink" href="#installing-warpx-as-a-python-package" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">cd</span></code> into the directory <code class="docutils literal notranslate"><span class="pre">warpx/Python</span></code> (instead of <code class="docutils literal notranslate"><span class="pre">warpx</span></code>
-in the previous section) and type</p>
+<p>Type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_PYTHON_MAIN</span><span class="o">=</span><span class="n">TRUE</span>
+</pre></div>
+</div>
+<p>or edit the GNUmakefile and set <cite>USE_PYTHON_MAIN=TRUE</cite>, and type</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
 </pre></div>
 </div>
