@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="PySide-based visualization GUI: PICViewer" href="picviewer.html" />
+    <link rel="next" title="PyQt-based visualization GUI: PICViewer" href="picviewer.html" />
     <link rel="prev" title="Visualization with yt" href="yt.html" /> 
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.1.1
+                0.1.0
               </div>
             
           
@@ -89,7 +89,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="visualization.html">Visualizing the simulation results</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="yt.html">Visualization with yt</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Visualization with Visit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="picviewer.html">PySide-based visualization GUI: PICViewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="picviewer.html">PyQt-based visualization GUI: PICViewer</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theoretical background</a></li>
@@ -161,10 +161,27 @@
             
   <div class="section" id="visualization-with-visit">
 <h1>Visualization with Visit<a class="headerlink" href="#visualization-with-visit" title="Permalink to this headline">¶</a></h1>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This section is currently in development.</p>
+<p>WarpX results can also be visualized by VisIt, an open source visualization and analysis software. VisIT can be downloaded and installed from <a class="reference external" href="https://wci.llnl.gov/simulation/computer-codes/visit">https://wci.llnl.gov/simulation/computer-codes/visit</a>.</p>
+<p>Assuming that you ran a 2D simulation, here are instructions for making a simple plot from a given plotfile:</p>
+<ul class="simple">
+<li>Open the header file: Run VisIt, then select “File” -&gt; “Open file …”, then select the Header file associated with the plotfile of interest (e.g., <code class="docutils literal notranslate"><span class="pre">plt10000/Header</span></code>).</li>
+<li>View the data: Select “Add” -&gt; “Pseudocolor” -&gt; “Ez” and select “Draw”. You can select other variable to draw, such as <code class="docutils literal notranslate"><span class="pre">jx</span></code>, <code class="docutils literal notranslate"><span class="pre">jy</span></code>, <code class="docutils literal notranslate"><span class="pre">jz</span></code>, <code class="docutils literal notranslate"><span class="pre">Ex</span></code>, …</li>
+<li>View the grid structure: Select “Subset”  -&gt; “levels”. Then double clik the text “Subset-levels”, enable the “Wireframe” option, select “Apply”, select “Dismiss”, and then select “Draw”.</li>
+<li>Save the image: Select “File” -&gt; “Set save options”, then customize the image format to your liking, then click “Save”.</li>
+</ul>
+<p>Your image should look similar to the one below</p>
+<div class="figure">
+<img alt="picture" src="../_images/Ez.png" />
 </div>
+<p>In 3D, you must apply the “Operators” -&gt; “Slicing”
+-&gt; “ThreeSlice”,  You can left-click and drag over the
+image to rotate the image to generate image you like.</p>
+<p>To make a movie, you must first create a text file named <code class="docutils literal notranslate"><span class="pre">movie.visit</span></code> with a
+list of the Header files for the individual frames.</p>
+<p>The next step is to run VisIt, select “File” -&gt; “Open file
+…”, then select <code class="docutils literal notranslate"><span class="pre">movie.visit</span></code>. Create an image to your liking and press the
+“play” button on the VCR-like control panel to preview all the frames. To save
+the movie, choose “File” -&gt; “Save movie …”, and follow the instructions on the screen.</p>
 </div>
 
 
@@ -175,7 +192,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="picviewer.html" class="btn btn-neutral float-right" title="PySide-based visualization GUI: PICViewer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="picviewer.html" class="btn btn-neutral float-right" title="PyQt-based visualization GUI: PICViewer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="yt.html" class="btn btn-neutral" title="Visualization with yt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
