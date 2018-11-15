@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0.1.0
+                18.11
               </div>
             
           
@@ -596,22 +596,32 @@ to automatically perform the conversion to the boosted frame.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">laser.stc_direction</span></code> (<cite>3 floats</cite>) optional (default <cite>1. 0. 0.</cite>)</dt>
+<dd><dl class="first last docutils">
+<dt>Direction of laser spatio-temporal couplings.</dt>
+<dd><p class="first last">See definition in Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">laser.zeta</span></code> (<cite>float</cite>; in meters.seconds) optional (default <cite>0.</cite>)</dt>
-<dd><p class="first last">Spatial chirp at focus in the <code class="docutils literal notranslate"><span class="pre">x</span></code> direction. See definition in
+<dd><p class="first last">Spatial chirp at focus in direction <code class="docutils literal notranslate"><span class="pre">laser.stc_direction</span></code>. See definition in
 Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">laser.beta</span></code> (<cite>float</cite>; in seconds) optional (default <cite>0.</cite>)</dt>
-<dd><p class="first last">Angular dispersion (or angular chirp) at focus in the <code class="docutils literal notranslate"><span class="pre">x</span></code> direction.
+<dd><p class="first last">Angular dispersion (or angular chirp) at focus in direction <code class="docutils literal notranslate"><span class="pre">laser.stc_direction</span></code>.
 See definition in Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">laser.phi2</span></code> (<cite>float</cite>; in seconds**2) optional (default <cite>0.</cite>)</dt>
-<dd><p class="first last">Temporal chirp at focus in the <code class="docutils literal notranslate"><span class="pre">x</span></code> direction.
+<dd><p class="first last">Temporal chirp at focus.
 See definition in Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
 </dd>
 </dl>
