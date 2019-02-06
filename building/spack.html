@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Building WarpX for Cori (NERSC) &mdash; WarpX  documentation</title>
+  <title>Building WarpX with Spack &mdash; WarpX  documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Building WarpX for Summit-dev (OLCF)" href="summitdev.html" />
-    <link rel="prev" title="Building the spectral solver" href="spectral.html" /> 
+    <link rel="next" title="Running WarpX as an executable" href="../running_cpp/running_cpp.html" />
+    <link rel="prev" title="Building WarpX for Summit-dev (OLCF)" href="summitdev.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -89,9 +89,9 @@
 <li class="toctree-l2"><a class="reference internal" href="building.html#installing-warpx-as-a-python-package">Installing WarpX as a Python package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="building.html#advanced-building-instructions">Advanced building instructions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="spectral.html">Building the spectral solver</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Building WarpX for Cori (NERSC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cori.html">Building WarpX for Cori (NERSC)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="summitdev.html">Building WarpX for Summit-dev (OLCF)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spack.html">Building WarpX with Spack</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Building WarpX with Spack</a></li>
 </ul>
 </li>
 </ul>
@@ -147,13 +147,13 @@
         
           <li><a href="building.html">Building/installing WarpX</a> &raquo;</li>
         
-      <li>Building WarpX for Cori (NERSC)</li>
+      <li>Building WarpX with Spack</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/building/cori.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/building/spack.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -166,53 +166,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="building-warpx-for-cori-nersc">
-<h1>Building WarpX for Cori (NERSC)<a class="headerlink" href="#building-warpx-for-cori-nersc" title="Permalink to this headline">¶</a></h1>
-<p>For the <a class="reference external" href="http://www.nersc.gov/users/computational-systems/cori/">Cori cluster</a> at NERSC,
-you need to type the following command when compiling:</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>In order to compile the code with a spectral solver, type</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">cray</span><span class="o">-</span><span class="n">fftw</span>
+  <div class="section" id="building-warpx-with-spack">
+<h1>Building WarpX with Spack<a class="headerlink" href="#building-warpx-with-spack" title="Permalink to this headline">¶</a></h1>
+<p>WarpX can be installed using Spack. From the Spack web page: “Spack is a package management tool designed to support multiple
+versions and configurations of software on a wide variety of platforms and environments.”</p>
+<p>Spack is available from <a class="reference external" href="https://github.com/spack/spack">github</a>. Spack only needs to be cloned and can be used right away - there are no installation
+steps. The spack command, “spack/bin/spack”, can be used directly or “spack/bin” can be added to your execute path.</p>
+<p>WarpX is built with the single command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spack</span> <span class="n">install</span> <span class="n">warpx</span>
 </pre></div>
 </div>
-<p class="last">before typing any of the commands below, and add <code class="docutils literal notranslate"><span class="pre">USE_PSATD=TRUE</span></code>
-at the end of the command containing <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
-</div>
-<p>In order to compile for the <strong>Haswell architecture</strong>:</p>
-<blockquote>
-<div><ul class="simple">
-<li>with the Intel compiler</li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
+<p>This will build the 3-D version of WarpX using the master branch.
+At the very end of the output from build sequence, Spack tells you where the WarpX executable has been placed.
+Alternatively, the “spack load” command can be configured so that “spack load warpx” will put the executable in your execute path.</p>
+<p>To build using the dev branch, the command is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spack</span> <span class="n">install</span> <span class="n">warpx</span><span class="nd">@dev</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li>with the GNU compiler</li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
-<span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">gnu</span>
+<p>Other variants of WarpX can be installed, for example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spack</span> <span class="n">install</span> <span class="n">warpx</span> <span class="n">dims</span><span class="o">=</span><span class="mi">2</span>
 </pre></div>
 </div>
-</div></blockquote>
-<p>In order to compile for the <strong>Knight’s Landing (KNL) architecture</strong>:</p>
-<blockquote>
-<div><ul class="simple">
-<li>with the Intel compiler</li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
-<span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
+<p>will build the 2-D version.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spack</span> <span class="n">install</span> <span class="n">warpx</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li>with the GNU compiler</li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
-<span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
-<span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">gnu</span>
+<p>will build with debugging turned on.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spack</span> <span class="n">install</span> <span class="n">warpx</span> <span class="o">%</span><span class="n">intel</span>
 </pre></div>
 </div>
-</div></blockquote>
+<p>will build using the intel compiler (instead of gcc).</p>
+<p>The Python verson of WarpX is not yet available with Spack.</p>
 </div>
 
 
@@ -223,10 +207,10 @@ at the end of the command containing <code class="docutils literal notranslate">
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="summitdev.html" class="btn btn-neutral float-right" title="Building WarpX for Summit-dev (OLCF)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../running_cpp/running_cpp.html" class="btn btn-neutral float-right" title="Running WarpX as an executable" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="spectral.html" class="btn btn-neutral" title="Building the spectral solver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="summitdev.html" class="btn btn-neutral" title="Building WarpX for Summit-dev (OLCF)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
