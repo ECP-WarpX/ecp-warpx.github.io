@@ -17,37 +17,34 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Mesh refinement" href="warpx_theory.html" />
     <link rel="prev" title="Introduction" href="intro.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -228,7 +225,7 @@ expressed as a function of the other quantities. The two implementations that ha
 \[\begin{aligned}
 \mathbf{\bar{v}}^{i}= &amp; \frac{\gamma^{i+1/2}\mathbf{v}^{i+1/2}+\gamma^{i-1/2}\mathbf{v}^{i-1/2}}{2\bar{\gamma}^{i}}.\label{Eq:boris_v}\end{aligned}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{\gamma}^{i}\)</span> is defined by <span class="math notranslate nohighlight">\(\bar{\gamma}^{i} \equiv (\gamma^{i+1/2}+\gamma^{i-1/2} )/2\)</span>.</p>
-<p>The system (<a class="reference external" href="#Eq:leapfrog_v">[Eq:leapfrog_v]</a>,<a class="reference external" href="#Eq:boris_v">[Eq:boris_v]</a>) is solved very
+<p>The system ([Eq:leapfrog_v],[Eq:boris_v]) is solved very
 efficiently following Boris’ method, where the electric field push
 is decoupled from the magnetic push. Setting <span class="math notranslate nohighlight">\(\mathbf{u}=\gamma\mathbf{v}\)</span>, the
 velocity is updated using the following sequence:</p>
@@ -290,7 +287,7 @@ D_{t}\mathbf{E} &amp; = &amp; \nabla\times\mathbf{B}-\mathbf{J}\label{Eq:Ampere-
 \left[\nabla\cdot\mathbf{E}\right. &amp; = &amp; \left.\rho\right]\label{Eq:Gauss-2}\\
 \left[\nabla\cdot\mathbf{B}\right. &amp; = &amp; \left.0\right].\label{Eq:divb-2}\end{aligned}\end{split}\]</div>
 <div class="figure" id="id2">
-<img alt="[fig:yee_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference &quot;leapfrog&quot; integrator." src="../_images/Yee_grid.png" />
+<img alt="[fig:yee\_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference “leapfrog” integrator." src="../_images/Yee_grid.png" />
 <p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">[fig:yee_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference “leapfrog” integrator.</span></p>
 </div>
 <p>The differential operator is defined as <span class="math notranslate nohighlight">\(\nabla=D_{x}\mathbf{\hat{x}}+D_{y}\mathbf{\hat{y}}+D_{z}\mathbf{\hat{z}}\)</span>
@@ -306,7 +303,7 @@ The difference operators along <span class="math notranslate nohighlight">\(y\)<
 permutation. The equations in brackets are given for completeness,
 as they are often not actually solved, thanks to the usage of a so-called
 charge conserving algorithm, as explained below. As shown in Figure
-<a class="reference external" href="#fig:yee_grid">[fig:yee_grid]</a>, the quantities are given on a staggered (or “Yee”)
+[fig:yee_grid], the quantities are given on a staggered (or “Yee”)
 grid (Yee 1966), where the electric field components are located
 between nodes and the magnetic field components are located in the
 center of the cell faces. Knowing the current densities at half-integer steps,
@@ -315,7 +312,7 @@ field components at integer and half-integer steps respectively.</p>
 </div>
 <div class="section" id="non-standard-finite-difference-time-domain-nsfdtd">
 <h3>Non-Standard Finite-Difference Time-Domain (NSFDTD)<a class="headerlink" href="#non-standard-finite-difference-time-domain-nsfdtd" title="Permalink to this headline">¶</a></h3>
-<p>In (Cole 1997, 2002), Cole introduced an implementation
+<p>In (Cole 1997; Cole 2002), Cole introduced an implementation
 of the source-free Maxwell’s wave equations for narrow-band applications
 based on non-standard finite-differences (NSFD). In (Karkkainen et al. 2006),
 Karkkainen <em>et al.</em> adapted it for wideband applications. At
@@ -332,7 +329,7 @@ D_{t}\mathbf{B} &amp; = &amp; -\nabla^{*}\times\mathbf{E}\label{Eq:Faraday}\\
 D_{t}\mathbf{E} &amp; = &amp; \nabla\times\mathbf{B}-\mathbf{J}\label{Eq:Ampere}\\
 \left[\nabla\cdot\mathbf{E}\right. &amp; = &amp; \left.\rho\right]\label{Eq:Gauss}\\
 \left[\nabla^{*}\cdot\mathbf{B}\right. &amp; = &amp; \left.0\right]\label{Eq:divb}\end{aligned}\end{split}\]</div>
-<p>Eq. <a class="reference external" href="#Eq:Gauss">[Eq:Gauss]</a> and <a class="reference external" href="#Eq:divb">[Eq:divb]</a> are not being solved explicitly
+<p>Eq. [Eq:Gauss] and [Eq:divb] are not being solved explicitly
 but verified via appropriate initial conditions and current deposition
 procedure. The NSFD differential operators is given by <span class="math notranslate nohighlight">\(\nabla^{*}=D_{x}^{*}\mathbf{\hat{x}}+D_{y}^{*}\mathbf{\hat{y}}+D_{z}^{*}\mathbf{\hat{z}}\)</span>
 where <span class="math notranslate nohighlight">\(D_{x}^{*}=\left(\alpha+\beta S_{x}^{1}+\xi S_{x}^{2}\right)D_{x}\)</span>
@@ -354,7 +351,7 @@ The algorithm reduces to the FDTD algorithm with <span class="math notranslate n
 An extension to non-cubic cells is provided by Cowan, <em>et al.</em>
 in 3-D in (Cowan et al. 2013) and was given by Pukhov in 2-D in
 (Pukhov 1999). An alternative NSFDTD implementation that enables superluminous waves is also
-given by Lehe et al. in (Lehe et al. 2013).</p>
+given by Lehe <em>et al.</em> in (Lehe et al. 2013).</p>
 <p>As mentioned above, a key feature of the algorithms based on NSFDTD
 is that some implementations (Karkkainen et al. 2006; Cowan et al. 2013) enable the time step <span class="math notranslate nohighlight">\(\Delta t=\Delta x\)</span> along one or
 more axes and no numerical dispersion along those axes. However, as
@@ -369,25 +366,25 @@ suppresses this instability.</p>
 <p>Maxwell’s equations in Fourier space are given by</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\frac{\partial\mathbf{\tilde{E}}}{\partial t} &amp; = &amp; i\mathbf{k}\times\mathbf{\tilde{B}}-\mathbf{\tilde{J}}\\
-\frac{\partial\mathbf{\tilde{B}}}{\partial t} &amp; = &amp; -i\mathbf{k}\times\mathbf{\tilde{E}}\\
-{}[i\mathbf{k}\cdot\mathbf{\tilde{E}}&amp; = &amp; \tilde{\rho}]\\
-{}[i\mathbf{k}\cdot\mathbf{\tilde{B}}&amp; = &amp; 0]\end{aligned}\end{split}\]</div>
+\frac{\partial{\mathbf{\tilde{E}}}}{\partial t} &amp; = &amp; i{\mathbf{k}}\times{\mathbf{\tilde{B}}}-{\mathbf{\tilde{J}}}\\
+\frac{\partial{\mathbf{\tilde{B}}}}{\partial t} &amp; = &amp; -i{\mathbf{k}}\times{\mathbf{\tilde{E}}}\\
+{}[i{\mathbf{k}}\cdot{\mathbf{\tilde{E}}}&amp; = &amp; \tilde{\rho}]\\
+{}[i{\mathbf{k}}\cdot{\mathbf{\tilde{B}}}&amp; = &amp; 0]\end{aligned}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tilde{a}\)</span> is the Fourier Transform of the quantity <span class="math notranslate nohighlight">\(a\)</span>.
 As with the real space formulation, provided that the continuity equation
-<span class="math notranslate nohighlight">\(\partial\tilde{\rho}/\partial t+i\mathbf{k}\cdot\mathbf{\tilde{J}}=0\)</span> is satisfied, then
+<span class="math notranslate nohighlight">\(\partial\tilde{\rho}/\partial t+i{\mathbf{k}}\cdot{\mathbf{\tilde{J}}}=0\)</span> is satisfied, then
 the last two equations will automatically be satisfied at any time
 if satisfied initially and do not need to be explicitly integrated.</p>
 <p>Decomposing the electric field and current between longitudinal and
-transverse components <span class="math notranslate nohighlight">\(\mathbf{\tilde{E}}=\mathbf{\tilde{E}}_{L}+\mathbf{\tilde{E}}_{T}=\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{E}})-\mathbf{\hat{k}}\times(\mathbf{\hat{k}}\times\mathbf{\tilde{E}})\)</span>
-and <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}=\mathbf{\tilde{J}}_{L}+\mathbf{\tilde{J}}_{T}=\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{J}})-\mathbf{\hat{k}}\times(\mathbf{\hat{k}}\times\mathbf{\tilde{J}})\)</span>
+transverse components <span class="math notranslate nohighlight">\({\mathbf{\tilde{E}}}={\mathbf{\tilde{E}}}_{L}+{\mathbf{\tilde{E}}}_{T}={\mathbf{\hat{k}}}({\mathbf{\hat{k}}}\cdot{\mathbf{\tilde{E}}})-{\mathbf{\hat{k}}}\times({\mathbf{\hat{k}}}\times{\mathbf{\tilde{E}}})\)</span>
+and <span class="math notranslate nohighlight">\({\mathbf{\tilde{J}}}={\mathbf{\tilde{J}}}_{L}+{\mathbf{\tilde{J}}}_{T}={\mathbf{\hat{k}}}({\mathbf{\hat{k}}}\cdot{\mathbf{\tilde{J}}})-{\mathbf{\hat{k}}}\times({\mathbf{\hat{k}}}\times{\mathbf{\tilde{J}}})\)</span>
 gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\frac{\partial\mathbf{\tilde{E}}_{T}}{\partial t} &amp; = &amp; i\mathbf{k}\times\mathbf{\tilde{B}}-\mathbf{\tilde{J}_{T}}\\
-\frac{\partial\mathbf{\tilde{E}}_{L}}{\partial t} &amp; = &amp; -\mathbf{\tilde{J}_{L}}\\
-\frac{\partial\mathbf{\tilde{B}}}{\partial t} &amp; = &amp; -i\mathbf{k}\times\mathbf{\tilde{E}}\end{aligned}\end{split}\]</div>
-<p>with <span class="math notranslate nohighlight">\(\mathbf{\hat{k}}=\mathbf{k}/k\)</span>.</p>
+\frac{\partial{\mathbf{\tilde{E}}}_{T}}{\partial t} &amp; = &amp; i{\mathbf{k}}\times{\mathbf{\tilde{B}}}-\mathbf{\tilde{J}_{T}}\\
+\frac{\partial{\mathbf{\tilde{E}}}_{L}}{\partial t} &amp; = &amp; -\mathbf{\tilde{J}_{L}}\\
+\frac{\partial{\mathbf{\tilde{B}}}}{\partial t} &amp; = &amp; -i{\mathbf{k}}\times{\mathbf{\tilde{E}}}\end{aligned}\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\({\mathbf{\hat{k}}}={\mathbf{k}}/k\)</span>.</p>
 <p>If the sources are assumed to be constant over a time interval <span class="math notranslate nohighlight">\(\Delta t\)</span>,
 the system of equations is solvable analytically and is given by (see
 (Haber et al. 1973) for the original formulation and (Jean-Luc Vay, Haber, and Godfrey 2013)
@@ -395,19 +392,19 @@ for a more detailed derivation):</p>
 <p>[Eq:PSATD]</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\mathbf{\tilde{E}}_{T}^{n+1} &amp; = &amp; C\mathbf{\tilde{E}}_{T}^{n}+iS\mathbf{\hat{k}}\times\mathbf{\tilde{B}}^{n}-\frac{S}{k}\mathbf{\tilde{J}}_{T}^{n+1/2}\label{Eq:PSATD_transverse_1}\\
-\mathbf{\tilde{E}}_{L}^{n+1} &amp; = &amp; \mathbf{\tilde{E}}_{L}^{n}-\Delta t\mathbf{\tilde{J}}_{L}^{n+1/2}\\
-\mathbf{\tilde{B}}^{n+1} &amp; = &amp; C\mathbf{\tilde{B}}^{n}-iS\mathbf{\hat{k}}\times\mathbf{\tilde{E}}^{n}\\
-&amp;+&amp;i\frac{1-C}{k}\mathbf{\hat{k}}\times\mathbf{\tilde{J}}^{n+1/2}\label{Eq:PSATD_transverse_2}\end{aligned}\end{split}\]</div>
+{\mathbf{\tilde{E}}}_{T}^{n+1} &amp; = &amp; C{\mathbf{\tilde{E}}}_{T}^{n}+iS{\mathbf{\hat{k}}}\times{\mathbf{\tilde{B}}}^{n}-\frac{S}{k}{\mathbf{\tilde{J}}}_{T}^{n+1/2}\label{Eq:PSATD_transverse_1}\\
+{\mathbf{\tilde{E}}}_{L}^{n+1} &amp; = &amp; {\mathbf{\tilde{E}}}_{L}^{n}-\Delta t{\mathbf{\tilde{J}}}_{L}^{n+1/2}\\
+{\mathbf{\tilde{B}}}^{n+1} &amp; = &amp; C{\mathbf{\tilde{B}}}^{n}-iS{\mathbf{\hat{k}}}\times{\mathbf{\tilde{E}}}^{n}\\
+&amp;+&amp;i\frac{1-C}{k}{\mathbf{\hat{k}}}\times{\mathbf{\tilde{J}}}^{n+1/2}\label{Eq:PSATD_transverse_2}\end{aligned}\end{split}\]</div>
 <p>with <span class="math notranslate nohighlight">\(C=\cos\left(k\Delta t\right)\)</span> and <span class="math notranslate nohighlight">\(S=\sin\left(k\Delta t\right)\)</span>.</p>
 <p>Combining the transverse and longitudinal components, gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\mathbf{\tilde{E}}^{n+1} &amp; = &amp; C\mathbf{\tilde{E}}^{n}+iS\mathbf{\hat{k}}\times\mathbf{\tilde{B}}^{n}-\frac{S}{k}\mathbf{\tilde{J}}^{n+1/2}\\
- &amp; + &amp;(1-C)\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{E}}^{n})\nonumber \\
- &amp; + &amp; \mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{J}}^{n+1/2})\left(\frac{S}{k}-\Delta t\right),\label{Eq_PSATD_1}\\
-\mathbf{\tilde{B}}^{n+1} &amp; = &amp; C\mathbf{\tilde{B}}^{n}-iS\mathbf{\hat{k}}\times\mathbf{\tilde{E}}^{n}\\
-&amp;+&amp;i\frac{1-C}{k}\mathbf{\hat{k}}\times\mathbf{\tilde{J}}^{n+1/2}.\label{Eq_PSATD_2}\end{aligned}\end{split}\]</div>
+{\mathbf{\tilde{E}}}^{n+1} &amp; = &amp; C{\mathbf{\tilde{E}}}^{n}+iS{\mathbf{\hat{k}}}\times{\mathbf{\tilde{B}}}^{n}-\frac{S}{k}{\mathbf{\tilde{J}}}^{n+1/2}\\
+ &amp; + &amp;(1-C){\mathbf{\hat{k}}}({\mathbf{\hat{k}}}\cdot{\mathbf{\tilde{E}}}^{n})\nonumber \\
+ &amp; + &amp; {\mathbf{\hat{k}}}({\mathbf{\hat{k}}}\cdot{\mathbf{\tilde{J}}}^{n+1/2})\left(\frac{S}{k}-\Delta t\right),\label{Eq_PSATD_1}\\
+{\mathbf{\tilde{B}}}^{n+1} &amp; = &amp; C{\mathbf{\tilde{B}}}^{n}-iS{\mathbf{\hat{k}}}\times{\mathbf{\tilde{E}}}^{n}\\
+&amp;+&amp;i\frac{1-C}{k}{\mathbf{\hat{k}}}\times{\mathbf{\tilde{J}}}^{n+1/2}.\label{Eq_PSATD_2}\end{aligned}\end{split}\]</div>
 <p>For fields generated by the source terms without the self-consistent
 dynamics of the charged particles, this algorithm is free of numerical
 dispersion and is not subject to a Courant condition. Furthermore,
@@ -419,8 +416,8 @@ formulation reduces to the perhaps better known pseudo-spectral time-domain
 (PSTD) formulation (Dawson 1983; Liu 1997):</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\mathbf{\tilde{E}}^{n+1} &amp; = &amp; \mathbf{\tilde{E}}^{n}+i\Delta t\mathbf{k}\times\mathbf{\tilde{B}}^{n+1/2}-\Delta t\mathbf{\tilde{J}}^{n+1/2},\\
-\mathbf{\tilde{B}}^{n+3/2} &amp; = &amp; \mathbf{\tilde{B}}^{n+1/2}-i\Delta t\mathbf{k}\times\mathbf{\tilde{E}}^{n+1}.\end{aligned}\end{split}\]</div>
+{\mathbf{\tilde{E}}}^{n+1} &amp; = &amp; {\mathbf{\tilde{E}}}^{n}+i\Delta t{\mathbf{k}}\times{\mathbf{\tilde{B}}}^{n+1/2}-\Delta t{\mathbf{\tilde{J}}}^{n+1/2},\\
+{\mathbf{\tilde{B}}}^{n+3/2} &amp; = &amp; {\mathbf{\tilde{B}}}^{n+1/2}-i\Delta t{\mathbf{k}}\times{\mathbf{\tilde{E}}}^{n+1}.\end{aligned}\end{split}\]</div>
 <p>The dispersion relation of the PSTD solver is given by <span class="math notranslate nohighlight">\(\sin(\frac{\omega\Delta t}{2})=\frac{k\Delta t}{2}.\)</span>
 In contrast to the PSATD solver, the PSTD solver is subject to numerical
 dispersion for a finite time step and to a Courant condition that
@@ -462,14 +459,14 @@ dispersion and Courant condition are given
 in (Pukhov 1999; Vay et al. 2011; Cowan et al. 2013; Lehe et al. 2013).</p>
 <p>In the case of the pseudospectral solvers, the current deposition
 algorithm generally does not satisfy the discretized continuity equation
-in Fourier space <span class="math notranslate nohighlight">\(\tilde{\rho}^{n+1}=\tilde{\rho}^{n}-i\Delta t\mathbf{k}\cdot\mathbf{\tilde{J}}^{n+1/2}\)</span>.
+in Fourier space <span class="math notranslate nohighlight">\(\tilde{\rho}^{n+1}=\tilde{\rho}^{n}-i\Delta t{\mathbf{k}}\cdot\mathbf{\tilde{J}}^{n+1/2}\)</span>.
 In this case, a Boris correction (Birdsall and Langdon 1991) can be applied
-in <span class="math notranslate nohighlight">\(k\)</span> space in the form <span class="math notranslate nohighlight">\(\mathbf{\tilde{E}}_{c}^{n+1}=\mathbf{\tilde{E}}^{n+1}-\left(\mathbf{k}\cdot\mathbf{\tilde{E}}^{n+1}+i\tilde{\rho}^{n+1}\right)\mathbf{\hat{k}}/k\)</span>,
-where <span class="math notranslate nohighlight">\(\mathbf{\tilde{E}}_{c}\)</span> is the corrected field. Alternatively, a correction
+in <span class="math notranslate nohighlight">\(k\)</span> space in the form <span class="math notranslate nohighlight">\({\mathbf{\tilde{E}}}_{c}^{n+1}={\mathbf{\tilde{E}}}^{n+1}-\left({\mathbf{k}}\cdot{\mathbf{\tilde{E}}}^{n+1}+i\tilde{\rho}^{n+1}\right){\mathbf{\hat{k}}}/k\)</span>,
+where <span class="math notranslate nohighlight">\({\mathbf{\tilde{E}}}_{c}\)</span> is the corrected field. Alternatively, a correction
 to the current can be applied (with some similarity to the current
 deposition presented by Morse and Nielson in their potential-based
-model in (Morse and Nielson 1971)) using <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}_{c}^{n+1/2}=\mathbf{\tilde{J}}^{n+1/2}-\left[\mathbf{k}\cdot\mathbf{\tilde{J}}^{n+1/2}-i\left(\tilde{\rho}^{n+1}-\tilde{\rho}^{n}\right)/\Delta t\right]\mathbf{\hat{k}}/k\)</span>,
-where <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}_{c}\)</span> is the corrected current. In this case, the transverse
+model in (Morse and Nielson 1971)) using <span class="math notranslate nohighlight">\({\mathbf{\tilde{J}}}_{c}^{n+1/2}={\mathbf{\tilde{J}}}^{n+1/2}-\left[{\mathbf{k}}\cdot{\mathbf{\tilde{J}}}^{n+1/2}-i\left(\tilde{\rho}^{n+1}-\tilde{\rho}^{n}\right)/\Delta t\right]{\mathbf{\hat{k}}}/k\)</span>,
+where <span class="math notranslate nohighlight">\({\mathbf{\tilde{J}}}_{c}\)</span> is the corrected current. In this case, the transverse
 component of the current is left untouched while the longitudinal
 component is effectively replaced by the one obtained from integration
 of the continuity equation, ensuring that the corrected current satisfies
@@ -479,7 +476,7 @@ domain decomposition of the fields for parallel computation (Jean Luc Vay, Haber
 <p>Alternatively, an exact current deposition can be written for the pseudospectral solvers, following the geometrical interpretation of existing methods in real space (Morse and Nielson 1971; Villasenor and Buneman 1992; Esirkepov 2001), thereby averaging the currents of the paths following grid lines between positions <span class="math notranslate nohighlight">\((x^n,y^n)\)</span> and <span class="math notranslate nohighlight">\((x^{n+1},y^{n+1})\)</span>, which is given in 2D (extension to 3D follows readily) for <span class="math notranslate nohighlight">\(k\neq0\)</span> by (Jean Luc Vay, Haber, and Godfrey 2013):</p>
 <div class="math notranslate nohighlight">
 \[\begin{aligned}
-\mathbf{\tilde{J}}^{k\neq0}=\frac{i\mathbf{\tilde{D}}}{\mathbf{k}}\end{aligned}\]</div>
+{\mathbf{\tilde{J}}}^{k\neq0}=\frac{i\mathbf{\tilde{D}}}{{\mathbf{k}}}\end{aligned}\]</div>
 <p>with</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
@@ -520,14 +517,14 @@ dispersion and Courant condition are given
 in (Pukhov 1999; Vay et al. 2011; Cowan et al. 2013; Lehe et al. 2013).</p>
 <p>In the case of the pseudospectral solvers, the current deposition
 algorithm generally does not satisfy the discretized continuity equation
-in Fourier space <span class="math notranslate nohighlight">\(\tilde{\rho}^{n+1}=\tilde{\rho}^{n}-i\Delta t\mathbf{k}\cdot\mathbf{\tilde{J}}^{n+1/2}\)</span>.
+in Fourier space <span class="math notranslate nohighlight">\(\tilde{\rho}^{n+1}=\tilde{\rho}^{n}-i\Delta t{\mathbf{k}}\cdot\mathbf{\tilde{J}}^{n+1/2}\)</span>.
 In this case, a Boris correction (Birdsall and Langdon 1991) can be applied
-in <span class="math notranslate nohighlight">\(k\)</span> space in the form <span class="math notranslate nohighlight">\(\mathbf{\tilde{E}}_{c}^{n+1}=\mathbf{\tilde{E}}^{n+1}-\left(\mathbf{k}\cdot\mathbf{\tilde{E}}^{n+1}+i\tilde{\rho}^{n+1}\right)\mathbf{\hat{k}}/k\)</span>,
-where <span class="math notranslate nohighlight">\(\mathbf{\tilde{E}}_{c}\)</span> is the corrected field. Alternatively, a correction
+in <span class="math notranslate nohighlight">\(k\)</span> space in the form <span class="math notranslate nohighlight">\({\mathbf{\tilde{E}}}_{c}^{n+1}={\mathbf{\tilde{E}}}^{n+1}-\left({\mathbf{k}}\cdot{\mathbf{\tilde{E}}}^{n+1}+i\tilde{\rho}^{n+1}\right){\mathbf{\hat{k}}}/k\)</span>,
+where <span class="math notranslate nohighlight">\({\mathbf{\tilde{E}}}_{c}\)</span> is the corrected field. Alternatively, a correction
 to the current can be applied (with some similarity to the current
 deposition presented by Morse and Nielson in their potential-based
-model in (Morse and Nielson 1971)) using <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}_{c}^{n+1/2}=\mathbf{\tilde{J}}^{n+1/2}-\left[\mathbf{k}\cdot\mathbf{\tilde{J}}^{n+1/2}-i\left(\tilde{\rho}^{n+1}-\tilde{\rho}^{n}\right)/\Delta t\right]\mathbf{\hat{k}}/k\)</span>,
-where <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}_{c}\)</span> is the corrected current. In this case, the transverse
+model in (Morse and Nielson 1971)) using <span class="math notranslate nohighlight">\({\mathbf{\tilde{J}}}_{c}^{n+1/2}={\mathbf{\tilde{J}}}^{n+1/2}-\left[{\mathbf{k}}\cdot{\mathbf{\tilde{J}}}^{n+1/2}-i\left(\tilde{\rho}^{n+1}-\tilde{\rho}^{n}\right)/\Delta t\right]{\mathbf{\hat{k}}}/k\)</span>,
+where <span class="math notranslate nohighlight">\({\mathbf{\tilde{J}}}_{c}\)</span> is the corrected current. In this case, the transverse
 component of the current is left untouched while the longitudinal
 component is effectively replaced by the one obtained from integration
 of the continuity equation, ensuring that the corrected current satisfies
@@ -537,7 +534,7 @@ domain decomposition of the fields for parallel computation (Jean Luc Vay, Haber
 <p>Alternatively, an exact current deposition can be written for the pseudospectral solvers, following the geometrical interpretation of existing methods in real space (Morse and Nielson 1971; Villasenor and Buneman 1992; Esirkepov 2001), thereby averaging the currents of the paths following grid lines between positions <span class="math notranslate nohighlight">\((x^n,y^n)\)</span> and <span class="math notranslate nohighlight">\((x^{n+1},y^{n+1})\)</span>, which is given in 2D (extension to 3D follows readily) for <span class="math notranslate nohighlight">\(k\neq0\)</span> by (Jean Luc Vay, Haber, and Godfrey 2013):</p>
 <div class="math notranslate nohighlight">
 \[\begin{aligned}
-\mathbf{\tilde{J}}^{k\neq0}=\frac{i\mathbf{\tilde{D}}}{\mathbf{k}}
+{\mathbf{\tilde{J}}}^{k\neq0}=\frac{i\mathbf{\tilde{D}}}{{\mathbf{k}}}
 \label{Eq_Jdep_1}\end{aligned}\]</div>
 <p>with</p>
 <div class="math notranslate nohighlight">
@@ -608,29 +605,29 @@ of computational cores for parallel calculations.</p>
 </div><div id="ref-Birdsalllangdon"><p>Birdsall, C K, and A B Langdon. 1991. <em>Plasma Physics via Computer Simulation</em>. Adam-Hilger.</p>
 </div><div id="ref-BorisICNSP70"><p>Boris, Jp. 1970. “Relativistic Plasma Simulation-Optimization of a Hybrid Code.” In <em>Proc. Fourth Conf. Num. Sim. Plasmas</em>, 3–67. Naval Res. Lab., Wash., D. C.</p>
 </div><div id="ref-Coleieee1997"><p>Cole, J. B. 1997. “A High-Accuracy Realization of the Yee Algorithm Using Non-Standard Finite Differences.” <em>Ieee Transactions on Microwave Theory and Techniques</em> 45 (6): 991–96.</p>
-</div><div id="ref-Coleieee2002"><p>———. 2002. “High-Accuracy Yee Algorithm Based on Nonstandard Finite Differences: New Developments and Verifications.” <em>Ieee Transactions on Antennas and Propagation</em> 50 (9): 1185–91. <a class="reference external" href="https://doi.org/10.1109/Tap.2002.801268">https://doi.org/10.1109/Tap.2002.801268</a>.</p>
-</div><div id="ref-CowanPRSTAB13"><p>Cowan, Benjamin M, David L Bruhwiler, John R Cary, Estelle Cormier-Michel, and Cameron G R Geddes. 2013. “Generalized algorithm for control of numerical dispersion in explicit time-domain electromagnetic simulations.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (4). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.041303">https://doi.org/10.1103/PhysRevSTAB.16.041303</a>.</p>
-</div><div id="ref-DawsonRMP83"><p>Dawson, J M. 1983. “Particle Simulation of Plasmas.” <em>Reviews of Modern Physics</em> 55 (2): 403–47. <a class="reference external" href="https://doi.org/10.1103/RevModPhys.55.403">https://doi.org/10.1103/RevModPhys.55.403</a>.</p>
+</div><div id="ref-Coleieee2002"><p>———. 2002. “High-Accuracy Yee Algorithm Based on Nonstandard Finite Differences: New Developments and Verifications.” <em>Ieee Transactions on Antennas and Propagation</em> 50 (9): 1185–91. doi:<a class="reference external" href="https://doi.org/10.1109/Tap.2002.801268">10.1109/Tap.2002.801268</a>.</p>
+</div><div id="ref-CowanPRSTAB13"><p>Cowan, Benjamin M, David L Bruhwiler, John R Cary, Estelle Cormier-Michel, and Cameron G R Geddes. 2013. “Generalized algorithm for control of numerical dispersion in explicit time-domain electromagnetic simulations.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (4). doi:<a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.041303">10.1103/PhysRevSTAB.16.041303</a>.</p>
+</div><div id="ref-DawsonRMP83"><p>Dawson, J M. 1983. “Particle Simulation of Plasmas.” <em>Reviews of Modern Physics</em> 55 (2): 403–47. doi:<a class="reference external" href="https://doi.org/10.1103/RevModPhys.55.403">10.1103/RevModPhys.55.403</a>.</p>
 </div><div id="ref-Esirkepovcpc01"><p>Esirkepov, Tz. 2001. “Exact Charge Conservation Scheme for Particle-in-Cell Simulation with an Arbitrary Form-Factor.” <em>Computer Physics Communications</em> 135 (2): 144–53.</p>
 </div><div id="ref-Habericnsp73"><p>Haber, I, R Lee, Hh Klein, and Jp Boris. 1973. “Advances in Electromagnetic Simulation Techniques.” In <em>Proc. Sixth Conf. Num. Sim. Plasmas</em>, 46–48. Berkeley, Ca.</p>
-</div><div id="ref-Karkicap06"><p>Karkkainen, M, E Gjonaj, T Lau, and T Weiland. 2006. “Low-Dispersionwake Field Calculation Tools.” In <em>Proc. Of International Computational Accelerator Physics Conference</em>, 35–40. Chamonix, France.</p>
+</div><div id="ref-Karkicap06"><p>Karkkainen, M, E Gjonaj, T Lau, and T Weiland. 2006. “Low-Dispersionwake Field Calculation Tools.” In <em>Proc. of International Computational Accelerator Physics Conference</em>, 35–40. Chamonix, France.</p>
 </div><div id="ref-Langdoncpc92"><p>Langdon, A B. 1992. “On Enforcing Gauss Law in Electromagnetic Particle-in-Cell Codes.” <em>Computer Physics Communications</em> 70 (3): 447–50.</p>
-</div><div id="ref-LehePRSTAB13"><p>Lehe, R, A Lifschitz, C Thaury, V Malka, and X Davoine. 2013. “Numerical growth of emittance in simulations of laser-wakefield acceleration.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (2). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.021301">https://doi.org/10.1103/PhysRevSTAB.16.021301</a>.</p>
-</div><div id="ref-Liumotl1997"><p>Liu, Qh. 1997. “The PSTD Algorithm: A Time-Domain Method Requiring Only Two Cells Per Wavelength.” <em>Microwave and Optical Technology Letters</em> 15 (3): 158–65. <a href="#id3"><span class="problematic" id="id4">`https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T &lt;https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T&gt;`__</span></a>.</p>
+</div><div id="ref-LehePRSTAB13"><p>Lehe, R, A Lifschitz, C Thaury, V Malka, and X Davoine. 2013. “Numerical growth of emittance in simulations of laser-wakefield acceleration.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (2). doi:<a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.021301">10.1103/PhysRevSTAB.16.021301</a>.</p>
+</div><div id="ref-Liumotl1997"><p>Liu, Qh. 1997. “The PSTD Algorithm: A Time-Domain Method Requiring Only Two Cells Per Wavelength.” <em>Microwave and Optical Technology Letters</em> 15 (3): 158–65. doi:<a href="#id3"><span class="problematic" id="id4">`10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T &lt;https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T&gt;`__</span></a>.</p>
 </div><div id="ref-Marderjcp87"><p>Marder, B. 1987. “A Method for Incorporating Gauss Law into Electromagnetic Pic Codes.” <em>Journal of Computational Physics</em> 68 (1): 48–55.</p>
-</div><div id="ref-Morsenielson1971"><p>Morse, Rl, and Cw Nielson. 1971. “Numerical Simulation of Weibel Instability in One and 2 Dimensions.” <em>Phys. Fluids</em> 14 (4): 830 –&amp;. <a class="reference external" href="https://doi.org/10.1063/1.1693518">https://doi.org/10.1063/1.1693518</a>.</p>
-</div><div id="ref-Munzjcp2000"><p>Munz, Cd, P Omnes, R Schneider, E Sonnendrucker, and U Voss. 2000. “Divergence Correction Techniques for Maxwell Solvers Based on A Hyperbolic Model.” <em>Journal of Computational Physics</em> 161 (2): 484–511. <a class="reference external" href="https://doi.org/10.1006/Jcph.2000.6507">https://doi.org/10.1006/Jcph.2000.6507</a>.</p>
+</div><div id="ref-Morsenielson1971"><p>Morse, Rl, and Cw Nielson. 1971. “Numerical Simulation of Weibel Instability in One and 2 Dimensions.” <em>Phys. Fluids</em> 14 (4): 830 –&amp;. doi:<a class="reference external" href="https://doi.org/10.1063/1.1693518">10.1063/1.1693518</a>.</p>
+</div><div id="ref-Munzjcp2000"><p>Munz, Cd, P Omnes, R Schneider, E Sonnendrucker, and U Voss. 2000. “Divergence Correction Techniques for Maxwell Solvers Based on A Hyperbolic Model.” <em>Journal of Computational Physics</em> 161 (2): 484–511. doi:<a class="reference external" href="https://doi.org/10.1006/Jcph.2000.6507">10.1006/Jcph.2000.6507</a>.</p>
 </div><div id="ref-Ohmurapiers2010"><p>Ohmura, Y, and Y Okamura. 2010. “Staggered Grid Pseudo-Spectral Time-Domain Method for Light Scattering Analysis.” <em>Piers Online</em> 6 (7): 632–35.</p>
-</div><div id="ref-PukhovJPP99"><p>Pukhov, A. 1999. “Three-dimensional electromagnetic relativistic particle-in-cell code VLPL (Virtual Laser Plasma Lab).” <em>Journal of Plasma Physics</em> 61 (3): 425–33. <a class="reference external" href="https://doi.org/10.1017/S0022377899007515">https://doi.org/10.1017/S0022377899007515</a>.</p>
-</div><div id="ref-VayJCP13"><p>Vay, Jean-Luc, Irving Haber, and Brendan B Godfrey. 2013. “A domain decomposition method for pseudo-spectral electromagnetic simulations of plasmas.” <em>Journal of Computational Physics</em> 243 (June): 260–68. <a class="reference external" href="https://doi.org/10.1016/j.jcp.2013.03.010">https://doi.org/10.1016/j.jcp.2013.03.010</a>.</p>
-</div><div id="ref-VayJCP2013"><p>Vay, Jean Luc, Irving Haber, and Brendan B. Godfrey. 2013. “A domain decomposition method for pseudo-spectral electromagnetic simulations of plasmas.” <em>Journal of Computational Physics</em> 243: 260–68.</p>
-</div><div id="ref-Vaypop2008"><p>Vay, J L. 2008. “Simulation of Beams or Plasmas Crossing at Relativistic Velocity.” <em>Physics of Plasmas</em> 15 (5): 56701. <a class="reference external" href="https://doi.org/10.1063/1.2837054">https://doi.org/10.1063/1.2837054</a>.</p>
-</div><div id="ref-Vaycpc04"><p>Vay, J.-L., J.-C. Adam, and A Heron. 2004. “Asymmetric Pml for the Absorption of Waves. Application to Mesh Refinement in Electromagnetic Particle-in-Cell Plasma Simulations.” <em>Computer Physics Communications</em> 164 (1-3): 171–77. <a class="reference external" href="https://doi.org/10.1016/J.Cpc.2004.06.026">https://doi.org/10.1016/J.Cpc.2004.06.026</a>.</p>
+</div><div id="ref-PukhovJPP99"><p>Pukhov, A. 1999. “Three-dimensional electromagnetic relativistic particle-in-cell code VLPL (Virtual Laser Plasma Lab).” <em>Journal of Plasma Physics</em> 61 (3): 425–33. doi:<a class="reference external" href="https://doi.org/10.1017/S0022377899007515">10.1017/S0022377899007515</a>.</p>
+</div><div id="ref-Vaypop2008"><p>Vay, J L. 2008. “Simulation of Beams or Plasmas Crossing at Relativistic Velocity.” <em>Physics of Plasmas</em> 15 (5): 56701. doi:<a class="reference external" href="https://doi.org/10.1063/1.2837054">10.1063/1.2837054</a>.</p>
+</div><div id="ref-Vayjcp2011"><p>Vay, J L, C G R Geddes, E Cormier-Michel, and D P Grote. 2011. “Numerical Methods for Instability Mitigation in the Modeling of Laser Wakefield Accelerators in A Lorentz-Boosted Frame.” <em>Journal of Computational Physics</em> 230 (15): 5908–29. doi:<a class="reference external" href="https://doi.org/10.1016/J.Jcp.2011.04.003">10.1016/J.Jcp.2011.04.003</a>.</p>
+</div><div id="ref-Vaycpc04"><p>Vay, J.-L., J.-C. Adam, and A Heron. 2004. “Asymmetric Pml for the Absorption of Waves. Application to Mesh Refinement in Electromagnetic Particle-in-Cell Plasma Simulations.” <em>Computer Physics Communications</em> 164 (1-3): 171–77. doi:<a class="reference external" href="https://doi.org/10.1016/J.Cpc.2004.06.026">10.1016/J.Cpc.2004.06.026</a>.</p>
 </div><div id="ref-Vaypop98"><p>Vay, J.-L., and C Deutsch. 1998. “Charge Compensated Ion Beam Propagation in A Reactor Sized Chamber.” <em>Physics of Plasmas</em> 5 (4): 1190–7.</p>
-</div><div id="ref-Vayjcp2011"><p>Vay, J L, C G R Geddes, E Cormier-Michel, and D P Grote. 2011. “Numerical Methods for Instability Mitigation in the Modeling of Laser Wakefield Accelerators in A Lorentz-Boosted Frame.” <em>Journal of Computational Physics</em> 230 (15): 5908–29. <a class="reference external" href="https://doi.org/10.1016/J.Jcp.2011.04.003">https://doi.org/10.1016/J.Jcp.2011.04.003</a>.</p>
 </div><div id="ref-VayCSD12"><p>Vay, J.-L., D P Grote, R H Cohen, and A Friedman. 2012. “Novel methods in the particle-in-cell accelerator code-framework warp.” Journal Paper. <em>Computational Science and Discovery</em> 5 (1): 014019 (20 pp.).</p>
+</div><div id="ref-VayJCP2013"><p>Vay, Jean Luc, Irving Haber, and Brendan B. Godfrey. 2013. “A domain decomposition method for pseudo-spectral electromagnetic simulations of plasmas.” <em>Journal of Computational Physics</em> 243: 260–68.</p>
+</div><div id="ref-VayJCP13"><p>Vay, Jean-Luc, Irving Haber, and Brendan B Godfrey. 2013. “A domain decomposition method for pseudo-spectral electromagnetic simulations of plasmas.” <em>Journal of Computational Physics</em> 243 (June): 260–68. doi:<a class="reference external" href="https://doi.org/10.1016/j.jcp.2013.03.010">10.1016/j.jcp.2013.03.010</a>.</p>
 </div><div id="ref-Villasenorcpc92"><p>Villasenor, J, and O Buneman. 1992. “Rigorous Charge Conservation for Local Electromagnetic-Field Solvers.” <em>Computer Physics Communications</em> 69 (2-3): 306–16.</p>
-</div><div id="ref-Vincenti2016a"><p>Vincenti, H., and J.-L. Vay. 2016. “Detailed analysis of the effects of stencil spatial variations with arbitrary high-order finite-difference Maxwell solver.” <em>Computer Physics Communications</em> 200 (March). ELSEVIER SCIENCE BV, PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS: 147–67. <a class="reference external" href="https://doi.org/10.1016/j.cpc.2015.11.009">https://doi.org/10.1016/j.cpc.2015.11.009</a>.</p>
+</div><div id="ref-Vincenti2016a"><p>Vincenti, H., and J.-L. Vay. 2016. “Detailed analysis of the effects of stencil spatial variations with arbitrary high-order finite-difference Maxwell solver.” <em>Computer Physics Communications</em> 200 (March). ELSEVIER SCIENCE BV, PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS: 147–67. doi:<a class="reference external" href="https://doi.org/10.1016/j.cpc.2015.11.009">10.1016/j.cpc.2015.11.009</a>.</p>
 </div><div id="ref-Yee"><p>Yee, Ks. 1966. “Numerical Solution of Initial Boundary Value Problems Involving Maxwells Equations in Isotropic Media.” <em>Ieee Transactions on Antennas and Propagation</em> Ap14 (3): 302–7.</p>
 </div></div></div>
 
@@ -645,7 +642,7 @@ of computational cores for parallel calculations.</p>
         <a href="warpx_theory.html" class="btn btn-neutral float-right" title="Mesh refinement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="intro.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -671,16 +668,36 @@ of computational cores for parallel calculations.</p>
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
