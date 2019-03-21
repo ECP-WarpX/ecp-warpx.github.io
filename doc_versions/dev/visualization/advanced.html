@@ -17,37 +17,34 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Theoretical background" href="../theory/theory.html" />
     <link rel="prev" title="In situ Visualization with SENSEI" href="sensei.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -176,9 +173,10 @@ electric and magnetic fields are all defined at different locations in space. Re
 (see the <a class="reference internal" href="yt.html"><span class="doc">Visualization with yt</span></a> page, or the notebook at <code class="docutils literal notranslate"><span class="pre">WarpX/Tools/Visualization.ipynb</span></code> for an example)
 returns cell-centered data for convenience, which involves an additional operation. It is sometimes
 useful to access the raw data directly. Furthermore,
-the WarpX implementation for mesh refinement contains a number of grids (see
+the WarpX implementation for mesh refinement contains a number of grids for each level (coarse,
+fine and auxilary, see
 <a class="reference internal" href="../theory/warpx_theory.html"><span class="doc">Mesh refinement</span></a> for more details), and it is sometimes useful to access each of
-them (regular output return the Auxiliary grid). This page provides information to read
+them (regular output return the auxiliary grid only). This page provides information to read
 raw data of all grids.</p>
 <div class="section" id="dump-additional-data">
 <h2>Dump additional data<a class="headerlink" href="#dump-additional-data" title="Permalink to this headline">¶</a></h2>
@@ -211,8 +209,7 @@ with</p>
 </pre></div>
 </div>
 <p>When <code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields=1</span></code> and <code class="docutils literal notranslate"><span class="pre">warpx.plot_finepatch=1</span></code>, here are some useful
-commands to access, for instance, the <code class="docutils literal notranslate"><span class="pre">Ex</span></code> field on the fine patch of a grid in the
-simulation domain.</p>
+commands to access properties of a grid and the Ex field on the fine patch:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># store grid number 2 into my_grid</span>
 <span class="n">my_grid</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">grids</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 <span class="c1"># Get left and right edges of my_grid</span>
@@ -224,6 +221,17 @@ simulation domain.</p>
 <span class="n">my_grid</span><span class="o">.</span><span class="n">start_index</span>
 </pre></div>
 </div>
+<p>Return the <code class="docutils literal notranslate"><span class="pre">Ex</span></code> field on the fine patch of grid <code class="docutils literal notranslate"><span class="pre">my_grid</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_field</span> <span class="o">=</span> <span class="n">my_grid</span><span class="p">[</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> <span class="s1">&#39;Ex_fp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">v</span>
+</pre></div>
+</div>
+<p>For a 2D plotfile, <code class="docutils literal notranslate"><span class="pre">my_field</span></code> has shape <code class="docutils literal notranslate"><span class="pre">(nx,nz,2)</span></code>. The last component stands for the
+two values on the edges of each cell for the electric field, due to field staggering.
+In the case of <code class="docutils literal notranslate"><span class="pre">Ex_fp</span></code>, the staggering is on direction <code class="docutils literal notranslate"><span class="pre">x</span></code>, so that
+<code class="docutils literal notranslate"><span class="pre">my_field[:,:-1,1]</span> <span class="pre">==</span> <span class="pre">my_field[:,1:,0]</span></code>.</p>
+<p>All combinations of the fields (<code class="docutils literal notranslate"><span class="pre">E</span></code> or <code class="docutils literal notranslate"><span class="pre">B</span></code>), the component (<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> or <code class="docutils literal notranslate"><span class="pre">z</span></code>) and the
+grid (<code class="docutils literal notranslate"><span class="pre">_fp</span></code> for fine, <code class="docutils literal notranslate"><span class="pre">_cp</span></code> for coarse and <code class="docutils literal notranslate"><span class="pre">_aux</span></code> for auxiliary) can be accessed in this
+way, i.e., <code class="docutils literal notranslate"><span class="pre">my_grid['raw',</span> <span class="pre">'Ey_aux']</span></code> or <code class="docutils literal notranslate"><span class="pre">my_grid['raw',</span> <span class="pre">'Bz_cp']</span></code> are valid queries.</p>
 </div>
 </div>
 
@@ -238,7 +246,7 @@ simulation domain.</p>
         <a href="../theory/theory.html" class="btn btn-neutral float-right" title="Theoretical background" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sensei.html" class="btn btn-neutral float-left" title="In situ Visualization with SENSEI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="sensei.html" class="btn btn-neutral" title="In situ Visualization with SENSEI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -264,16 +272,36 @@ simulation domain.</p>
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
