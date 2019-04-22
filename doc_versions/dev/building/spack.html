@@ -17,34 +17,37 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Building WarpX for Cori (NERSC)" href="cori.html" />
     <link rel="prev" title="Installing WarpX as a Python package" href="python.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -87,14 +90,14 @@
 <li class="toctree-l2"><a class="reference internal" href="building.html#downloading-the-source-code">Downloading the source code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="building.html#basic-compilation">Basic compilation</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="building.html#advanced-building-instructions">Advanced building instructions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="openpmd.html">Building WarpX with support for openPMD output</a></li>
 <li class="toctree-l3"><a class="reference internal" href="spectral.html">Building the spectral solver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gpu_local.html">Building WarpX with GPU support (Linux only)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html">Installing WarpX as a Python package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Building WarpX with Spack</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cori.html">Building WarpX for Cori (NERSC)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="summit.html">Building WarpX for Summit (OLCF)</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#building-for-specific-plateforms">Building for specific plateforms</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
@@ -211,7 +214,7 @@ Alternatively, the “spack load” command can be configured so that “spack l
         <a href="cori.html" class="btn btn-neutral float-right" title="Building WarpX for Cori (NERSC)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="python.html" class="btn btn-neutral" title="Installing WarpX as a Python package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="python.html" class="btn btn-neutral float-left" title="Installing WarpX as a Python package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -237,26 +240,16 @@ Alternatively, the “spack load” command can be configured so that “spack l
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

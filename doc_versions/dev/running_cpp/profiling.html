@@ -17,34 +17,37 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Running WarpX from Python" href="../running_python/running_python.html" />
     <link rel="prev" title="Input parameters" href="parameters.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -174,14 +177,14 @@
 <h2>Profiling the code with Intel Advisor on NERSC<a class="headerlink" href="#profiling-the-code-with-intel-advisor-on-nersc" title="Permalink to this headline">¶</a></h2>
 <p>Follow these steps:</p>
 <ul>
-<li><p class="first">Instrument the code during compilation</p>
+<li><p>Instrument the code during compilation</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span> <span class="n">USE_VTUNE</span><span class="o">=</span><span class="n">TRUE</span>
 </pre></div>
 </div>
 <p>(where the first line is only needed for KNL)</p>
 </li>
-<li><p class="first">In your SLURM submission script, use the following
+<li><p>In your SLURM submission script, use the following
 lines in order to run the executable. (In addition
 to setting the usual <code class="docutils literal notranslate"><span class="pre">OMP</span></code> environment variables.)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">advisor</span>
@@ -194,7 +197,7 @@ to setting the usual <code class="docutils literal notranslate"><span class="pre
 the proper values, and <code class="docutils literal notranslate"><span class="pre">&lt;warpx_executable&gt;</span></code> should be replaced by the
 name of the WarpX executable.</p>
 </li>
-<li><p class="first">Launch the Intel Advisor GUI</p>
+<li><p>Launch the Intel Advisor GUI</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">advisor</span>
 <span class="n">advixe</span><span class="o">-</span><span class="n">gui</span>
 </pre></div>
@@ -216,7 +219,7 @@ name of the WarpX executable.</p>
         <a href="../running_python/running_python.html" class="btn btn-neutral float-right" title="Running WarpX from Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="parameters.html" class="btn btn-neutral" title="Input parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="parameters.html" class="btn btn-neutral float-left" title="Input parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -242,26 +245,16 @@ name of the WarpX executable.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

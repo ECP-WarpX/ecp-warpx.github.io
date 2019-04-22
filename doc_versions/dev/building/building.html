@@ -17,34 +17,37 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Building the spectral solver" href="spectral.html" />
+    <link rel="next" title="Building WarpX with support for openPMD output" href="openpmd.html" />
     <link rel="prev" title="WarpX documentation" href="../index.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -87,10 +90,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#downloading-the-source-code">Downloading the source code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#basic-compilation">Basic compilation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#advanced-building-instructions">Advanced building instructions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="openpmd.html">Building WarpX with support for openPMD output</a></li>
 <li class="toctree-l3"><a class="reference internal" href="spectral.html">Building the spectral solver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gpu_local.html">Building WarpX with GPU support (Linux only)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="python.html">Installing WarpX as a Python package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="spack.html">Building WarpX with Spack</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-for-specific-plateforms">Building for specific plateforms</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cori.html">Building WarpX for Cori (NERSC)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="summit.html">Building WarpX for Summit (OLCF)</a></li>
 </ul>
@@ -203,23 +210,23 @@ single directory (e.g. <code class="docutils literal notranslate"><span class="p
 </div>
 <p>This will generate an executable file in the <code class="docutils literal notranslate"><span class="pre">Bin</span></code> directory.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>The compilation options are set in the file <code class="docutils literal notranslate"><span class="pre">GNUmakefile</span></code>. The default
 options correspond to an optimized code for 3D geometry. You can modify the
 options in this file in order to (for instance):</p>
 <blockquote>
 <div><ul class="simple">
-<li>Use 2D geometry</li>
-<li>Disable OpenMP</li>
-<li>Profile or debug the code</li>
-<li>Choose a given compiler</li>
+<li><p>Use 2D geometry</p></li>
+<li><p>Disable OpenMP</p></li>
+<li><p>Profile or debug the code</p></li>
+<li><p>Choose a given compiler</p></li>
 </ul>
 </div></blockquote>
 <p>For a description of these different options, see the <a class="reference external" href="https://amrex-codes.github.io/amrex/BuildingAMReX.html#building-with-gnu-make">corresponding page</a> in
 the AMReX documentation.</p>
 <p>Alternatively, instead of modifying the file <code class="docutils literal notranslate"><span class="pre">GNUmakefile</span></code>, you can
 directly pass the options in command line ; for instance:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_OMP</span><span class="o">=</span><span class="n">FALSE</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_OMP</span><span class="o">=</span><span class="n">FALSE</span>
 </pre></div>
 </div>
 </div>
@@ -232,10 +239,18 @@ directly pass the options in command line ; for instance:</p>
 <h2>Advanced building instructions<a class="headerlink" href="#advanced-building-instructions" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="openpmd.html">Building WarpX with support for openPMD output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spectral.html">Building the spectral solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu_local.html">Building WarpX with GPU support (Linux only)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Installing WarpX as a Python package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spack.html">Building WarpX with Spack</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="building-for-specific-plateforms">
+<h2>Building for specific plateforms<a class="headerlink" href="#building-for-specific-plateforms" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="cori.html">Building WarpX for Cori (NERSC)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summit.html">Building WarpX for Summit (OLCF)</a></li>
 </ul>
@@ -251,10 +266,10 @@ directly pass the options in command line ; for instance:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="spectral.html" class="btn btn-neutral float-right" title="Building the spectral solver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="openpmd.html" class="btn btn-neutral float-right" title="Building WarpX with support for openPMD output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="WarpX documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="WarpX documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -280,26 +295,16 @@ directly pass the options in command line ; for instance:</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

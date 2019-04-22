@@ -17,34 +17,37 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Mesh refinement" href="warpx_theory.html" />
     <link rel="prev" title="Introduction" href="intro.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -180,9 +183,9 @@
             
   <div class="section" id="the-electromagnetic-particle-in-cell-method">
 <h1>The electromagnetic Particle-In-Cell method<a class="headerlink" href="#the-electromagnetic-particle-in-cell-method" title="Permalink to this headline">¶</a></h1>
-<div class="figure" id="id1">
+<div class="figure align-center" id="id1">
 <img alt="[fig:PIC] The Particle-In-Cell (PIC) method follows the evolution of a collection of charged macro-particles (positively charged in blue on the left plot, negatively charged in red) that evolve self-consistently with their electromagnetic (or electrostatic) fields. The core PIC algorithm involves four operations at each time step: 1) evolve the velocity and position of the particles using the Newton-Lorentz equations, 2) deposit the charge and/or current densities through interpolation from the particles distributions onto the grid, 3) evolve Maxwell’s wave equations (for electromagnetic) or solve Poisson’s equation (for electrostatic) on the grid, 4) interpolate the fields from the grid onto the particles for the next particle push. Additional “add-ons” operations are inserted between these core operations to account for additional physics (e.g. absorption/emission of particles, addition of external forces to account for accelerator focusing or accelerating component) or numerical effects (e.g. smoothing/filtering of the charge/current densities and/or fields on the grid)." src="../_images/PIC.png" />
-<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">[fig:PIC] The Particle-In-Cell (PIC) method follows the evolution of a collection of charged macro-particles (positively charged in blue on the left plot, negatively charged in red) that evolve self-consistently with their electromagnetic (or electrostatic) fields. The core PIC algorithm involves four operations at each time step: 1) evolve the velocity and position of the particles using the Newton-Lorentz equations, 2) deposit the charge and/or current densities through interpolation from the particles distributions onto the grid, 3) evolve Maxwell’s wave equations (for electromagnetic) or solve Poisson’s equation (for electrostatic) on the grid, 4) interpolate the fields from the grid onto the particles for the next particle push. Additional “add-ons” operations are inserted between these core operations to account for additional physics (e.g. absorption/emission of particles, addition of external forces to account for accelerator focusing or accelerating component) or numerical effects (e.g. smoothing/filtering of the charge/current densities and/or fields on the grid).</span></p>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">[fig:PIC] The Particle-In-Cell (PIC) method follows the evolution of a collection of charged macro-particles (positively charged in blue on the left plot, negatively charged in red) that evolve self-consistently with their electromagnetic (or electrostatic) fields. The core PIC algorithm involves four operations at each time step: 1) evolve the velocity and position of the particles using the Newton-Lorentz equations, 2) deposit the charge and/or current densities through interpolation from the particles distributions onto the grid, 3) evolve Maxwell’s wave equations (for electromagnetic) or solve Poisson’s equation (for electrostatic) on the grid, 4) interpolate the fields from the grid onto the particles for the next particle push. Additional “add-ons” operations are inserted between these core operations to account for additional physics (e.g. absorption/emission of particles, addition of external forces to account for accelerator focusing or accelerating component) or numerical effects (e.g. smoothing/filtering of the charge/current densities and/or fields on the grid).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <p>In the electromagnetic Particle-In-Cell method (Birdsall and Langdon 1991),
 the electromagnetic fields are solved on a grid, usually using Maxwell’s
@@ -286,9 +289,9 @@ D_{t}\mathbf{B} &amp; = &amp; -\nabla\times\mathbf{E}\label{Eq:Faraday-2}\\
 D_{t}\mathbf{E} &amp; = &amp; \nabla\times\mathbf{B}-\mathbf{J}\label{Eq:Ampere-2}\\
 \left[\nabla\cdot\mathbf{E}\right. &amp; = &amp; \left.\rho\right]\label{Eq:Gauss-2}\\
 \left[\nabla\cdot\mathbf{B}\right. &amp; = &amp; \left.0\right].\label{Eq:divb-2}\end{aligned}\end{split}\]</div>
-<div class="figure" id="id2">
+<div class="figure align-center" id="id2">
 <img alt="[fig:yee_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference &quot;leapfrog&quot; integrator." src="../_images/Yee_grid.png" />
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">[fig:yee_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference “leapfrog” integrator.</span></p>
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">[fig:yee_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference “leapfrog” integrator.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <p>The differential operator is defined as <span class="math notranslate nohighlight">\(\nabla=D_{x}\mathbf{\hat{x}}+D_{y}\mathbf{\hat{y}}+D_{z}\mathbf{\hat{z}}\)</span>
 and the finite-difference operators in time and space are defined
@@ -366,45 +369,27 @@ suppresses this instability.</p>
 <p>Maxwell’s equations in Fourier space are given by</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\frac{\partial\mathbf{\tilde{E}}}{\partial t} &amp; = &amp; i\mathbf{k}\times\mathbf{\tilde{B}}-\mathbf{\tilde{J}}\\
+\frac{\partial\mathbf{\tilde{E}}}{\partial t} &amp; = &amp; c^2i\mathbf{k}\times\mathbf{\tilde{B}}-\frac{1}{\epsilon_0} \mathbf{\tilde{J}}\\
 \frac{\partial\mathbf{\tilde{B}}}{\partial t} &amp; = &amp; -i\mathbf{k}\times\mathbf{\tilde{E}}\\
-{}[i\mathbf{k}\cdot\mathbf{\tilde{E}}&amp; = &amp; \tilde{\rho}]\\
+{}[i\mathbf{k}\cdot\mathbf{\tilde{E}}&amp; = &amp; \frac{\tilde{\rho}}{\epsilon_0}]\\
 {}[i\mathbf{k}\cdot\mathbf{\tilde{B}}&amp; = &amp; 0]\end{aligned}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tilde{a}\)</span> is the Fourier Transform of the quantity <span class="math notranslate nohighlight">\(a\)</span>.
 As with the real space formulation, provided that the continuity equation
 <span class="math notranslate nohighlight">\(\partial\tilde{\rho}/\partial t+i\mathbf{k}\cdot\mathbf{\tilde{J}}=0\)</span> is satisfied, then
 the last two equations will automatically be satisfied at any time
 if satisfied initially and do not need to be explicitly integrated.</p>
-<p>Decomposing the electric field and current between longitudinal and
-transverse components <span class="math notranslate nohighlight">\(\mathbf{\tilde{E}}=\mathbf{\tilde{E}}_{L}+\mathbf{\tilde{E}}_{T}=\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{E}})-\mathbf{\hat{k}}\times(\mathbf{\hat{k}}\times\mathbf{\tilde{E}})\)</span>
-and <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}=\mathbf{\tilde{J}}_{L}+\mathbf{\tilde{J}}_{T}=\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{J}})-\mathbf{\hat{k}}\times(\mathbf{\hat{k}}\times\mathbf{\tilde{J}})\)</span>
-gives</p>
+<p>These equations can be integrated analytically over one timestep,
+assuming that the current density <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}\)</span> is constant over this timestep, and that
+the charge density is linear in time (<span class="math notranslate nohighlight">\(\tilde{\rho}(t) = \tilde{\rho}^n +
+\frac{\tilde{\rho}^{n+1}-\tilde{\rho}^n}{\Delta t}(t-n\Delta t)\)</span>). This gives:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\frac{\partial\mathbf{\tilde{E}}_{T}}{\partial t} &amp; = &amp; i\mathbf{k}\times\mathbf{\tilde{B}}-\mathbf{\tilde{J}_{T}}\\
-\frac{\partial\mathbf{\tilde{E}}_{L}}{\partial t} &amp; = &amp; -\mathbf{\tilde{J}_{L}}\\
-\frac{\partial\mathbf{\tilde{B}}}{\partial t} &amp; = &amp; -i\mathbf{k}\times\mathbf{\tilde{E}}\end{aligned}\end{split}\]</div>
-<p>with <span class="math notranslate nohighlight">\(\mathbf{\hat{k}}=\mathbf{k}/k\)</span>.</p>
-<p>If the sources are assumed to be constant over a time interval <span class="math notranslate nohighlight">\(\Delta t\)</span>,
-the system of equations is solvable analytically and is given by (see
-(Haber et al. 1973) for the original formulation and (Jean-Luc Vay, Haber, and Godfrey 2013)
-for a more detailed derivation):</p>
-<p>[Eq:PSATD]</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\mathbf{\tilde{E}}_{T}^{n+1} &amp; = &amp; C\mathbf{\tilde{E}}_{T}^{n}+iS\mathbf{\hat{k}}\times\mathbf{\tilde{B}}^{n}-\frac{S}{k}\mathbf{\tilde{J}}_{T}^{n+1/2}\label{Eq:PSATD_transverse_1}\\
-\mathbf{\tilde{E}}_{L}^{n+1} &amp; = &amp; \mathbf{\tilde{E}}_{L}^{n}-\Delta t\mathbf{\tilde{J}}_{L}^{n+1/2}\\
-\mathbf{\tilde{B}}^{n+1} &amp; = &amp; C\mathbf{\tilde{B}}^{n}-iS\mathbf{\hat{k}}\times\mathbf{\tilde{E}}^{n}\\
-&amp;+&amp;i\frac{1-C}{k}\mathbf{\hat{k}}\times\mathbf{\tilde{J}}^{n+1/2}\label{Eq:PSATD_transverse_2}\end{aligned}\end{split}\]</div>
-<p>with <span class="math notranslate nohighlight">\(C=\cos\left(k\Delta t\right)\)</span> and <span class="math notranslate nohighlight">\(S=\sin\left(k\Delta t\right)\)</span>.</p>
-<p>Combining the transverse and longitudinal components, gives</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\mathbf{\tilde{E}}^{n+1} &amp; = &amp; C\mathbf{\tilde{E}}^{n}+iS\mathbf{\hat{k}}\times\mathbf{\tilde{B}}^{n}-\frac{S}{k}\mathbf{\tilde{J}}^{n+1/2}\\
- &amp; + &amp;(1-C)\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{E}}^{n})\nonumber \\
- &amp; + &amp; \mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{J}}^{n+1/2})\left(\frac{S}{k}-\Delta t\right),\label{Eq_PSATD_1}\\
-\mathbf{\tilde{B}}^{n+1} &amp; = &amp; C\mathbf{\tilde{B}}^{n}-iS\mathbf{\hat{k}}\times\mathbf{\tilde{E}}^{n}\\
-&amp;+&amp;i\frac{1-C}{k}\mathbf{\hat{k}}\times\mathbf{\tilde{J}}^{n+1/2}.\label{Eq_PSATD_2}\end{aligned}\end{split}\]</div>
+\mathbf{\tilde{E}}^{n+1} &amp; = &amp; C\mathbf{\tilde{E}}^{n}+\frac{S}{ck}\left(c^2i\mathbf{k}\times\mathbf{\tilde{B}}^{n}-\frac{1}{\epsilon_0}\mathbf{\tilde{J}}^{n+1/2}\right) \\
+ &amp; - &amp; i\mathbf{k}\left[ \frac{1}{\epsilon_0 k^2}\left( 1 - \frac{S}{ck\Delta t} \right)\tilde{\rho}^{n+1}
+ - \frac{1}{\epsilon_0 k^2}\left( C - \frac{S}{ck\Delta t} \right)\tilde{\rho}^{n}\right]\nonumber \\
+\mathbf{\tilde{B}}^{n+1} &amp; = &amp; C\mathbf{\tilde{B}}^{n}-\frac{S}{ck}i\mathbf{k}\times\mathbf{\tilde{E}}^{n}\\
+&amp;+&amp;\frac{1}{\epsilon_0}\frac{1-C}{c^2k^2}i\mathbf{k}\times\mathbf{\tilde{J}}^{n+1/2}.\label{Eq_PSATD_2}\end{aligned}\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\(C=\cos\left(c k\Delta t\right)\)</span> and <span class="math notranslate nohighlight">\(S=\sin\left(c k\Delta t\right)\)</span>.</p>
 <p>For fields generated by the source terms without the self-consistent
 dynamics of the charged particles, this algorithm is free of numerical
 dispersion and is not subject to a Courant condition. Furthermore,
@@ -416,7 +401,7 @@ formulation reduces to the perhaps better known pseudo-spectral time-domain
 (PSTD) formulation (Dawson 1983; Liu 1997):</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\mathbf{\tilde{E}}^{n+1} &amp; = &amp; \mathbf{\tilde{E}}^{n}+i\Delta t\mathbf{k}\times\mathbf{\tilde{B}}^{n+1/2}-\Delta t\mathbf{\tilde{J}}^{n+1/2},\\
+\mathbf{\tilde{E}}^{n+1} &amp; = &amp; \mathbf{\tilde{E}}^{n}+ic^2\Delta t\mathbf{k}\times\mathbf{\tilde{B}}^{n+1/2}-\frac{\Delta t}{\epsilon_0}\mathbf{\tilde{J}}^{n+1/2},\\
 \mathbf{\tilde{B}}^{n+3/2} &amp; = &amp; \mathbf{\tilde{B}}^{n+1/2}-i\Delta t\mathbf{k}\times\mathbf{\tilde{E}}^{n+1}.\end{aligned}\end{split}\]</div>
 <p>The dispersion relation of the PSTD solver is given by <span class="math notranslate nohighlight">\(\sin(\frac{\omega\Delta t}{2})=\frac{k\Delta t}{2}.\)</span>
 In contrast to the PSATD solver, the PSTD solver is subject to numerical
@@ -601,65 +586,34 @@ for a single pass equivalent filter, hence giving a gain of 9 in compactness
 for the stride filters combination in comparison to the single-pass
 filter with large stencil, resulting in more favorable scaling with the number
 of computational cores for parallel calculations.</p>
-<div class="references docutils container" id="refs">
-<div class="docutils container" id="ref-abejcp86">
-Abe, H, N Sakairi, R Itatani, and H Okuda. 1986. “High-Order Spline Interpolations in the Particle Simulation.” <em>Journal of Computational Physics</em> 63 (2): 247–67.</div>
-<div class="docutils container" id="ref-birdsalllangdon">
-Birdsall, C K, and A B Langdon. 1991. <em>Plasma Physics via Computer Simulation</em>. Adam-Hilger.</div>
-<div class="docutils container" id="ref-borisicnsp70">
-Boris, Jp. 1970. “Relativistic Plasma Simulation-Optimization of a Hybrid Code.” In <em>Proc. Fourth Conf. Num. Sim. Plasmas</em>, 3–67. Naval Res. Lab., Wash., D. C.</div>
-<div class="docutils container" id="ref-coleieee1997">
-Cole, J. B. 1997. “A High-Accuracy Realization of the Yee Algorithm Using Non-Standard Finite Differences.” <em>Ieee Transactions on Microwave Theory and Techniques</em> 45 (6): 991–96.</div>
-<div class="docutils container" id="ref-coleieee2002">
-———. 2002. “High-Accuracy Yee Algorithm Based on Nonstandard Finite Differences: New Developments and Verifications.” <em>Ieee Transactions on Antennas and Propagation</em> 50 (9): 1185–91. <a class="reference external" href="https://doi.org/10.1109/Tap.2002.801268">https://doi.org/10.1109/Tap.2002.801268</a>.</div>
-<div class="docutils container" id="ref-cowanprstab13">
-Cowan, Benjamin M, David L Bruhwiler, John R Cary, Estelle Cormier-Michel, and Cameron G R Geddes. 2013. “Generalized algorithm for control of numerical dispersion in explicit time-domain electromagnetic simulations.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (4). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.041303">https://doi.org/10.1103/PhysRevSTAB.16.041303</a>.</div>
-<div class="docutils container" id="ref-dawsonrmp83">
-Dawson, J M. 1983. “Particle Simulation of Plasmas.” <em>Reviews of Modern Physics</em> 55 (2): 403–47. <a class="reference external" href="https://doi.org/10.1103/RevModPhys.55.403">https://doi.org/10.1103/RevModPhys.55.403</a>.</div>
-<div class="docutils container" id="ref-esirkepovcpc01">
-Esirkepov, Tz. 2001. “Exact Charge Conservation Scheme for Particle-in-Cell Simulation with an Arbitrary Form-Factor.” <em>Computer Physics Communications</em> 135 (2): 144–53.</div>
-<div class="docutils container" id="ref-habericnsp73">
-Haber, I, R Lee, Hh Klein, and Jp Boris. 1973. “Advances in Electromagnetic Simulation Techniques.” In <em>Proc. Sixth Conf. Num. Sim. Plasmas</em>, 46–48. Berkeley, Ca.</div>
-<div class="docutils container" id="ref-karkicap06">
-Karkkainen, M, E Gjonaj, T Lau, and T Weiland. 2006. “Low-Dispersionwake Field Calculation Tools.” In <em>Proc. Of International Computational Accelerator Physics Conference</em>, 35–40. Chamonix, France.</div>
-<div class="docutils container" id="ref-langdoncpc92">
-Langdon, A B. 1992. “On Enforcing Gauss Law in Electromagnetic Particle-in-Cell Codes.” <em>Computer Physics Communications</em> 70 (3): 447–50.</div>
-<div class="docutils container" id="ref-leheprstab13">
-Lehe, R, A Lifschitz, C Thaury, V Malka, and X Davoine. 2013. “Numerical growth of emittance in simulations of laser-wakefield acceleration.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (2). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.021301">https://doi.org/10.1103/PhysRevSTAB.16.021301</a>.</div>
-<div class="docutils container" id="ref-liumotl1997">
-Liu, Qh. 1997. “The PSTD Algorithm: A Time-Domain Method Requiring Only Two Cells Per Wavelength.” <em>Microwave and Optical Technology Letters</em> 15 (3): 158–65. <a class="reference external" href="https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3%3C158::Aid-Mop11%3E3.3.Co;2-T">https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3%3C158::Aid-Mop11%3E3.3.Co;2-T</a>.</div>
-<div class="docutils container" id="ref-marderjcp87">
-Marder, B. 1987. “A Method for Incorporating Gauss Law into Electromagnetic Pic Codes.” <em>Journal of Computational Physics</em> 68 (1): 48–55.</div>
-<div class="docutils container" id="ref-morsenielson1971">
-Morse, Rl, and Cw Nielson. 1971. “Numerical Simulation of Weibel Instability in One and 2 Dimensions.” <em>Phys. Fluids</em> 14 (4): 830 –&amp;. <a class="reference external" href="https://doi.org/10.1063/1.1693518">https://doi.org/10.1063/1.1693518</a>.</div>
-<div class="docutils container" id="ref-munzjcp2000">
-Munz, Cd, P Omnes, R Schneider, E Sonnendrucker, and U Voss. 2000. “Divergence Correction Techniques for Maxwell Solvers Based on A Hyperbolic Model.” <em>Journal of Computational Physics</em> 161 (2): 484–511. <a class="reference external" href="https://doi.org/10.1006/Jcph.2000.6507">https://doi.org/10.1006/Jcph.2000.6507</a>.</div>
-<div class="docutils container" id="ref-ohmurapiers2010">
-Ohmura, Y, and Y Okamura. 2010. “Staggered Grid Pseudo-Spectral Time-Domain Method for Light Scattering Analysis.” <em>Piers Online</em> 6 (7): 632–35.</div>
-<div class="docutils container" id="ref-pukhovjpp99">
-Pukhov, A. 1999. “Three-dimensional electromagnetic relativistic particle-in-cell code VLPL (Virtual Laser Plasma Lab).” <em>Journal of Plasma Physics</em> 61 (3): 425–33. <a class="reference external" href="https://doi.org/10.1017/S0022377899007515">https://doi.org/10.1017/S0022377899007515</a>.</div>
-<div class="docutils container" id="ref-vayjcp13">
-Vay, Jean-Luc, Irving Haber, and Brendan B Godfrey. 2013. “A domain decomposition method for pseudo-spectral electromagnetic simulations of plasmas.” <em>Journal of Computational Physics</em> 243 (June): 260–68. <a class="reference external" href="https://doi.org/10.1016/j.jcp.2013.03.010">https://doi.org/10.1016/j.jcp.2013.03.010</a>.</div>
-<div class="docutils container" id="ref-vayjcp2013">
-Vay, Jean Luc, Irving Haber, and Brendan B. Godfrey. 2013. “A domain decomposition method for pseudo-spectral electromagnetic simulations of plasmas.” <em>Journal of Computational Physics</em> 243: 260–68.</div>
-<div class="docutils container" id="ref-vaypop2008">
-Vay, J L. 2008. “Simulation of Beams or Plasmas Crossing at Relativistic Velocity.” <em>Physics of Plasmas</em> 15 (5): 56701. <a class="reference external" href="https://doi.org/10.1063/1.2837054">https://doi.org/10.1063/1.2837054</a>.</div>
-<div class="docutils container" id="ref-vaycpc04">
-Vay, J.-L., J.-C. Adam, and A Heron. 2004. “Asymmetric Pml for the Absorption of Waves. Application to Mesh Refinement in Electromagnetic Particle-in-Cell Plasma Simulations.” <em>Computer Physics Communications</em> 164 (1-3): 171–77. <a class="reference external" href="https://doi.org/10.1016/J.Cpc.2004.06.026">https://doi.org/10.1016/J.Cpc.2004.06.026</a>.</div>
-<div class="docutils container" id="ref-vaypop98">
-Vay, J.-L., and C Deutsch. 1998. “Charge Compensated Ion Beam Propagation in A Reactor Sized Chamber.” <em>Physics of Plasmas</em> 5 (4): 1190–7.</div>
-<div class="docutils container" id="ref-vayjcp2011">
-Vay, J L, C G R Geddes, E Cormier-Michel, and D P Grote. 2011. “Numerical Methods for Instability Mitigation in the Modeling of Laser Wakefield Accelerators in A Lorentz-Boosted Frame.” <em>Journal of Computational Physics</em> 230 (15): 5908–29. <a class="reference external" href="https://doi.org/10.1016/J.Jcp.2011.04.003">https://doi.org/10.1016/J.Jcp.2011.04.003</a>.</div>
-<div class="docutils container" id="ref-vaycsd12">
-Vay, J.-L., D P Grote, R H Cohen, and A Friedman. 2012. “Novel methods in the particle-in-cell accelerator code-framework warp.” Journal Paper. <em>Computational Science and Discovery</em> 5 (1): 014019 (20 pp.).</div>
-<div class="docutils container" id="ref-villasenorcpc92">
-Villasenor, J, and O Buneman. 1992. “Rigorous Charge Conservation for Local Electromagnetic-Field Solvers.” <em>Computer Physics Communications</em> 69 (2-3): 306–16.</div>
-<div class="docutils container" id="ref-vincenti2016a">
-Vincenti, H., and J.-L. Vay. 2016. “Detailed analysis of the effects of stencil spatial variations with arbitrary high-order finite-difference Maxwell solver.” <em>Computer Physics Communications</em> 200 (March): 147–67. <a class="reference external" href="https://doi.org/10.1016/j.cpc.2015.11.009">https://doi.org/10.1016/j.cpc.2015.11.009</a>.</div>
-<div class="docutils container" id="ref-yee">
-Yee, Ks. 1966. “Numerical Solution of Initial Boundary Value Problems Involving Maxwells Equations in Isotropic Media.” <em>Ieee Transactions on Antennas and Propagation</em> Ap14 (3): 302–7.</div>
-</div>
-</div>
+<div id="refs" class="references"><div id="ref-Abejcp86"><p>Abe, H, N Sakairi, R Itatani, and H Okuda. 1986. “High-Order Spline Interpolations in the Particle Simulation.” <em>Journal of Computational Physics</em> 63 (2): 247–67.</p>
+</div><div id="ref-Birdsalllangdon"><p>Birdsall, C K, and A B Langdon. 1991. <em>Plasma Physics via Computer Simulation</em>. Adam-Hilger.</p>
+</div><div id="ref-BorisICNSP70"><p>Boris, Jp. 1970. “Relativistic Plasma Simulation-Optimization of a Hybrid Code.” In <em>Proc. Fourth Conf. Num. Sim. Plasmas</em>, 3–67. Naval Res. Lab., Wash., D. C.</p>
+</div><div id="ref-Coleieee1997"><p>Cole, J. B. 1997. “A High-Accuracy Realization of the Yee Algorithm Using Non-Standard Finite Differences.” <em>Ieee Transactions on Microwave Theory and Techniques</em> 45 (6): 991–96.</p>
+</div><div id="ref-Coleieee2002"><p>———. 2002. “High-Accuracy Yee Algorithm Based on Nonstandard Finite Differences: New Developments and Verifications.” <em>Ieee Transactions on Antennas and Propagation</em> 50 (9): 1185–91. <a class="reference external" href="https://doi.org/10.1109/Tap.2002.801268">https://doi.org/10.1109/Tap.2002.801268</a>.</p>
+</div><div id="ref-CowanPRSTAB13"><p>Cowan, Benjamin M, David L Bruhwiler, John R Cary, Estelle Cormier-Michel, and Cameron G R Geddes. 2013. “Generalized algorithm for control of numerical dispersion in explicit time-domain electromagnetic simulations.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (4). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.041303">https://doi.org/10.1103/PhysRevSTAB.16.041303</a>.</p>
+</div><div id="ref-DawsonRMP83"><p>Dawson, J M. 1983. “Particle Simulation of Plasmas.” <em>Reviews of Modern Physics</em> 55 (2): 403–47. <a class="reference external" href="https://doi.org/10.1103/RevModPhys.55.403">https://doi.org/10.1103/RevModPhys.55.403</a>.</p>
+</div><div id="ref-Esirkepovcpc01"><p>Esirkepov, Tz. 2001. “Exact Charge Conservation Scheme for Particle-in-Cell Simulation with an Arbitrary Form-Factor.” <em>Computer Physics Communications</em> 135 (2): 144–53.</p>
+</div><div id="ref-Karkicap06"><p>Karkkainen, M, E Gjonaj, T Lau, and T Weiland. 2006. “Low-Dispersionwake Field Calculation Tools.” In <em>Proc. Of International Computational Accelerator Physics Conference</em>, 35–40. Chamonix, France.</p>
+</div><div id="ref-Langdoncpc92"><p>Langdon, A B. 1992. “On Enforcing Gauss Law in Electromagnetic Particle-in-Cell Codes.” <em>Computer Physics Communications</em> 70 (3): 447–50.</p>
+</div><div id="ref-LehePRSTAB13"><p>Lehe, R, A Lifschitz, C Thaury, V Malka, and X Davoine. 2013. “Numerical growth of emittance in simulations of laser-wakefield acceleration.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (2). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.021301">https://doi.org/10.1103/PhysRevSTAB.16.021301</a>.</p>
+</div><div id="ref-Liumotl1997"><p>Liu, Qh. 1997. “The PSTD Algorithm: A Time-Domain Method Requiring Only Two Cells Per Wavelength.” <em>Microwave and Optical Technology Letters</em> 15 (3): 158–65. <a href="#id3"><span class="problematic" id="id4">`https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T &lt;https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T&gt;`__</span></a>.</p>
+</div><div id="ref-Marderjcp87"><p>Marder, B. 1987. “A Method for Incorporating Gauss Law into Electromagnetic Pic Codes.” <em>Journal of Computational Physics</em> 68 (1): 48–55.</p>
+</div><div id="ref-Morsenielson1971"><p>Morse, Rl, and Cw Nielson. 1971. “Numerical Simulation of Weibel Instability in One and 2 Dimensions.” <em>Phys. Fluids</em> 14 (4): 830 –&amp;. <a class="reference external" href="https://doi.org/10.1063/1.1693518">https://doi.org/10.1063/1.1693518</a>.</p>
+</div><div id="ref-Munzjcp2000"><p>Munz, Cd, P Omnes, R Schneider, E Sonnendrucker, and U Voss. 2000. “Divergence Correction Techniques for Maxwell Solvers Based on A Hyperbolic Model.” <em>Journal of Computational Physics</em> 161 (2): 484–511. <a class="reference external" href="https://doi.org/10.1006/Jcph.2000.6507">https://doi.org/10.1006/Jcph.2000.6507</a>.</p>
+</div><div id="ref-Ohmurapiers2010"><p>Ohmura, Y, and Y Okamura. 2010. “Staggered Grid Pseudo-Spectral Time-Domain Method for Light Scattering Analysis.” <em>Piers Online</em> 6 (7): 632–35.</p>
+</div><div id="ref-PukhovJPP99"><p>Pukhov, A. 1999. “Three-dimensional electromagnetic relativistic particle-in-cell code VLPL (Virtual Laser Plasma Lab).” <em>Journal of Plasma Physics</em> 61 (3): 425–33. <a class="reference external" href="https://doi.org/10.1017/S0022377899007515">https://doi.org/10.1017/S0022377899007515</a>.</p>
+</div><div id="ref-VayJCP13"><p>Vay, Jean-Luc, Irving Haber, and Brendan B Godfrey. 2013. “A domain decomposition method for pseudo-spectral electromagnetic simulations of plasmas.” <em>Journal of Computational Physics</em> 243 (June): 260–68. <a class="reference external" href="https://doi.org/10.1016/j.jcp.2013.03.010">https://doi.org/10.1016/j.jcp.2013.03.010</a>.</p>
+</div><div id="ref-VayJCP2013"><p>Vay, Jean Luc, Irving Haber, and Brendan B. Godfrey. 2013. “A domain decomposition method for pseudo-spectral electromagnetic simulations of plasmas.” <em>Journal of Computational Physics</em> 243: 260–68.</p>
+</div><div id="ref-Vaypop2008"><p>Vay, J L. 2008. “Simulation of Beams or Plasmas Crossing at Relativistic Velocity.” <em>Physics of Plasmas</em> 15 (5): 56701. <a class="reference external" href="https://doi.org/10.1063/1.2837054">https://doi.org/10.1063/1.2837054</a>.</p>
+</div><div id="ref-Vaycpc04"><p>Vay, J.-L., J.-C. Adam, and A Heron. 2004. “Asymmetric Pml for the Absorption of Waves. Application to Mesh Refinement in Electromagnetic Particle-in-Cell Plasma Simulations.” <em>Computer Physics Communications</em> 164 (1-3): 171–77. <a class="reference external" href="https://doi.org/10.1016/J.Cpc.2004.06.026">https://doi.org/10.1016/J.Cpc.2004.06.026</a>.</p>
+</div><div id="ref-Vaypop98"><p>Vay, J.-L., and C Deutsch. 1998. “Charge Compensated Ion Beam Propagation in A Reactor Sized Chamber.” <em>Physics of Plasmas</em> 5 (4): 1190–7.</p>
+</div><div id="ref-Vayjcp2011"><p>Vay, J L, C G R Geddes, E Cormier-Michel, and D P Grote. 2011. “Numerical Methods for Instability Mitigation in the Modeling of Laser Wakefield Accelerators in A Lorentz-Boosted Frame.” <em>Journal of Computational Physics</em> 230 (15): 5908–29. <a class="reference external" href="https://doi.org/10.1016/J.Jcp.2011.04.003">https://doi.org/10.1016/J.Jcp.2011.04.003</a>.</p>
+</div><div id="ref-VayCSD12"><p>Vay, J.-L., D P Grote, R H Cohen, and A Friedman. 2012. “Novel methods in the particle-in-cell accelerator code-framework warp.” Journal Paper. <em>Computational Science and Discovery</em> 5 (1): 014019 (20 pp.).</p>
+</div><div id="ref-Villasenorcpc92"><p>Villasenor, J, and O Buneman. 1992. “Rigorous Charge Conservation for Local Electromagnetic-Field Solvers.” <em>Computer Physics Communications</em> 69 (2-3): 306–16.</p>
+</div><div id="ref-Vincenti2016a"><p>Vincenti, H., and J.-L. Vay. 2016. “Detailed analysis of the effects of stencil spatial variations with arbitrary high-order finite-difference Maxwell solver.” <em>Computer Physics Communications</em> 200 (March). ELSEVIER SCIENCE BV, PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS: 147–67. <a class="reference external" href="https://doi.org/10.1016/j.cpc.2015.11.009">https://doi.org/10.1016/j.cpc.2015.11.009</a>.</p>
+</div><div id="ref-Yee"><p>Yee, Ks. 1966. “Numerical Solution of Initial Boundary Value Problems Involving Maxwells Equations in Isotropic Media.” <em>Ieee Transactions on Antennas and Propagation</em> Ap14 (3): 302–7.</p>
+</div></div></div>
 
 
            </div>
@@ -672,7 +626,7 @@ Yee, Ks. 1966. “Numerical Solution of Initial Boundary Value Problems Involvin
         <a href="warpx_theory.html" class="btn btn-neutral float-right" title="Mesh refinement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="intro.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -698,26 +652,16 @@ Yee, Ks. 1966. “Numerical Solution of Initial Boundary Value Problems Involvin
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

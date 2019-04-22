@@ -17,34 +17,37 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="PyQt-based visualization GUI: PICViewer" href="picviewer.html" />
     <link rel="prev" title="Visualization with yt" href="yt.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -91,6 +94,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Visualization with Visit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="picviewer.html">PyQt-based visualization GUI: PICViewer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sensei.html">In situ Visualization with SENSEI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ascent.html">In situ Visualization with Ascent</a></li>
 <li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced visualization (for developers)</a></li>
 </ul>
 </li>
@@ -166,13 +170,13 @@
 <p>WarpX results can also be visualized by VisIt, an open source visualization and analysis software. VisIT can be downloaded and installed from <a class="reference external" href="https://wci.llnl.gov/simulation/computer-codes/visit">https://wci.llnl.gov/simulation/computer-codes/visit</a>.</p>
 <p>Assuming that you ran a 2D simulation, here are instructions for making a simple plot from a given plotfile:</p>
 <ul class="simple">
-<li>Open the header file: Run VisIt, then select “File” -&gt; “Open file …”, then select the Header file associated with the plotfile of interest (e.g., <code class="docutils literal notranslate"><span class="pre">plt10000/Header</span></code>).</li>
-<li>View the data: Select “Add” -&gt; “Pseudocolor” -&gt; “Ez” and select “Draw”. You can select other variable to draw, such as <code class="docutils literal notranslate"><span class="pre">jx</span></code>, <code class="docutils literal notranslate"><span class="pre">jy</span></code>, <code class="docutils literal notranslate"><span class="pre">jz</span></code>, <code class="docutils literal notranslate"><span class="pre">Ex</span></code>, …</li>
-<li>View the grid structure: Select “Subset”  -&gt; “levels”. Then double clik the text “Subset-levels”, enable the “Wireframe” option, select “Apply”, select “Dismiss”, and then select “Draw”.</li>
-<li>Save the image: Select “File” -&gt; “Set save options”, then customize the image format to your liking, then click “Save”.</li>
+<li><p>Open the header file: Run VisIt, then select “File” -&gt; “Open file …”, then select the Header file associated with the plotfile of interest (e.g., <code class="docutils literal notranslate"><span class="pre">plt10000/Header</span></code>).</p></li>
+<li><p>View the data: Select “Add” -&gt; “Pseudocolor” -&gt; “Ez” and select “Draw”. You can select other variable to draw, such as <code class="docutils literal notranslate"><span class="pre">jx</span></code>, <code class="docutils literal notranslate"><span class="pre">jy</span></code>, <code class="docutils literal notranslate"><span class="pre">jz</span></code>, <code class="docutils literal notranslate"><span class="pre">Ex</span></code>, …</p></li>
+<li><p>View the grid structure: Select “Subset”  -&gt; “levels”. Then double clik the text “Subset-levels”, enable the “Wireframe” option, select “Apply”, select “Dismiss”, and then select “Draw”.</p></li>
+<li><p>Save the image: Select “File” -&gt; “Set save options”, then customize the image format to your liking, then click “Save”.</p></li>
 </ul>
 <p>Your image should look similar to the one below</p>
-<div class="figure">
+<div class="figure align-center">
 <img alt="picture" src="../_images/Ez.png" />
 </div>
 <p>In 3D, you must apply the “Operators” -&gt; “Slicing”
@@ -197,7 +201,7 @@ the movie, choose “File” -&gt; “Save movie …”, and follow the instruct
         <a href="picviewer.html" class="btn btn-neutral float-right" title="PyQt-based visualization GUI: PICViewer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="yt.html" class="btn btn-neutral" title="Visualization with yt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="yt.html" class="btn btn-neutral float-left" title="Visualization with yt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -223,26 +227,16 @@ the movie, choose “File” -&gt; “Save movie …”, and follow the instruct
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
