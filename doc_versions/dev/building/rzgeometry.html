@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installing WarpX as a Python package &mdash; WarpX  documentation</title>
+  <title>Building WarpX to use RZ geometry &mdash; WarpX  documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Building WarpX with Spack" href="spack.html" />
-    <link rel="prev" title="Building WarpX with GPU support (Linux only)" href="gpu_local.html" /> 
+    <link rel="next" title="Building WarpX with GPU support (Linux only)" href="gpu_local.html" />
+    <link rel="prev" title="Building the spectral solver" href="spectral.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -92,9 +92,9 @@
 <li class="toctree-l2 current"><a class="reference internal" href="building.html#advanced-building-instructions">Advanced building instructions</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="openpmd.html">Building WarpX with support for openPMD output</a></li>
 <li class="toctree-l3"><a class="reference internal" href="spectral.html">Building the spectral solver</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rzgeometry.html">Building WarpX to use RZ geometry</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Building WarpX to use RZ geometry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gpu_local.html">Building WarpX with GPU support (Linux only)</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Installing WarpX as a Python package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python.html">Installing WarpX as a Python package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="spack.html">Building WarpX with Spack</a></li>
 </ul>
 </li>
@@ -152,13 +152,13 @@
         
           <li><a href="building.html">Building/installing WarpX</a> &raquo;</li>
         
-      <li>Installing WarpX as a Python package</li>
+      <li>Building WarpX to use RZ geometry</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/building/python.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/building/rzgeometry.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -171,25 +171,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installing-warpx-as-a-python-package">
-<h1>Installing WarpX as a Python package<a class="headerlink" href="#installing-warpx-as-a-python-package" title="Permalink to this headline">¶</a></h1>
-<p>Type</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_PYTHON_MAIN</span><span class="o">=</span><span class="n">TRUE</span>
+  <div class="section" id="building-warpx-to-use-rz-geometry">
+<h1>Building WarpX to use RZ geometry<a class="headerlink" href="#building-warpx-to-use-rz-geometry" title="Permalink to this headline">¶</a></h1>
+<p>WarpX can be built to run with RZ geometry. Currently, this only allows pure axisymmetry (i.e. mode 0) with an FDTD solver.</p>
+<p>To select RZ geometry, set the flag USE_RZ = TRUE when compiling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_RZ</span><span class="o">=</span><span class="n">TRUE</span>
 </pre></div>
 </div>
-<p>or edit the GNUmakefile and set <cite>USE_PYTHON_MAIN=TRUE</cite>, and type</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span>
-</pre></div>
-</div>
-<p>This will compile the code, and install the Python bindings as a package (named
-<code class="docutils literal notranslate"><span class="pre">pywarpx</span></code>) in your standard Python installation (i.e. in your
-<code class="docutils literal notranslate"><span class="pre">site-packages</span></code> directory). The note on compiler options from the previous
-section also holds when compiling the Python package.</p>
-<p>In case you do not have write permissions to the default Python installation (e.g. typical on computer clusters), use the following command instead:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">PYINSTALLOPTIONS</span><span class="o">=--</span><span class="n">user</span>
-</pre></div>
-</div>
-<p>In this case, you can also set the variable <cite>PYTHONUSERBASE</cite> to set the folder where <cite>pywarpx</cite> will be installed.</p>
+<p>Note that this sets DIM=2, which is required with USE_RZ=TRUE. The executable produced will have “RZ” as a suffix.</p>
 </div>
 
 
@@ -200,10 +189,10 @@ section also holds when compiling the Python package.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="spack.html" class="btn btn-neutral float-right" title="Building WarpX with Spack" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="gpu_local.html" class="btn btn-neutral float-right" title="Building WarpX with GPU support (Linux only)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="gpu_local.html" class="btn btn-neutral float-left" title="Building WarpX with GPU support (Linux only)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="spectral.html" class="btn btn-neutral float-left" title="Building the spectral solver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
