@@ -98,6 +98,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#particle-initialization">Particle initialization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#laser-initialization">Laser initialization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#numerics-and-algorithms">Numerics and algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#diagnostics-and-output">Diagnostics and output</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#checkpoints-and-restart">Checkpoints and restart</a></li>
 </ul>
@@ -207,6 +208,11 @@ input parameters.)</p>
 </dd>
 </dl>
 </li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.verbose</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Controls how much information is printed to the terminal, when running WarpX.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
 <div class="section" id="setting-up-the-field-mesh">
@@ -249,6 +255,26 @@ of the lower corner (<code class="docutils literal notranslate"><span class="pre
 </dd>
 </dl>
 </li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">n_field_gather_buffer</span></code> (<cite>integer</cite>; 0 by default)</dt><dd><p>When using mesh refinement: the particles that are located inside
+a refinement patch, but within <code class="docutils literal notranslate"><span class="pre">n_field_gather_buffer</span></code> cells of
+the edge of this patch, will gather the fields from the lower refinement
+level, instead of gathering the fields from the refinement patch itself.
+This avoids some of the spurious effects that can occur inside the
+refinement patch, close to its edge. See the section
+<a class="reference internal" href="../theory/amr.html"><span class="doc">Mesh refinement</span></a> for more details.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">n_current_deposition_buffer</span></code> (<cite>integer</cite>)</dt><dd><p>When using mesh refinement: the particles that are located inside
+a refinement patch, but within <code class="docutils literal notranslate"><span class="pre">n_field_gather_buffer</span></code> cells of
+the edge of this patch, will deposit their charge and current to the
+lower refinement level, instead of depositing to the refinement patch
+itself. See the section <a class="reference internal" href="../theory/amr.html"><span class="doc">Mesh refinement</span></a> for more details.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
 <div class="section" id="distribution-across-mpi-ranks-and-parallelization">
@@ -284,7 +310,8 @@ This relies on each MPI rank handling several (in fact many) subdomains
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.load_balance_with_sfc</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt><dd><p>If this is <cite>1</cite>: use a Space-Filling Curve (SFC) algorithm in order to perform load-balancing of the simulation.
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.load_balance_with_sfc</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt><dd><p>If this is <cite>1</cite>: use a Space-Filling Curve (SFC) algorithm in order to
+perform load-balancing of the simulation.
 If this is <cite>0</cite>: the Knapsack algorithm is used instead.</p>
 </dd>
 </dl>
@@ -337,10 +364,14 @@ in this documentation we use <cite>&lt;species_name&gt;</cite> as a placeholder.
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code> (<cite>strings</cite>, separated by spaces)</dt><dd><p>List of species injected using the rigid injection method. For species injected
-using this method, particles are translated along the <cite>+z</cite> axis with constant velocity
-as long as their <code class="docutils literal notranslate"><span class="pre">z</span></code> coordinate verifies <code class="docutils literal notranslate"><span class="pre">z&lt;zinject_plane</span></code>. When <code class="docutils literal notranslate"><span class="pre">z&gt;zinject_plane</span></code>,
-particles are pushed in a standard way, using the specified pusher.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code> (<cite>strings</cite>, separated by spaces)</dt><dd><p>List of species injected using the rigid injection method. The rigid injection
+method is useful when injecting a relativistic particle beam, in boosted-frame
+simulation ; see the section <a class="reference internal" href="../theory/input_output.html"><span class="doc">Inputs and outputs</span></a> for more details.
+For species injected using this method, particles are translated along the <cite>+z</cite>
+axis with constant velocity as long as their <code class="docutils literal notranslate"><span class="pre">z</span></code> coordinate verifies
+<code class="docutils literal notranslate"><span class="pre">z&lt;zinject_plane</span></code>. When <code class="docutils literal notranslate"><span class="pre">z&gt;zinject_plane</span></code>,
+particles are pushed in a standard way, using the specified pusher.
+(see the parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.zinject_plane</span></code> below)</p>
 </dd>
 </dl>
 </li>
@@ -363,6 +394,13 @@ This requires the additional parameter <code class="docutils literal notranslate
 <li><p><code class="docutils literal notranslate"><span class="pre">NRandomPerCell</span></code>: injection with a fixed number of randomly-distributed particles per cell.
 This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell</span></code>.</p></li>
 </ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_continuous_injection</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Whether to inject particles during the simulation, and not only at
+initialization. This can be required whith a moving window and/or when
+running in a boosted frame.</p>
 </dd>
 </dl>
 </li>
@@ -421,7 +459,7 @@ See <code class="docutils literal notranslate"><span class="pre">particles.rigid
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.rigid_avance</span></code> (<cite>bool</cite>)</dt><dd><p>Only read if <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;</span></code> is in <code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.rigid_advance</span></code> (<cite>bool</cite>)</dt><dd><p>Only read if <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;</span></code> is in <code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code>.</p>
 <ul class="simple">
 <li><p>If <code class="docutils literal notranslate"><span class="pre">false</span></code>, each particle is advanced with its
 own velocity <code class="docutils literal notranslate"><span class="pre">vz</span></code> until it reaches <code class="docutils literal notranslate"><span class="pre">zinject_plane</span></code>.</p></li>
@@ -661,6 +699,19 @@ See definition in Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
 </dl>
 </li>
 <li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.do_continuous_injection</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>).</dt><dd><p>Whether or not to use continuous injection (<cite>0</cite> or not <cite>0</cite>).
+If the antenna starts outside of the simulation domain but enters it
+at some point (due to moving window or moving antenna in the boosted
+frame), use this so that the laser antenna is injected when it reaches
+the box boundary. If running in a boosted frame, this requires the
+boost direction, moving window direction and laser propagation direction
+to be along <cite>z</cite>. If not running in a boosted frame, this requires the
+moving window and laser propagation directions to be the same (<cite>x</cite>, <cite>y</cite>
+or <cite>z</cite>)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors</span></code> (<cite>int</cite>) optional (default <cite>0</cite>)</dt><dd><p>Users can input perfect mirror condition inside the simulation domain.
 The number of mirrors is given by <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors</span></code>. The mirrors are
 orthogonal to the <cite>z</cite> direction. The following parameters are required
@@ -694,8 +745,8 @@ so that it contains at least <code class="docutils literal notranslate"><span cl
 <ul>
 <li><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.cfl</span></code> (<cite>float</cite>)</dt><dd><p>The ratio between the actual timestep that is used in the simulation
-and the CFL limit. (e.g. for <cite>warpx.cfl=1</cite>, the timestep will be
-exactly equal to the CFL limit.)</p>
+and the Courant-Friedrichs-Lewy (CFL) limit. (e.g. for <cite>warpx.cfl=1</cite>,
+the timestep will be exactly equal to the CFL limit.)</p>
 </dd>
 </dl>
 </li>
@@ -791,6 +842,23 @@ and when they are between 1 and 3.</p>
 </dl>
 </li>
 <li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_dive_cleaning</span></code> (<cite>0</cite> or <cite>1</cite> ; default: 0)</dt><dd><p>Whether to use modified Maxwell equations that progressively eliminate
+the error in <span class="math notranslate nohighlight">\(div(E)-\rho\)</span>. This can be useful when using a current
+deposition algorithm which is not strictly charge-conserving, or when
+using mesh refinement. These modified Maxwell equation will cause the error
+to propagate (at the speed of light) to the boundaries of the simulation
+domain, where it can be absorbed.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_nodal</span></code> (<cite>0</cite> or <cite>1</cite> ; default: 0)</dt><dd><p>Whether to use a nodal grid (i.e. all fields are defined at the
+same points in space) or a staggered grid (i.e. Yee grid ; different
+fields are defined at different points in space)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">psatd.nox</span></code>, <code class="docutils literal notranslate"><span class="pre">psatd.noy</span></code>, <code class="docutils literal notranslate"><span class="pre">pstad.noz</span></code> (<cite>integer</cite>) optional (default <cite>16</cite> for all)</dt><dd><p>The order of accuracy of the spatial derivatives, when using the code compiled with a PSATD solver.</p>
 </dd>
 </dl>
@@ -818,6 +886,29 @@ If <code class="docutils literal notranslate"><span class="pre">psatd.fftw_plan_
 plans will simply be estimated (<code class="docutils literal notranslate"><span class="pre">FFTW_ESTIMATE</span></code> mode).
 See <a class="reference external" href="http://www.fftw.org/fftw3_doc/Planner-Flags.html">this section of the FFTW documentation</a>
 for more information.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="boundary-conditions">
+<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_pml</span></code> (<cite>0</cite> or <cite>1</cite>; default: 1)</dt><dd><p>Whether to add Perfectly Matched Layers (PML) around the simulation box,
+and around the refinement patches. See the section <a class="reference internal" href="../theory/PML.html"><span class="doc">Boundary conditions</span></a>
+for more details.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.pml_ncells</span></code> (<cite>int</cite>; default: 10)</dt><dd><p>The depth of the PML, in number of cells.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.pml_delta</span></code> (<cite>int</cite>; default: 10)</dt><dd><p>The characteristic depth, in number of cells, over which
+the absorption coefficients of the PML increases.</p>
 </dd>
 </dl>
 </li>

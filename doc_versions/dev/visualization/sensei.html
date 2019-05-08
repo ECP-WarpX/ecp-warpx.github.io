@@ -37,7 +37,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="In situ Visualization with Ascent" href="ascent.html" />
-    <link rel="prev" title="PyQt-based visualization GUI: PICViewer" href="picviewer.html" /> 
+    <link rel="prev" title="Advanced yt visualization, for developers (for plotfiles)" href="advanced.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,9 +90,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="visualization.html">Visualizing the simulation results</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="yt.html">Visualization with yt</a></li>
-<li class="toctree-l2"><a class="reference internal" href="visit.html">Visualization with Visit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="picviewer.html">PyQt-based visualization GUI: PICViewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yt.html">Visualization with yt (for plotfiles)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visit.html">Visualization with Visit (for plotfiles)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="picviewer.html">PyQt-based visualization GUI: PICViewer (for both plotfiles and openPMD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openpmdviewer.html">Visualization with openPMD-viewer (for openPMD data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced yt visualization, for developers (for plotfiles)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">In situ Visualization with SENSEI</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#system-architecture">System Architecture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#compiling-with-gnu-make">Compiling with GNU Make</a></li>
@@ -112,7 +114,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="ascent.html">In situ Visualization with Ascent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced visualization (for developers)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theoretical background</a></li>
@@ -437,13 +438,10 @@ on cori or the VM are that different versions of software are installed.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$SCRATCH</span>
 mkdir warpx
 <span class="nb">cd</span> warpx/
-git clone https://github.com/ECP-WarpX/WarpX.git WarpX-libsim
-git clone https://github.com/AMReX-Codes/amrex
-git clone https://bitbucket.org/berkeleylab/picsar.git
-<span class="nb">cd</span> amrex/
-git checkout development
-<span class="nb">cd</span> ../WarpX-libsim
-git checkout dev
+git clone --branch dev https://github.com/ECP-WarpX/WarpX.git WarpX-libsim
+git clone --branch development https://github.com/AMReX-Codes/amrex
+git clone --branch master https://bitbucket.org/berkeleylab/picsar.git
+<span class="nb">cd</span> WarpX-libsim
 vim GNUmakefile
 </pre></div>
 </div>
@@ -481,13 +479,10 @@ wget https://data.kitware.com/api/v1/item/5c05d4588d777f2179d22f0e/download -O b
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$SCRATCH</span>
 mkdir warpx
 <span class="nb">cd</span> warpx/
-git clone https://github.com/ECP-WarpX/WarpX.git WarpX-catalyst
-git clone https://github.com/AMReX-Codes/amrex
-git clone https://bitbucket.org/berkeleylab/picsar.git
-<span class="nb">cd</span> amrex/
-git checkout development
-<span class="nb">cd</span> ../WarpX-catalyst
-git checkout dev
+git clone --branch dev https://github.com/ECP-WarpX/WarpX.git WarpX-catalyst
+git clone --branch development https://github.com/AMReX-Codes/amrex
+git clone --branch master https://bitbucket.org/berkeleylab/picsar.git
+<span class="nb">cd</span> WarpX-catalyst
 vim GNUmakefile
 </pre></div>
 </div>
@@ -642,7 +637,7 @@ controls runtime behavior specific to each user provided script.</p>
         <a href="ascent.html" class="btn btn-neutral float-right" title="In situ Visualization with Ascent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="picviewer.html" class="btn btn-neutral float-left" title="PyQt-based visualization GUI: PICViewer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="advanced.html" class="btn btn-neutral float-left" title="Advanced yt visualization, for developers (for plotfiles)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

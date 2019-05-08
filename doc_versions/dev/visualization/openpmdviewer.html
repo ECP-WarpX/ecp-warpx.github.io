@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Visualizing the simulation results &mdash; WarpX  documentation</title>
+  <title>Visualization with openPMD-viewer (for openPMD data) &mdash; WarpX  documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Visualization with yt (for plotfiles)" href="yt.html" />
-    <link rel="prev" title="Example input files" href="../running_python/examples.html" /> 
+    <link rel="next" title="Advanced yt visualization, for developers (for plotfiles)" href="advanced.html" />
+    <link rel="prev" title="PyQt-based visualization GUI: PICViewer (for both plotfiles and openPMD)" href="picviewer.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -89,11 +89,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../building/building.html">Building/installing WarpX</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualizing the simulation results</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="visualization.html">Visualizing the simulation results</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="yt.html">Visualization with yt (for plotfiles)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visit.html">Visualization with Visit (for plotfiles)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="picviewer.html">PyQt-based visualization GUI: PICViewer (for both plotfiles and openPMD)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openpmdviewer.html">Visualization with openPMD-viewer (for openPMD data)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Visualization with openPMD-viewer (for openPMD data)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced yt visualization, for developers (for plotfiles)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sensei.html">In situ Visualization with SENSEI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ascent.html">In situ Visualization with Ascent</a></li>
@@ -145,13 +149,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Visualizing the simulation results</li>
+          <li><a href="visualization.html">Visualizing the simulation results</a> &raquo;</li>
+        
+      <li>Visualization with openPMD-viewer (for openPMD data)</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/visualization/visualization.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/visualization/openpmdviewer.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -164,34 +170,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="visualizing-the-simulation-results">
-<h1>Visualizing the simulation results<a class="headerlink" href="#visualizing-the-simulation-results" title="Permalink to this headline">¶</a></h1>
-<p>WarpX can write data either in <cite>plotfile</cite> format (AMReX’s native format), or
-in <a class="reference external" href="https://www.openpmd.org/">openPMD format</a> (a common data format for
-Particle-In-Cell codes).</p>
+  <div class="section" id="visualization-with-openpmd-viewer-for-openpmd-data">
+<h1>Visualization with openPMD-viewer (for openPMD data)<a class="headerlink" href="#visualization-with-openpmd-viewer-for-openpmd-data" title="Permalink to this headline">¶</a></h1>
+<p>openPMD-viewer is an open-source Python package to access openPMD data.</p>
+<p>It allows to:
+- Quickly browse through the data, with a GUI-type interface in the Jupyter notebook
+- Have access to the data numpy array, for more detailed analysis</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>openPMD-viewer can be installed via <code class="docutils literal notranslate"><span class="pre">conda</span></code> or <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">rlehe</span> <span class="n">openpmd_viewer</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">openPMD</span><span class="o">-</span><span class="n">viewer</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>openPMD-viewer can be used either in simple Python scripts, or in a Jupyter
+notebook. In both cases, you can import openPMD-viewer, and load the data
+with the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">opmd_viewer</span> <span class="k">import</span> <span class="n">OpenPMDTimeSeries</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">OpenPMDTimeSeries</span><span class="p">(</span><span class="s1">&#39;./diags/hdf5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This is controlled by the parameters <code class="docutils literal notranslate"><span class="pre">warpx.dump_plotfiles</span></code> and
-<code class="docutils literal notranslate"><span class="pre">warpx.dump_openpmd</span></code> in the section <a class="reference internal" href="../running_cpp/parameters.html"><span class="doc">Input parameters</span></a>.</p>
+<p>If you are using the Jupyter notebook, then you can start a pre-filled
+notebook, which already contains the above lines, by typing in a terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openPMD_notebook</span>
+</pre></div>
 </div>
-<p>This section describes some of the tools available to visualize the data:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="yt.html">Visualization with yt (for plotfiles)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="visit.html">Visualization with Visit (for plotfiles)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="picviewer.html">PyQt-based visualization GUI: PICViewer (for both plotfiles and openPMD)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="openpmdviewer.html">Visualization with openPMD-viewer (for openPMD data)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced yt visualization, for developers (for plotfiles)</a></li>
-</ul>
 </div>
-<p>In addition, WarpX also has In-Situ Visualization capabilities (i.e.
-visualizing the data directly from the simulation, without dumping data
-files to disk).</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="sensei.html">In situ Visualization with SENSEI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ascent.html">In situ Visualization with Ascent</a></li>
-</ul>
+<p>When using the Jupyter notebook, you can quickly browse through the data
+by using the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span><span class="o">.</span><span class="n">slider</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can also access the particle and field data as numpy arrays with the
+methods <code class="docutils literal notranslate"><span class="pre">ts.get_field</span></code> and <code class="docutils literal notranslate"><span class="pre">ts.get_particle</span></code>. See the openPMD-viewer
+tutorials <a class="reference external" href="https://github.com/openPMD/openPMD-viewer/tree/master/tutorials">here</a> for more info.</p>
 </div>
 </div>
 
@@ -203,10 +222,10 @@ files to disk).</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="yt.html" class="btn btn-neutral float-right" title="Visualization with yt (for plotfiles)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="advanced.html" class="btn btn-neutral float-right" title="Advanced yt visualization, for developers (for plotfiles)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../running_python/examples.html" class="btn btn-neutral float-left" title="Example input files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="picviewer.html" class="btn btn-neutral float-left" title="PyQt-based visualization GUI: PICViewer (for both plotfiles and openPMD)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

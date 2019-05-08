@@ -185,6 +185,13 @@ therefore we recommend to use <a class="reference external" href="https://spack.
 using spack (first section below). If this fails, a back-up solution
 is to install parallel HDF5 with spack, and then install the openPMD-api
 library from source.</p>
+<p>In order to install spack, you can simply do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/spack/spack.git
+export SPACK_ROOT=/path/to/spack
+. $SPACK_ROOT/share/spack/setup-env.sh
+</pre></div>
+</div>
+<p>(You may want to add the last 2 lines to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file.)</p>
 <div class="section" id="building-openpmd-support-by-installing-openpmd-api-directly-from-spack">
 <h2>Building openPMD support, by installing openPMD-api directly from spack<a class="headerlink" href="#building-openpmd-support-by-installing-openpmd-api-directly-from-spack" title="Permalink to this headline">¶</a></h2>
 <p>First, install the openPMD-api library:</p>

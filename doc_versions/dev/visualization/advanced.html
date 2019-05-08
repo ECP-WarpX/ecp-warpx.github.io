@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Advanced visualization (for developers) &mdash; WarpX  documentation</title>
+  <title>Advanced yt visualization, for developers (for plotfiles) &mdash; WarpX  documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Theoretical background" href="../theory/theory.html" />
-    <link rel="prev" title="In situ Visualization with Ascent" href="ascent.html" /> 
+    <link rel="next" title="In situ Visualization with SENSEI" href="sensei.html" />
+    <link rel="prev" title="Visualization with openPMD-viewer (for openPMD data)" href="openpmdviewer.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,16 +90,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="visualization.html">Visualizing the simulation results</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="yt.html">Visualization with yt</a></li>
-<li class="toctree-l2"><a class="reference internal" href="visit.html">Visualization with Visit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="picviewer.html">PyQt-based visualization GUI: PICViewer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sensei.html">In situ Visualization with SENSEI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ascent.html">In situ Visualization with Ascent</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Advanced visualization (for developers)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="yt.html">Visualization with yt (for plotfiles)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visit.html">Visualization with Visit (for plotfiles)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="picviewer.html">PyQt-based visualization GUI: PICViewer (for both plotfiles and openPMD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openpmdviewer.html">Visualization with openPMD-viewer (for openPMD data)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Advanced yt visualization, for developers (for plotfiles)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dump-additional-data">Dump additional data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#read-raw-data">Read raw data</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="sensei.html">In situ Visualization with SENSEI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ascent.html">In situ Visualization with Ascent</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theoretical background</a></li>
@@ -150,7 +151,7 @@
         
           <li><a href="visualization.html">Visualizing the simulation results</a> &raquo;</li>
         
-      <li>Advanced visualization (for developers)</li>
+      <li>Advanced yt visualization, for developers (for plotfiles)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -169,17 +170,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="advanced-visualization-for-developers">
-<h1>Advanced visualization (for developers)<a class="headerlink" href="#advanced-visualization-for-developers" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="advanced-yt-visualization-for-developers-for-plotfiles">
+<h1>Advanced yt visualization, for developers (for plotfiles)<a class="headerlink" href="#advanced-yt-visualization-for-developers-for-plotfiles" title="Permalink to this headline">¶</a></h1>
 <p>This sections contains yt commands for advanced users. The Particle-In-Cell methods uses a
 staggered grid (see <a class="reference internal" href="../theory/picsar_theory.html"><span class="doc">The electromagnetic Particle-In-Cell method</span></a>), so that the x, y, and z components of the
 electric and magnetic fields are all defined at different locations in space. Regular output
-(see the <a class="reference internal" href="yt.html"><span class="doc">Visualization with yt</span></a> page, or the notebook at <code class="docutils literal notranslate"><span class="pre">WarpX/Tools/Visualization.ipynb</span></code> for an example)
+(see the <a class="reference internal" href="yt.html"><span class="doc">Visualization with yt (for plotfiles)</span></a> page, or the notebook at <code class="docutils literal notranslate"><span class="pre">WarpX/Tools/Visualization.ipynb</span></code> for an example)
 returns cell-centered data for convenience, which involves an additional operation. It is sometimes
 useful to access the raw data directly. Furthermore,
 the WarpX implementation for mesh refinement contains a number of grids for each level (coarse,
 fine and auxilary, see
-<a class="reference internal" href="../theory/warpx_theory.html"><span class="doc">Mesh refinement</span></a> for more details), and it is sometimes useful to access each of
+<span class="xref std std-doc">../theory/warpx_theory</span> for more details), and it is sometimes useful to access each of
 them (regular output return the auxiliary grid only). This page provides information to read
 raw data of all grids.</p>
 <div class="section" id="dump-additional-data">
@@ -251,10 +252,10 @@ way, i.e., <code class="docutils literal notranslate"><span class="pre">my_grid[
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../theory/theory.html" class="btn btn-neutral float-right" title="Theoretical background" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="sensei.html" class="btn btn-neutral float-right" title="In situ Visualization with SENSEI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ascent.html" class="btn btn-neutral float-left" title="In situ Visualization with Ascent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="openpmdviewer.html" class="btn btn-neutral float-left" title="Visualization with openPMD-viewer (for openPMD data)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

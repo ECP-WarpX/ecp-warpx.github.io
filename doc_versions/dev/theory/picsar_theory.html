@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Mesh refinement" href="warpx_theory.html" />
+    <link rel="next" title="Mesh refinement" href="amr.html" />
     <link rel="prev" title="Introduction" href="intro.html" /> 
 </head>
 
@@ -109,10 +109,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#filtering">Filtering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="warpx_theory.html">Mesh refinement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="warpx_theory.html#boundary-conditions">Boundary conditions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="warpx_theory.html#moving-window-and-optimal-lorentz-boosted-frame">Moving window and optimal Lorentz boosted frame</a></li>
-<li class="toctree-l2"><a class="reference internal" href="warpx_theory.html#inputs-and-outputs">Inputs and outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="amr.html">Mesh refinement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PML.html">Boundary conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boosted_frame.html">Moving window and optimal Lorentz boosted frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input_output.html">Inputs and outputs</a></li>
 </ul>
 </li>
 </ul>
@@ -369,27 +369,45 @@ suppresses this instability.</p>
 <p>Maxwell’s equations in Fourier space are given by</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\frac{\partial\mathbf{\tilde{E}}}{\partial t} &amp; = &amp; c^2i\mathbf{k}\times\mathbf{\tilde{B}}-\frac{1}{\epsilon_0} \mathbf{\tilde{J}}\\
+\frac{\partial\mathbf{\tilde{E}}}{\partial t} &amp; = &amp; i\mathbf{k}\times\mathbf{\tilde{B}}-\mathbf{\tilde{J}}\\
 \frac{\partial\mathbf{\tilde{B}}}{\partial t} &amp; = &amp; -i\mathbf{k}\times\mathbf{\tilde{E}}\\
-{}[i\mathbf{k}\cdot\mathbf{\tilde{E}}&amp; = &amp; \frac{\tilde{\rho}}{\epsilon_0}]\\
+{}[i\mathbf{k}\cdot\mathbf{\tilde{E}}&amp; = &amp; \tilde{\rho}]\\
 {}[i\mathbf{k}\cdot\mathbf{\tilde{B}}&amp; = &amp; 0]\end{aligned}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tilde{a}\)</span> is the Fourier Transform of the quantity <span class="math notranslate nohighlight">\(a\)</span>.
 As with the real space formulation, provided that the continuity equation
 <span class="math notranslate nohighlight">\(\partial\tilde{\rho}/\partial t+i\mathbf{k}\cdot\mathbf{\tilde{J}}=0\)</span> is satisfied, then
 the last two equations will automatically be satisfied at any time
 if satisfied initially and do not need to be explicitly integrated.</p>
-<p>These equations can be integrated analytically over one timestep,
-assuming that the current density <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}\)</span> is constant over this timestep, and that
-the charge density is linear in time (<span class="math notranslate nohighlight">\(\tilde{\rho}(t) = \tilde{\rho}^n +
-\frac{\tilde{\rho}^{n+1}-\tilde{\rho}^n}{\Delta t}(t-n\Delta t)\)</span>). This gives:</p>
+<p>Decomposing the electric field and current between longitudinal and
+transverse components <span class="math notranslate nohighlight">\(\mathbf{\tilde{E}}=\mathbf{\tilde{E}}_{L}+\mathbf{\tilde{E}}_{T}=\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{E}})-\mathbf{\hat{k}}\times(\mathbf{\hat{k}}\times\mathbf{\tilde{E}})\)</span>
+and <span class="math notranslate nohighlight">\(\mathbf{\tilde{J}}=\mathbf{\tilde{J}}_{L}+\mathbf{\tilde{J}}_{T}=\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{J}})-\mathbf{\hat{k}}\times(\mathbf{\hat{k}}\times\mathbf{\tilde{J}})\)</span>
+gives</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\mathbf{\tilde{E}}^{n+1} &amp; = &amp; C\mathbf{\tilde{E}}^{n}+\frac{S}{ck}\left(c^2i\mathbf{k}\times\mathbf{\tilde{B}}^{n}-\frac{1}{\epsilon_0}\mathbf{\tilde{J}}^{n+1/2}\right) \\
- &amp; - &amp; i\mathbf{k}\left[ \frac{1}{\epsilon_0 k^2}\left( 1 - \frac{S}{ck\Delta t} \right)\tilde{\rho}^{n+1}
- - \frac{1}{\epsilon_0 k^2}\left( C - \frac{S}{ck\Delta t} \right)\tilde{\rho}^{n}\right]\nonumber \\
-\mathbf{\tilde{B}}^{n+1} &amp; = &amp; C\mathbf{\tilde{B}}^{n}-\frac{S}{ck}i\mathbf{k}\times\mathbf{\tilde{E}}^{n}\\
-&amp;+&amp;\frac{1}{\epsilon_0}\frac{1-C}{c^2k^2}i\mathbf{k}\times\mathbf{\tilde{J}}^{n+1/2}.\label{Eq_PSATD_2}\end{aligned}\end{split}\]</div>
-<p>with <span class="math notranslate nohighlight">\(C=\cos\left(c k\Delta t\right)\)</span> and <span class="math notranslate nohighlight">\(S=\sin\left(c k\Delta t\right)\)</span>.</p>
+\frac{\partial\mathbf{\tilde{E}}_{T}}{\partial t} &amp; = &amp; i\mathbf{k}\times\mathbf{\tilde{B}}-\mathbf{\tilde{J}_{T}}\\
+\frac{\partial\mathbf{\tilde{E}}_{L}}{\partial t} &amp; = &amp; -\mathbf{\tilde{J}_{L}}\\
+\frac{\partial\mathbf{\tilde{B}}}{\partial t} &amp; = &amp; -i\mathbf{k}\times\mathbf{\tilde{E}}\end{aligned}\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\mathbf{\hat{k}}=\mathbf{k}/k\)</span>.</p>
+<p>If the sources are assumed to be constant over a time interval <span class="math notranslate nohighlight">\(\Delta t\)</span>,
+the system of equations is solvable analytically and is given by (see
+(Haber et al. 1973) for the original formulation and (Jean-Luc Vay, Haber, and Godfrey 2013)
+for a more detailed derivation):</p>
+<p>[Eq:PSATD]</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbf{\tilde{E}}_{T}^{n+1} &amp; = &amp; C\mathbf{\tilde{E}}_{T}^{n}+iS\mathbf{\hat{k}}\times\mathbf{\tilde{B}}^{n}-\frac{S}{k}\mathbf{\tilde{J}}_{T}^{n+1/2}\label{Eq:PSATD_transverse_1}\\
+\mathbf{\tilde{E}}_{L}^{n+1} &amp; = &amp; \mathbf{\tilde{E}}_{L}^{n}-\Delta t\mathbf{\tilde{J}}_{L}^{n+1/2}\\
+\mathbf{\tilde{B}}^{n+1} &amp; = &amp; C\mathbf{\tilde{B}}^{n}-iS\mathbf{\hat{k}}\times\mathbf{\tilde{E}}^{n}\\
+&amp;+&amp;i\frac{1-C}{k}\mathbf{\hat{k}}\times\mathbf{\tilde{J}}^{n+1/2}\label{Eq:PSATD_transverse_2}\end{aligned}\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\(C=\cos\left(k\Delta t\right)\)</span> and <span class="math notranslate nohighlight">\(S=\sin\left(k\Delta t\right)\)</span>.</p>
+<p>Combining the transverse and longitudinal components, gives</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbf{\tilde{E}}^{n+1} &amp; = &amp; C\mathbf{\tilde{E}}^{n}+iS\mathbf{\hat{k}}\times\mathbf{\tilde{B}}^{n}-\frac{S}{k}\mathbf{\tilde{J}}^{n+1/2}\\
+ &amp; + &amp;(1-C)\mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{E}}^{n})\nonumber \\
+ &amp; + &amp; \mathbf{\hat{k}}(\mathbf{\hat{k}}\cdot\mathbf{\tilde{J}}^{n+1/2})\left(\frac{S}{k}-\Delta t\right),\label{Eq_PSATD_1}\\
+\mathbf{\tilde{B}}^{n+1} &amp; = &amp; C\mathbf{\tilde{B}}^{n}-iS\mathbf{\hat{k}}\times\mathbf{\tilde{E}}^{n}\\
+&amp;+&amp;i\frac{1-C}{k}\mathbf{\hat{k}}\times\mathbf{\tilde{J}}^{n+1/2}.\label{Eq_PSATD_2}\end{aligned}\end{split}\]</div>
 <p>For fields generated by the source terms without the self-consistent
 dynamics of the charged particles, this algorithm is free of numerical
 dispersion and is not subject to a Courant condition. Furthermore,
@@ -401,7 +419,7 @@ formulation reduces to the perhaps better known pseudo-spectral time-domain
 (PSTD) formulation (Dawson 1983; Liu 1997):</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\mathbf{\tilde{E}}^{n+1} &amp; = &amp; \mathbf{\tilde{E}}^{n}+ic^2\Delta t\mathbf{k}\times\mathbf{\tilde{B}}^{n+1/2}-\frac{\Delta t}{\epsilon_0}\mathbf{\tilde{J}}^{n+1/2},\\
+\mathbf{\tilde{E}}^{n+1} &amp; = &amp; \mathbf{\tilde{E}}^{n}+i\Delta t\mathbf{k}\times\mathbf{\tilde{B}}^{n+1/2}-\Delta t\mathbf{\tilde{J}}^{n+1/2},\\
 \mathbf{\tilde{B}}^{n+3/2} &amp; = &amp; \mathbf{\tilde{B}}^{n+1/2}-i\Delta t\mathbf{k}\times\mathbf{\tilde{E}}^{n+1}.\end{aligned}\end{split}\]</div>
 <p>The dispersion relation of the PSTD solver is given by <span class="math notranslate nohighlight">\(\sin(\frac{\omega\Delta t}{2})=\frac{k\Delta t}{2}.\)</span>
 In contrast to the PSATD solver, the PSTD solver is subject to numerical
@@ -594,6 +612,7 @@ of computational cores for parallel calculations.</p>
 </div><div id="ref-CowanPRSTAB13"><p>Cowan, Benjamin M, David L Bruhwiler, John R Cary, Estelle Cormier-Michel, and Cameron G R Geddes. 2013. “Generalized algorithm for control of numerical dispersion in explicit time-domain electromagnetic simulations.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (4). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.041303">https://doi.org/10.1103/PhysRevSTAB.16.041303</a>.</p>
 </div><div id="ref-DawsonRMP83"><p>Dawson, J M. 1983. “Particle Simulation of Plasmas.” <em>Reviews of Modern Physics</em> 55 (2): 403–47. <a class="reference external" href="https://doi.org/10.1103/RevModPhys.55.403">https://doi.org/10.1103/RevModPhys.55.403</a>.</p>
 </div><div id="ref-Esirkepovcpc01"><p>Esirkepov, Tz. 2001. “Exact Charge Conservation Scheme for Particle-in-Cell Simulation with an Arbitrary Form-Factor.” <em>Computer Physics Communications</em> 135 (2): 144–53.</p>
+</div><div id="ref-Habericnsp73"><p>Haber, I, R Lee, Hh Klein, and Jp Boris. 1973. “Advances in Electromagnetic Simulation Techniques.” In <em>Proc. Sixth Conf. Num. Sim. Plasmas</em>, 46–48. Berkeley, Ca.</p>
 </div><div id="ref-Karkicap06"><p>Karkkainen, M, E Gjonaj, T Lau, and T Weiland. 2006. “Low-Dispersionwake Field Calculation Tools.” In <em>Proc. Of International Computational Accelerator Physics Conference</em>, 35–40. Chamonix, France.</p>
 </div><div id="ref-Langdoncpc92"><p>Langdon, A B. 1992. “On Enforcing Gauss Law in Electromagnetic Particle-in-Cell Codes.” <em>Computer Physics Communications</em> 70 (3): 447–50.</p>
 </div><div id="ref-LehePRSTAB13"><p>Lehe, R, A Lifschitz, C Thaury, V Malka, and X Davoine. 2013. “Numerical growth of emittance in simulations of laser-wakefield acceleration.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (2). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.021301">https://doi.org/10.1103/PhysRevSTAB.16.021301</a>.</p>
@@ -623,7 +642,7 @@ of computational cores for parallel calculations.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="warpx_theory.html" class="btn btn-neutral float-right" title="Mesh refinement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="amr.html" class="btn btn-neutral float-right" title="Mesh refinement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
