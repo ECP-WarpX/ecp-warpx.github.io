@@ -24,8 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -170,8 +169,8 @@ WarpX executable is stored in the folder <code class="docutils literal notransla
 with <cite>main</cite> but depends on the compiler options.)</p>
 <p>In order to run a new simulation:</p>
 <ul class="simple">
-<li><p>Create a <strong>new directory</strong>, where the simulation will be run.</p></li>
-<li><p>Copy the <strong>executable</strong> to this directory:</p></li>
+<li>Create a <strong>new directory</strong>, where the simulation will be run.</li>
+<li>Copy the <strong>executable</strong> to this directory:</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="n">warpx</span><span class="o">/</span><span class="n">Bin</span><span class="o">/&lt;</span><span class="n">warpx_executable</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">run_directory</span><span class="o">&gt;/</span><span class="n">warpx</span><span class="o">.</span><span class="n">exe</span>
 </pre></div>
@@ -180,7 +179,7 @@ with <cite>main</cite> but depends on the compiler options.)</p>
 of the executable (see above) and <code class="docutils literal notranslate"><span class="pre">&lt;run_directory&gt;</span></code> by the actual
 path to the run directory.</p>
 <ul class="simple">
-<li><p>Add an <strong>input file</strong> in the directory.</p></li>
+<li>Add an <strong>input file</strong> in the directory.</li>
 </ul>
 <p>This file contains the numerical and physical parameters that define
 the situation to be simulated.
@@ -188,7 +187,7 @@ Example input files can be found in the section <a class="reference internal" hr
 The different parameters in these files are explained in the section
 <a class="reference internal" href="parameters.html"><span class="doc">Input parameters</span></a>.</p>
 <ul class="simple">
-<li><p><strong>Run</strong> the executable:</p></li>
+<li><strong>Run</strong> the executable:</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="o">&lt;</span><span class="n">n_ranks</span><span class="o">&gt;</span> <span class="o">./</span><span class="n">warpx</span><span class="o">.</span><span class="n">exe</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="o">&gt;</span>
 </pre></div>

@@ -24,8 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -178,38 +177,54 @@
   <div class="section" id="input-parameters">
 <h1>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This section is currently in development.</p>
+<p class="first admonition-title">Warning</p>
+<p class="last">This section is currently in development.</p>
 </div>
 <div class="section" id="overall-simulation-parameters">
 <h2>Overall simulation parameters<a class="headerlink" href="#overall-simulation-parameters" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">max_step</span></code> (<cite>integer</cite>)</dt><dd><p>The number of PIC cycles to perform.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">max_step</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first last">The number of PIC cycles to perform.</p>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code> (<cite>float</cite>)</dt><dd><p>The Lorentz factor of the boosted frame in which the simulation is run.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code> (<cite>float</cite>)</dt>
+<dd><p class="first">The Lorentz factor of the boosted frame in which the simulation is run.
 (The corresponding Lorentz transformation is assumed to be along <code class="docutils literal notranslate"><span class="pre">warpx.boost_direction</span></code>.)</p>
 <p>When using this parameter, some of the input parameters are automatically
 converted to the boosted frame. (See the corresponding documentation of each
 input parameters.)</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For now, only the laser parameters will be converted.</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For now, only the laser parameters will be converted.</p>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.boost_direction</span></code> (string: <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> or <code class="docutils literal notranslate"><span class="pre">z</span></code>)</dt><dd><p>The direction of the Lorentz-transform for boosted-frame simulations
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.boost_direction</span></code> (string: <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> or <code class="docutils literal notranslate"><span class="pre">z</span></code>)</dt>
+<dd><p class="first last">The direction of the Lorentz-transform for boosted-frame simulations
 (The direction <code class="docutils literal notranslate"><span class="pre">y</span></code> cannot be used in 2D simulations.)</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.verbose</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Controls how much information is printed to the terminal, when running WarpX.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.zmax_plasma_to_compute_max_step</span></code> (<cite>float</cite>) optional</dt>
+<dd><p class="first last">Can be useful when running in a boosted frame. If specified, automatically
+calculates the number of iterations required in the boosted frame for the
+lower <cite>z</cite> end of the simulation domain to reach
+<code class="docutils literal notranslate"><span class="pre">warpx.zmax_plasma_to_compute_max_step</span></code> (typically the plasma end,
+given in the lab frame). The value of <code class="docutils literal notranslate"><span class="pre">max_step</span></code> is overwritten, and
+printed to standard output. Currently only works if the Lorentz boost and
+the moving window are along the z direction.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.verbose</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd><p class="first last">Controls how much information is printed to the terminal, when running WarpX.</p>
 </dd>
 </dl>
 </li>
@@ -218,45 +233,52 @@ input parameters.)</p>
 <div class="section" id="setting-up-the-field-mesh">
 <h2>Setting up the field mesh<a class="headerlink" href="#setting-up-the-field-mesh" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">amr.n_cell</span></code> (<cite>2 integers in 2D</cite>, <cite>3 integers in 3D</cite>)</dt><dd><p>The number of grid points along each direction (on the <strong>coarsest level</strong>)</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.n_cell</span></code> (<cite>2 integers in 2D</cite>, <cite>3 integers in 3D</cite>)</dt>
+<dd><p class="first last">The number of grid points along each direction (on the <strong>coarsest level</strong>)</p>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">amr.max_level</span></code> (<cite>integer</cite>)</dt><dd><p>When using mesh refinement, the number of refinement levels that will be used.</p>
-<p>Use 0 in order to disable mesh refinement.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.max_level</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">When using mesh refinement, the number of refinement levels that will be used.</p>
+<p class="last">Use 0 in order to disable mesh refinement.</p>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">geometry.is_periodic</span></code> (<cite>2 integers in 2D</cite>, <cite>3 integers in 3D</cite>)</dt><dd><p>Whether the boundary conditions are periodic, in each direction.</p>
-<p>For each direction, use 1 for periodic conditions, 0 otherwise.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">geometry.is_periodic</span></code> (<cite>2 integers in 2D</cite>, <cite>3 integers in 3D</cite>)</dt>
+<dd><p class="first">Whether the boundary conditions are periodic, in each direction.</p>
+<p class="last">For each direction, use 1 for periodic conditions, 0 otherwise.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">geometry.coord_sys</span></code> (<cite>integer</cite>) optional (default <cite>0</cite>)</dt><dd><p>Coordinate system used by the simulation. 0 for Cartesian, 1 for cylindrical.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">geometry.coord_sys</span></code> (<cite>integer</cite>) optional (default <cite>0</cite>)</dt>
+<dd><p class="first last">Coordinate system used by the simulation. 0 for Cartesian, 1 for cylindrical.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">geometry.prob_lo</span></code> and <code class="docutils literal notranslate"><span class="pre">geometry.prob_hi</span></code> (<cite>2 floats in 2D</cite>, <cite>3 integers in 3D</cite>; in meters)</dt><dd><p>The extent of the full simulation box. This box is rectangular, and thus its
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">geometry.prob_lo</span></code> and <code class="docutils literal notranslate"><span class="pre">geometry.prob_hi</span></code> (<cite>2 floats in 2D</cite>, <cite>3 integers in 3D</cite>; in meters)</dt>
+<dd><p class="first last">The extent of the full simulation box. This box is rectangular, and thus its
 extent is given here by the coordinates of the lower corner (<code class="docutils literal notranslate"><span class="pre">geometry.prob_lo</span></code>) and
 upper corner (<code class="docutils literal notranslate"><span class="pre">geometry.prob_hi</span></code>). The first axis of the coordinates is x (or r with cylindrical)
 and the last is z.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.fine_tag_lo</span></code> and <code class="docutils literal notranslate"><span class="pre">warpx.fine_tag_hi</span></code> (<cite>2 floats in 2D</cite>, <cite>3 integers in 3D</cite>; in meters) optional</dt><dd><p><strong>When using static mesh refinement with 1 level</strong>, the extent of the refined patch.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.fine_tag_lo</span></code> and <code class="docutils literal notranslate"><span class="pre">warpx.fine_tag_hi</span></code> (<cite>2 floats in 2D</cite>, <cite>3 integers in 3D</cite>; in meters) optional</dt>
+<dd><p class="first last"><strong>When using static mesh refinement with 1 level</strong>, the extent of the refined patch.
 This patch is rectangular, and thus its extent is given here by the coordinates
 of the lower corner (<code class="docutils literal notranslate"><span class="pre">warpx.fine_tag_lo</span></code>) and upper corner (<code class="docutils literal notranslate"><span class="pre">warpx.fine_tag_hi</span></code>).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">n_field_gather_buffer</span></code> (<cite>integer</cite>; 0 by default)</dt><dd><p>When using mesh refinement: the particles that are located inside
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">n_field_gather_buffer</span></code> (<cite>integer</cite>; 0 by default)</dt>
+<dd><p class="first last">When using mesh refinement: the particles that are located inside
 a refinement patch, but within <code class="docutils literal notranslate"><span class="pre">n_field_gather_buffer</span></code> cells of
 the edge of this patch, will gather the fields from the lower refinement
 level, instead of gathering the fields from the refinement patch itself.
@@ -266,8 +288,9 @@ refinement patch, close to its edge. See the section
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">n_current_deposition_buffer</span></code> (<cite>integer</cite>)</dt><dd><p>When using mesh refinement: the particles that are located inside
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">n_current_deposition_buffer</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first last">When using mesh refinement: the particles that are located inside
 a refinement patch, but within <code class="docutils literal notranslate"><span class="pre">n_field_gather_buffer</span></code> cells of
 the edge of this patch, will deposit their charge and current to the
 lower refinement level, instead of depositing to the refinement patch
@@ -280,8 +303,9 @@ itself. See the section <a class="reference internal" href="../theory/amr.html">
 <div class="section" id="distribution-across-mpi-ranks-and-parallelization">
 <h2>Distribution across MPI ranks and parallelization<a class="headerlink" href="#distribution-across-mpi-ranks-and-parallelization" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">amr.max_grid_size</span></code> (<cite>integer</cite>) optional (default <cite>128</cite>)</dt><dd><p>Maximum allowable size of each <strong>subdomain</strong>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.max_grid_size</span></code> (<cite>integer</cite>) optional (default <cite>128</cite>)</dt>
+<dd><p class="first">Maximum allowable size of each <strong>subdomain</strong>
 (expressed in number of grid points, in each direction).
 Each subdomain has its own ghost cells, and can be handled by a
 different MPI rank ; several OpenMP threads can work simultaneously on the
@@ -290,17 +314,18 @@ same subdomain.</p>
 <strong>larger</strong> that the number of MPI ranks used, than some MPI ranks
 will handle several subdomains, thereby providing additional flexibility
 for <strong>load balancing</strong>.</p>
-<p>When using mesh refinement, this number applies to the subdomains
+<p class="last">When using mesh refinement, this number applies to the subdomains
 of the coarsest level, but also to any of the finer level.</p>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.load_balance_int</span></code> (<cite>integer</cite>) optional (default <cite>-1</cite>)</dt><dd><p>How often WarpX should try to redistribute the work across MPI ranks,
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.load_balance_int</span></code> (<cite>integer</cite>) optional (default <cite>-1</cite>)</dt>
+<dd><p class="first">How often WarpX should try to redistribute the work across MPI ranks,
 in order to have better load balancing (expressed in number of PIC cycles
 inbetween two consecutive attempts at redistributing the work).
 Use 0 to disable load_balancing.</p>
-<p>When performing load balancing, WarpX measures the wall time for
+<p class="last">When performing load balancing, WarpX measures the wall time for
 computational parts of the PIC cycle. It then uses this data to decide
 how to redistribute the subdomains across MPI ranks. (Each subdomain
 is unchanged, but its owner is changed in order to have better performance.)
@@ -309,15 +334,17 @@ This relies on each MPI rank handling several (in fact many) subdomains
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.load_balance_with_sfc</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt><dd><p>If this is <cite>1</cite>: use a Space-Filling Curve (SFC) algorithm in order to
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.load_balance_with_sfc</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt>
+<dd><p class="first last">If this is <cite>1</cite>: use a Space-Filling Curve (SFC) algorithm in order to
 perform load-balancing of the simulation.
 If this is <cite>0</cite>: the Knapsack algorithm is used instead.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_dynamic_scheduling</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>1</cite>)</dt><dd><p>Whether to activate OpenMP dynamic scheduling.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_dynamic_scheduling</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>1</cite>)</dt>
+<dd><p class="first last">Whether to activate OpenMP dynamic scheduling.</p>
 </dd>
 </dl>
 </li>
@@ -340,31 +367,35 @@ The name of each constant has to begin with a letter. The following names are us
 by WarpX, and cannot be used as user-defined constants: <cite>x</cite>, <cite>y</cite>, <cite>z</cite>, <cite>X</cite>, <cite>Y</cite>, <cite>t</cite>.
 For example, parameters <code class="docutils literal notranslate"><span class="pre">a0</span></code> and <code class="docutils literal notranslate"><span class="pre">z_plateau</span></code> can be specified with:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">my_constants.a0</span> <span class="pre">=</span> <span class="pre">3.0</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">my_constants.z_plateau</span> <span class="pre">=</span> <span class="pre">150.e-6</span></code></p></li>
+<li><code class="docutils literal notranslate"><span class="pre">my_constants.a0</span> <span class="pre">=</span> <span class="pre">3.0</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">my_constants.z_plateau</span> <span class="pre">=</span> <span class="pre">150.e-6</span></code></li>
 </ul>
 </div>
 <div class="section" id="particle-initialization">
 <h2>Particle initialization<a class="headerlink" href="#particle-initialization" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">particles.nspecies</span></code> (<cite>int</cite>)</dt><dd><p>The number of species that will be used in the simulation.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">particles.nspecies</span></code> (<cite>int</cite>)</dt>
+<dd><p class="first last">The number of species that will be used in the simulation.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">particles.species_names</span></code> (<cite>strings</cite>, separated by spaces)</dt><dd><p>The name of each species. This is then used in the rest of the input deck ;
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">particles.species_names</span></code> (<cite>strings</cite>, separated by spaces)</dt>
+<dd><p class="first last">The name of each species. This is then used in the rest of the input deck ;
 in this documentation we use <cite>&lt;species_name&gt;</cite> as a placeholder.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">particles.use_fdtd_nci_corr</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt><dd><p>Whether to activate the FDTD Numerical Cherenkov Instability corrector.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">particles.use_fdtd_nci_corr</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt>
+<dd><p class="first last">Whether to activate the FDTD Numerical Cherenkov Instability corrector.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code> (<cite>strings</cite>, separated by spaces)</dt><dd><p>List of species injected using the rigid injection method. The rigid injection
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code> (<cite>strings</cite>, separated by spaces)</dt>
+<dd><p class="first last">List of species injected using the rigid injection method. The rigid injection
 method is useful when injecting a relativistic particle beam, in boosted-frame
 simulation ; see the section <a class="reference internal" href="../theory/input_output.html"><span class="doc">Inputs and outputs</span></a> for more details.
 For species injected using this method, particles are translated along the <cite>+z</cite>
@@ -375,104 +406,114 @@ particles are pushed in a standard way, using the specified pusher.
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.charge</span></code> (<cite>float</cite>)</dt><dd><p>The charge of one <cite>physical</cite> particle of this species.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.charge</span></code> (<cite>float</cite>)</dt>
+<dd><p class="first last">The charge of one <cite>physical</cite> particle of this species.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.mass</span></code> (<cite>float</cite>)</dt><dd><p>The mass of one <cite>physical</cite> particle of this species.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.mass</span></code> (<cite>float</cite>)</dt>
+<dd><p class="first last">The mass of one <cite>physical</cite> particle of this species.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.injection_style</span></code> (<cite>string</cite>)</dt><dd><p>Determines how the particles will be injected in the simulation.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.injection_style</span></code> (<cite>string</cite>)</dt>
+<dd><p class="first">Determines how the particles will be injected in the simulation.
 The options are:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">NUniformPerCell</span></code>: injection with a fixed number of evenly-spaced particles per cell.
-This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell_each_dim</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NRandomPerCell</span></code>: injection with a fixed number of randomly-distributed particles per cell.
-This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell</span></code>.</p></li>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">NUniformPerCell</span></code>: injection with a fixed number of evenly-spaced particles per cell.
+This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell_each_dim</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">NRandomPerCell</span></code>: injection with a fixed number of randomly-distributed particles per cell.
+This requires the additional parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.num_particles_per_cell</span></code>.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_continuous_injection</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Whether to inject particles during the simulation, and not only at
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_continuous_injection</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd><p class="first last">Whether to inject particles during the simulation, and not only at
 initialization. This can be required whith a moving window and/or when
 running in a boosted frame.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.profile</span></code> (<cite>string</cite>)</dt><dd><p>Density profile for this species. The options are:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">constant</span></code>: Constant density profile within the box, or between <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.xmin</span></code>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.profile</span></code> (<cite>string</cite>)</dt>
+<dd><p class="first">Density profile for this species. The options are:</p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">constant</span></code>: Constant density profile within the box, or between <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.xmin</span></code>
 and <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.xmax</span></code> (and same in all directions). This requires additional
-parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.density</span></code>. i.e., the plasma density in <span class="math notranslate nohighlight">\(m^{-3}\)</span>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">parse_density_function</span></code>: the density is given by a function in the input file.
+parameter <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.density</span></code>. i.e., the plasma density in <span class="math notranslate nohighlight">\(m^{-3}\)</span>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">parse_density_function</span></code>: the density is given by a function in the input file.
 It requires additional argument <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.density_function(x,y,z)</span></code>, which is a
 mathematical expression for the density of the species, e.g.
 <code class="docutils literal notranslate"><span class="pre">electrons.density_function(x,y,z)</span> <span class="pre">=</span> <span class="pre">&quot;n0+n0*x**2*1.e12&quot;</span></code> where <code class="docutils literal notranslate"><span class="pre">n0</span></code> is a
-user-defined constant, see above.</p></li>
+user-defined constant, see above.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.radially_weighted</span></code> (<cite>bool</cite>) optional (default <cite>true</cite>)</dt><dd><p>Whether particle’s weight is varied with their radius. This only applies to cylindrical geometry.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.radially_weighted</span></code> (<cite>bool</cite>) optional (default <cite>true</cite>)</dt>
+<dd><p class="first">Whether particle’s weight is varied with their radius. This only applies to cylindrical geometry.
 The only valid value is true.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">predefined</span></code>: use one of WarpX predefined plasma profiles. It requires additional
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">predefined</span></code>: use one of WarpX predefined plasma profiles. It requires additional
 arguments <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.predefined_profile_name</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.predefined_profile_params</span></code> (see below).</p></li>
+<code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.predefined_profile_params</span></code> (see below).</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.momentum_distribution_type</span></code> (<cite>string</cite>)</dt><dd><p>Distribution of the normalized momentum (<cite>u=p/mc</cite>) for this species. The options are:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">constant</span></code>: constant momentum profile. This requires additional parameters
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.momentum_distribution_type</span></code> (<cite>string</cite>)</dt>
+<dd><p class="first">Distribution of the normalized momentum (<cite>u=p/mc</cite>) for this species. The options are:</p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">constant</span></code>: constant momentum profile. This requires additional parameters
 <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.ux</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.uy</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.uz</span></code>, the normalized
-momenta in the x, y and z direction respectively.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gaussian</span></code>: gaussian momentum distribution in all 3 directions. This requires
+momenta in the x, y and z direction respectively.</li>
+<li><code class="docutils literal notranslate"><span class="pre">gaussian</span></code>: gaussian momentum distribution in all 3 directions. This requires
 additional arguments for the average momenta along each direction
 <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.ux_m</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.uy_m</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.uz_m</span></code> as
 well as standard deviations along each direction <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.ux_th</span></code>,
-<code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.uy_th</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.uz_th</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">radial_expansion</span></code>: momentum depends on the radial coordinate linearly. This
-requires additional parameter <code class="docutils literal notranslate"><span class="pre">u_over_r</span></code> which is the slope.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">parse_momentum_function</span></code>: the momentum is given by a function in the input
+<code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.uy_th</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.uz_th</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">radial_expansion</span></code>: momentum depends on the radial coordinate linearly. This
+requires additional parameter <code class="docutils literal notranslate"><span class="pre">u_over_r</span></code> which is the slope.</li>
+<li><code class="docutils literal notranslate"><span class="pre">parse_momentum_function</span></code>: the momentum is given by a function in the input
 file. It requires additional arguments <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.momentum_function_ux(x,y,z)</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.momentum_function_uy(x,y,z)</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.momentum_function_uz(x,y,z)</span></code>,
-which gives the distribution of each component of the momentum as a function of space.</p></li>
+which gives the distribution of each component of the momentum as a function of space.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.zinject_plane</span></code> (<cite>float</cite>)</dt><dd><p>Only read if  <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;</span></code> is in <code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code>.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.zinject_plane</span></code> (<cite>float</cite>)</dt>
+<dd><p class="first last">Only read if  <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;</span></code> is in <code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code>.
 Injection plane when using the rigid injection method.
 See <code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code> above.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.rigid_advance</span></code> (<cite>bool</cite>)</dt><dd><p>Only read if <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;</span></code> is in <code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code>.</p>
-<ul class="simple">
-<li><p>If <code class="docutils literal notranslate"><span class="pre">false</span></code>, each particle is advanced with its
-own velocity <code class="docutils literal notranslate"><span class="pre">vz</span></code> until it reaches <code class="docutils literal notranslate"><span class="pre">zinject_plane</span></code>.</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">true</span></code>, each particle is advanced with the average speed of the species
-<code class="docutils literal notranslate"><span class="pre">vzbar</span></code> until it reaches <code class="docutils literal notranslate"><span class="pre">zinject_plane</span></code>.</p></li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.rigid_advance</span></code> (<cite>bool</cite>)</dt>
+<dd><p class="first">Only read if <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;</span></code> is in <code class="docutils literal notranslate"><span class="pre">particles.rigid_injected_species</span></code>.</p>
+<ul class="last simple">
+<li>If <code class="docutils literal notranslate"><span class="pre">false</span></code>, each particle is advanced with its
+own velocity <code class="docutils literal notranslate"><span class="pre">vz</span></code> until it reaches <code class="docutils literal notranslate"><span class="pre">zinject_plane</span></code>.</li>
+<li>If <code class="docutils literal notranslate"><span class="pre">true</span></code>, each particle is advanced with the average speed of the species
+<code class="docutils literal notranslate"><span class="pre">vzbar</span></code> until it reaches <code class="docutils literal notranslate"><span class="pre">zinject_plane</span></code>.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">species_name.predefined_profile_name</span></code> (<cite>string</cite>)</dt><dd><p>Only read of <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.electrons.profile</span></code> is <cite>predefined</cite>.</p>
-<ul>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">parabolic_channel</span></code>, the plasma profile is a parabolic profile with linear ramps
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">species_name.predefined_profile_name</span></code> (<cite>string</cite>)</dt>
+<dd><p class="first">Only read of <code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.electrons.profile</span></code> is <cite>predefined</cite>.</p>
+<ul class="last">
+<li><p class="first">If <code class="docutils literal notranslate"><span class="pre">parabolic_channel</span></code>, the plasma profile is a parabolic profile with linear ramps
 at the beginning and the end of the profile. The density is given by</p>
 <div class="math notranslate nohighlight">
 \[n = n_0 n(x,y) n(z)\]</div>
@@ -490,38 +531,63 @@ in <code class="docutils literal notranslate"><span class="pre">predefined_profi
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.predefined_profile_params</span></code> (list of <cite>float</cite>)</dt><dd><p>Parameters for the predefined profiles.</p>
-<ul class="simple">
-<li><p>If <code class="docutils literal notranslate"><span class="pre">species_name.predefined_profile_name</span></code> is <code class="docutils literal notranslate"><span class="pre">parabolic_channel</span></code>,
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.predefined_profile_params</span></code> (list of <cite>float</cite>)</dt>
+<dd><p class="first">Parameters for the predefined profiles.</p>
+<ul class="last simple">
+<li>If <code class="docutils literal notranslate"><span class="pre">species_name.predefined_profile_name</span></code> is <code class="docutils literal notranslate"><span class="pre">parabolic_channel</span></code>,
 <code class="docutils literal notranslate"><span class="pre">predefined_profile_params</span></code> contains a space-separated list of the
 following parameters, in this order: <span class="math notranslate nohighlight">\(L_{ramp,up}\)</span> <span class="math notranslate nohighlight">\(L_{plateau}\)</span>
-<span class="math notranslate nohighlight">\(L_{ramp,down}\)</span> <span class="math notranslate nohighlight">\(R_c\)</span> <span class="math notranslate nohighlight">\(n_0\)</span></p></li>
+<span class="math notranslate nohighlight">\(L_{ramp,down}\)</span> <span class="math notranslate nohighlight">\(R_c\)</span> <span class="math notranslate nohighlight">\(n_0\)</span></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_backward_injection</span></code> (<cite>bool</cite>)</dt><dd><p>Inject a backward-propagating beam to reduce the effect of charge-separation
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_backward_injection</span></code> (<cite>bool</cite>)</dt>
+<dd><p class="first last">Inject a backward-propagating beam to reduce the effect of charge-separation
 fields when running in the boosted frame. See examples.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_splitting</span></code> (<cite>bool</cite>) optional (default <cite>0</cite>)</dt><dd><p>Split particles of the species when crossing the boundary from a lower
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_splitting</span></code> (<cite>bool</cite>) optional (default <cite>0</cite>)</dt>
+<dd><p class="first last">Split particles of the species when crossing the boundary from a lower
 resolution domain to a higher resolution domain.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.split_type</span></code> (<cite>int</cite>) optional (default <cite>0</cite>)</dt><dd><p>Splitting technique. When <cite>0</cite>, particles are split along the simulation
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.split_type</span></code> (<cite>int</cite>) optional (default <cite>0</cite>)</dt>
+<dd><p class="first last">Splitting technique. When <cite>0</cite>, particles are split along the simulation
 axes (4 particles in 2D, 6 particles in 3D). When <cite>1</cite>, particles are split
 along the diagonals (4 particles in 2D, 8 particles in 3D).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.serialize_ics</span></code> (<cite>0 or 1</cite>)</dt><dd><p>Whether or not to use OpenMP threading for particle initialization.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species&gt;.plot_species</span></code> (<cite>0</cite> or <cite>1</cite> optional; default <cite>1</cite>)</dt>
+<dd><p class="first last">Whether to plot particle quantities for this species.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species&gt;.plot_vars</span></code> (list of <cite>strings</cite> separated by spaces, optional)</dt>
+<dd><p class="first last">List of particle quantities to write to <cite>plotfiles</cite>. By defaults, all
+quantities are written to file. Choices are
+* <code class="docutils literal notranslate"><span class="pre">w</span></code> for the particle weight,
+* <code class="docutils literal notranslate"><span class="pre">ux</span></code> <code class="docutils literal notranslate"><span class="pre">uy</span></code> <code class="docutils literal notranslate"><span class="pre">uz</span></code> for the particle momentum,
+* <code class="docutils literal notranslate"><span class="pre">Ex</span></code> <code class="docutils literal notranslate"><span class="pre">Ey</span></code> <code class="docutils literal notranslate"><span class="pre">Ez</span></code> for the electric field on particles,
+* <code class="docutils literal notranslate"><span class="pre">Bx</span></code> <code class="docutils literal notranslate"><span class="pre">By</span></code> <code class="docutils literal notranslate"><span class="pre">Bz</span></code> for the magnetic field on particles.
+The particle positions are always included. Use
+<code class="docutils literal notranslate"><span class="pre">&lt;species&gt;.plot_vars</span> <span class="pre">=</span> <span class="pre">none</span></code> to plot no particle data, except
+particle position.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.serialize_ics</span></code> (<cite>0 or 1</cite>)</dt>
+<dd><p class="first last">Whether or not to use OpenMP threading for particle initialization.</p>
 </dd>
 </dl>
 </li>
@@ -530,20 +596,23 @@ along the diagonals (4 particles in 2D, 8 particles in 3D).</p>
 <div class="section" id="laser-initialization">
 <h2>Laser initialization<a class="headerlink" href="#laser-initialization" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">lasers.nlasers</span></code> (<cite>int</cite>) optional (default <cite>0</cite>)</dt><dd><p>Number of lasers pulses.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">lasers.nlasers</span></code> (<cite>int</cite>) optional (default <cite>0</cite>)</dt>
+<dd><p class="first last">Number of lasers pulses.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">lasers.names</span></code> (list of <cite>string</cite>. Must contain <code class="docutils literal notranslate"><span class="pre">lasers.nlasers</span></code> elements)</dt><dd><p>Name of each laser. This is then used in the rest of the input deck ;
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">lasers.names</span></code> (list of <cite>string</cite>. Must contain <code class="docutils literal notranslate"><span class="pre">lasers.nlasers</span></code> elements)</dt>
+<dd><p class="first last">Name of each laser. This is then used in the rest of the input deck ;
 in this documentation we use <cite>&lt;laser_name&gt;</cite> as a placeholder. The parameters below
 must be provided for each laser pulse.</p>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">`&lt;laser_name&gt;`.position</span></code> (<cite>3 floats in 3D and 2D</cite> ; in meters)</dt><dd><p>The coordinates of one of the point of the antenna that will emit the laser.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">`&lt;laser_name&gt;`.position</span></code> (<cite>3 floats in 3D and 2D</cite> ; in meters)</dt>
+<dd><p class="first">The coordinates of one of the point of the antenna that will emit the laser.
 The plane of the antenna is entirely defined by <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.position</span></code>
 and <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.direction</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">`&lt;laser_name&gt;`.position</span></code> also corresponds to the origin of the coordinates system
@@ -552,68 +621,73 @@ the peak of intensity will be at the position given by <code class="docutils lit
 This variable can thus be used to shift the position of the laser pulse
 transversally.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In 2D, <code class="docutils literal notranslate"><span class="pre">`&lt;laser_name&gt;`.position</span></code> is still given by 3 numbers,
+<p class="first admonition-title">Note</p>
+<p class="last">In 2D, <code class="docutils literal notranslate"><span class="pre">`&lt;laser_name&gt;`.position</span></code> is still given by 3 numbers,
 but the second number is ignored.</p>
 </div>
-<p>When running a <strong>boosted-frame simulation</strong>, provide the value of
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
 <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.position</span></code> in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code>
 to automatically perform the conversion to the boosted frame. Note that,
 in this case, the laser antenna will be moving, in the boosted frame.</p>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.polarization</span></code> (<cite>3 floats in 3D and 2D</cite>)</dt><dd><p>The coordinates of a vector that points in the direction of polarization of
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.polarization</span></code> (<cite>3 floats in 3D and 2D</cite>)</dt>
+<dd><p class="first">The coordinates of a vector that points in the direction of polarization of
 the laser. The norm of this vector is unimportant, only its direction matters.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Even in 2D, all the 3 components of this vectors are important (i.e.
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Even in 2D, all the 3 components of this vectors are important (i.e.
 the polarization can be orthogonal to the plane of the simulation).</p>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.direction</span></code> (<cite>3 floats in 3D</cite>)</dt><dd><p>The coordinates of a vector that points in the propagation direction of
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.direction</span></code> (<cite>3 floats in 3D</cite>)</dt>
+<dd><p class="first">The coordinates of a vector that points in the propagation direction of
 the laser. The norm of this vector is unimportant, only its direction matters.</p>
 <p>The plane of the antenna that will emit the laser is orthogonal to this vector.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>When running <strong>boosted-frame simulations</strong>, <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.direction</span></code> should
+<div class="last admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When running <strong>boosted-frame simulations</strong>, <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.direction</span></code> should
 be parallel to <code class="docutils literal notranslate"><span class="pre">warpx.boost_direction</span></code>, for now.</p>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.e_max</span></code> (<cite>float</cite> ; in V/m)</dt><dd><p>Peak amplitude of the laser field.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.e_max</span></code> (<cite>float</cite> ; in V/m)</dt>
+<dd><p class="first">Peak amplitude of the laser field.</p>
 <p>For a laser with a wavelength <span class="math notranslate nohighlight">\(\lambda = 0.8\,\mu m\)</span>, the peak amplitude
 is related to <span class="math notranslate nohighlight">\(a_0\)</span> by:</p>
 <div class="math notranslate nohighlight">
 \[E_{max} = a_0 \frac{2 \pi m_e c}{e\lambda} = a_0 \times (4.0 \cdot 10^{12} \;V.m^{-1})\]</div>
-<p>When running a <strong>boosted-frame simulation</strong>, provide the value of <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.e_max</span></code>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.e_max</span></code>
 in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code> to automatically
 perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.wavelength</span></code> (<cite>float</cite>; in meters)</dt><dd><p>The wavelength of the laser in vacuum.</p>
-<p>When running a <strong>boosted-frame simulation</strong>, provide the value of
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.wavelength</span></code> (<cite>float</cite>; in meters)</dt>
+<dd><p class="first">The wavelength of the laser in vacuum.</p>
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
 <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.wavelength</span></code> in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code>
 to automatically perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile</span></code> (<cite>string</cite>)</dt><dd><p>The spatio-temporal shape of the laser. The options that are currently
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile</span></code> (<cite>string</cite>)</dt>
+<dd><p class="first">The spatio-temporal shape of the laser. The options that are currently
 implemented are:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Gaussian&quot;</span></code>: The transverse and longitudinal profiles are Gaussian.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Harris&quot;</span></code>: The transverse profile is Gaussian, but the longitudinal profile
-is given by the Harris function (see <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_duration</span></code> for more details)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;parse_field_function&quot;</span></code>: the laser electric field is given by a function in the
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;Gaussian&quot;</span></code>: The transverse and longitudinal profiles are Gaussian.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;Harris&quot;</span></code>: The transverse profile is Gaussian, but the longitudinal profile
+is given by the Harris function (see <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_duration</span></code> for more details)</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;parse_field_function&quot;</span></code>: the laser electric field is given by a function in the
 input file. It requires additional argument <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.field_function(X,Y,t)</span></code>, which
 is a mathematical expression , e.g.
 <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.field_function(X,Y,t)</span> <span class="pre">=</span> <span class="pre">&quot;a0*X**2</span> <span class="pre">*</span> <span class="pre">(X&gt;0)</span> <span class="pre">*</span> <span class="pre">cos(omega0*t)&quot;</span></code> where
@@ -623,30 +697,31 @@ and <code class="docutils literal notranslate"><span class="pre">Y</span></code>
 x and y coordinates of the simulation). All parameters above are required, but
 none of the parameters below are used when <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.parse_field_function=1</span></code>. Even
 though <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.wavelength</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.e_max</span></code> should be included in the laser
-function, they still have to be specified as they are used for numerical purposes.</p></li>
+function, they still have to be specified as they are used for numerical purposes.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_t_peak</span></code> (<cite>float</cite>; in seconds)</dt><dd><p>The time at which the laser reaches its peak intensity, at the position
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_t_peak</span></code> (<cite>float</cite>; in seconds)</dt>
+<dd><p class="first">The time at which the laser reaches its peak intensity, at the position
 given by <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.position</span></code> (only used for the <code class="docutils literal notranslate"><span class="pre">&quot;gaussian&quot;</span></code> profile)</p>
-<p>When running a <strong>boosted-frame simulation</strong>, provide the value of
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
 <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_t_peak</span></code> in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code>
 to automatically perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_duration</span></code> (<cite>float</cite> ; in seconds)</p>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_duration</span></code> (<cite>float</cite> ; in seconds)</p>
 <blockquote>
 <div><p>The duration of the laser, defined as <span class="math notranslate nohighlight">\(\tau\)</span> below:</p>
 <ul class="simple">
-<li><p>For the <code class="docutils literal notranslate"><span class="pre">&quot;gaussian&quot;</span></code> profile:</p></li>
+<li>For the <code class="docutils literal notranslate"><span class="pre">&quot;gaussian&quot;</span></code> profile:</li>
 </ul>
 <div class="math notranslate nohighlight">
 \[E(\boldsymbol{x},t) \propto \exp\left( -\frac{(t-t_{peak})^2}{\tau^2} \right)\]</div>
 <ul class="simple">
-<li><p>For the <code class="docutils literal notranslate"><span class="pre">&quot;harris&quot;</span></code> profile:</p></li>
+<li>For the <code class="docutils literal notranslate"><span class="pre">&quot;harris&quot;</span></code> profile:</li>
 </ul>
 <div class="math notranslate nohighlight">
 \[E(\boldsymbol{x},t) \propto \frac{1}{32}\left[10 - 15 \cos\left(\frac{2\pi t}{\tau}\right) + 6 \cos\left(\frac{4\pi t}{\tau}\right) - \cos\left(\frac{6\pi t}{\tau}\right) \right]\Theta(\tau - t)\]</div>
@@ -655,51 +730,59 @@ to automatically perform the conversion to the boosted frame.</p>
 to automatically perform the conversion to the boosted frame.</p>
 </div></blockquote>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_waist</span></code> (<cite>float</cite> ; in meters)</dt><dd><p>The waist of the transverse Gaussian laser profile, defined as <span class="math notranslate nohighlight">\(w_0\)</span> :</p>
-<div class="math notranslate nohighlight">
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_waist</span></code> (<cite>float</cite> ; in meters)</dt>
+<dd><p class="first">The waist of the transverse Gaussian laser profile, defined as <span class="math notranslate nohighlight">\(w_0\)</span> :</p>
+<div class="last math notranslate nohighlight">
 \[E(\boldsymbol{x},t) \propto \exp\left( -\frac{\boldsymbol{x}_\perp^2}{w_0^2} \right)\]</div>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_focal_distance</span></code> (<cite>float</cite>; in meters)</dt><dd><p>The distance from <code class="docutils literal notranslate"><span class="pre">laser_position</span></code> to the focal plane.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_focal_distance</span></code> (<cite>float</cite>; in meters)</dt>
+<dd><p class="first">The distance from <code class="docutils literal notranslate"><span class="pre">laser_position</span></code> to the focal plane.
 (where the distance is defined along the direction given by <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.direction</span></code>.)</p>
 <p>Use a negative number for a defocussing laser instead of a focussing laser.</p>
-<p>When running a <strong>boosted-frame simulation</strong>, provide the value of
+<p class="last">When running a <strong>boosted-frame simulation</strong>, provide the value of
 <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.profile_focal_distance</span></code> in the laboratory frame, and use <code class="docutils literal notranslate"><span class="pre">warpx.gamma_boost</span></code>
 to automatically perform the conversion to the boosted frame.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.stc_direction</span></code> (<cite>3 floats</cite>) optional (default <cite>1. 0. 0.</cite>)</dt><dd><dl class="simple">
-<dt>Direction of laser spatio-temporal couplings.</dt><dd><p>See definition in Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.stc_direction</span></code> (<cite>3 floats</cite>) optional (default <cite>1. 0. 0.</cite>)</dt>
+<dd><dl class="first last docutils">
+<dt>Direction of laser spatio-temporal couplings.</dt>
+<dd><p class="first last">See definition in Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
 </dd>
 </dl>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.zeta</span></code> (<cite>float</cite>; in meters.seconds) optional (default <cite>0.</cite>)</dt><dd><p>Spatial chirp at focus in direction <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.stc_direction</span></code>. See definition in
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.zeta</span></code> (<cite>float</cite>; in meters.seconds) optional (default <cite>0.</cite>)</dt>
+<dd><p class="first last">Spatial chirp at focus in direction <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.stc_direction</span></code>. See definition in
 Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.beta</span></code> (<cite>float</cite>; in seconds) optional (default <cite>0.</cite>)</dt><dd><p>Angular dispersion (or angular chirp) at focus in direction <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.stc_direction</span></code>.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.beta</span></code> (<cite>float</cite>; in seconds) optional (default <cite>0.</cite>)</dt>
+<dd><p class="first last">Angular dispersion (or angular chirp) at focus in direction <code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.stc_direction</span></code>.
 See definition in Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.phi2</span></code> (<cite>float</cite>; in seconds**2) optional (default <cite>0.</cite>)</dt><dd><p>Temporal chirp at focus.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.phi2</span></code> (<cite>float</cite>; in seconds**2) optional (default <cite>0.</cite>)</dt>
+<dd><p class="first last">Temporal chirp at focus.
 See definition in Akturk et al., Opt Express, vol 12, no 19 (2014).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.do_continuous_injection</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>).</dt><dd><p>Whether or not to use continuous injection (<cite>0</cite> or not <cite>0</cite>).
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;laser_name&gt;.do_continuous_injection</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>).</dt>
+<dd><p class="first last">Whether or not to use continuous injection (<cite>0</cite> or not <cite>0</cite>).
 If the antenna starts outside of the simulation domain but enters it
 at some point (due to moving window or moving antenna in the boosted
 frame), use this so that the laser antenna is injected when it reaches
@@ -711,26 +794,30 @@ or <cite>z</cite>)</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors</span></code> (<cite>int</cite>) optional (default <cite>0</cite>)</dt><dd><p>Users can input perfect mirror condition inside the simulation domain.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors</span></code> (<cite>int</cite>) optional (default <cite>0</cite>)</dt>
+<dd><p class="first last">Users can input perfect mirror condition inside the simulation domain.
 The number of mirrors is given by <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors</span></code>. The mirrors are
 orthogonal to the <cite>z</cite> direction. The following parameters are required
 when <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors</span></code> is &gt;0.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.mirror_z</span></code> (list of <cite>float</cite>) required if <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors&gt;0</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">z</span></code> location of the front of the mirrors.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.mirror_z</span></code> (list of <cite>float</cite>) required if <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors&gt;0</span></code></dt>
+<dd><p class="first last"><code class="docutils literal notranslate"><span class="pre">z</span></code> location of the front of the mirrors.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.mirror_z_width</span></code> (list of <cite>float</cite>) required if <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors&gt;0</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">z</span></code> width of the mirrors.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.mirror_z_width</span></code> (list of <cite>float</cite>) required if <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors&gt;0</span></code></dt>
+<dd><p class="first last"><code class="docutils literal notranslate"><span class="pre">z</span></code> width of the mirrors.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.mirror_z_npoints</span></code> (list of <cite>int</cite>) required if <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors&gt;0</span></code></dt><dd><p>In the boosted frame, depending on <cite>gamma_boost</cite>, <code class="docutils literal notranslate"><span class="pre">warpx.mirror_z_width</span></code>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.mirror_z_npoints</span></code> (list of <cite>int</cite>) required if <code class="docutils literal notranslate"><span class="pre">warpx.num_mirrors&gt;0</span></code></dt>
+<dd><p class="first last">In the boosted frame, depending on <cite>gamma_boost</cite>, <code class="docutils literal notranslate"><span class="pre">warpx.mirror_z_width</span></code>
 can be smaller than the cell size, so that the mirror would not work. This
 parameter is the minimum number of points for the mirror. If
 <code class="docutils literal notranslate"><span class="pre">mirror_z_width</span> <span class="pre">&lt;</span> <span class="pre">dz/cell_size</span></code>, the upper bound of the mirror is increased
@@ -743,106 +830,117 @@ so that it contains at least <code class="docutils literal notranslate"><span cl
 <div class="section" id="numerics-and-algorithms">
 <h2>Numerics and algorithms<a class="headerlink" href="#numerics-and-algorithms" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.cfl</span></code> (<cite>float</cite>)</dt><dd><p>The ratio between the actual timestep that is used in the simulation
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.cfl</span></code> (<cite>float</cite>)</dt>
+<dd><p class="first last">The ratio between the actual timestep that is used in the simulation
 and the Courant-Friedrichs-Lewy (CFL) limit. (e.g. for <cite>warpx.cfl=1</cite>,
 the timestep will be exactly equal to the CFL limit.)</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.use_filter</span></code> (<cite>0 or 1</cite>)</dt><dd><p>Whether to smooth the charge and currents on the mesh, after depositing
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.use_filter</span></code> (<cite>0 or 1</cite>)</dt>
+<dd><p class="first last">Whether to smooth the charge and currents on the mesh, after depositing
 them from the macroparticles. This uses a bilinear filter
 (see the sub-section <strong>Filtering</strong> in <a class="reference internal" href="../theory/theory.html"><span class="doc">Theoretical background</span></a>).</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.filter_npass_each_dir</span></code> (<cite>3 int</cite>) optional (default <cite>1 1 1</cite>)</dt><dd><p>Number of passes along each direction for the bilinear filter.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.filter_npass_each_dir</span></code> (<cite>3 int</cite>) optional (default <cite>1 1 1</cite>)</dt>
+<dd><p class="first last">Number of passes along each direction for the bilinear filter.
 In 2D simulations, only the first two values are read.</p>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">algo.current_deposition</span></code> (<cite>integer</cite>)</dt><dd><p>The algorithm for current deposition:</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">algo.current_deposition</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The algorithm for current deposition:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>: Esirkepov deposition, vectorized</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: Esirkepov deposition, non-optimized</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">2</span></code>: Direct deposition, vectorized</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">3</span></code>: Direct deposition, non-optimized</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">0</span></code>: Esirkepov deposition, vectorized</li>
+<li><code class="docutils literal notranslate"><span class="pre">1</span></code>: Esirkepov deposition, non-optimized</li>
+<li><code class="docutils literal notranslate"><span class="pre">2</span></code>: Direct deposition, vectorized</li>
+<li><code class="docutils literal notranslate"><span class="pre">3</span></code>: Direct deposition, non-optimized</li>
 </ul>
 </div></blockquote>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>On GPU, use <code class="docutils literal notranslate"><span class="pre">algo.current_deposition=0</span></code> for Esirkepov
+<div class="last admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">On GPU, use <code class="docutils literal notranslate"><span class="pre">algo.current_deposition=0</span></code> for Esirkepov
 or <code class="docutils literal notranslate"><span class="pre">3</span></code> for direct deposition.</p>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">algo.charge_deposition</span></code> (<cite>integer</cite>)</dt><dd><p>The algorithm for the charge density deposition:</p>
-<blockquote>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">algo.charge_deposition</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The algorithm for the charge density deposition:</p>
+<blockquote class="last">
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>: Vectorized version</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: Non-optimized version</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">0</span></code>: Vectorized version</li>
+<li><code class="docutils literal notranslate"><span class="pre">1</span></code>: Non-optimized version</li>
 </ul>
 </div></blockquote>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">algo.field_gathering</span></code> (<cite>integer</cite>)</dt><dd><p>The algorithm for field gathering:</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">algo.field_gathering</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The algorithm for field gathering:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>: Vectorized version</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: Non-optimized version</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">0</span></code>: Vectorized version</li>
+<li><code class="docutils literal notranslate"><span class="pre">1</span></code>: Non-optimized version</li>
 </ul>
 </div></blockquote>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<dl class="simple">
-<dt>The vectorized version does not run on GPU. Use</dt><dd><p><code class="docutils literal notranslate"><span class="pre">algo.field_gather=1</span></code> when running on GPU.</p>
+<div class="last admonition warning">
+<p class="first admonition-title">Warning</p>
+<dl class="last docutils">
+<dt>The vectorized version does not run on GPU. Use</dt>
+<dd><p class="first last"><code class="docutils literal notranslate"><span class="pre">algo.field_gather=1</span></code> when running on GPU.</p>
 </dd>
 </dl>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">algo.particle_pusher</span></code> (<cite>integer</cite>)</dt><dd><p>The algorithm for the particle pusher:</p>
-<blockquote>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">algo.particle_pusher</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The algorithm for the particle pusher:</p>
+<blockquote class="last">
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>: Boris pusher</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: Vay pusher</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">0</span></code>: Boris pusher</li>
+<li><code class="docutils literal notranslate"><span class="pre">1</span></code>: Vay pusher</li>
 </ul>
 </div></blockquote>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">algo.maxwell_fdtd_solver</span></code> (<cite>string</cite>)</dt><dd><p>The algorithm for the FDTD Maxwell field solver:</p>
-<blockquote>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">algo.maxwell_fdtd_solver</span></code> (<cite>string</cite>)</dt>
+<dd><p class="first">The algorithm for the FDTD Maxwell field solver:</p>
+<blockquote class="last">
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">yee</span></code>: Yee FDTD solver</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ckc</span></code>: Cole-Karkkainen solver with Cowan
-coefficients (see Cowan - PRST-AB 16, 041303 (2013))</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">yee</span></code>: Yee FDTD solver</li>
+<li><code class="docutils literal notranslate"><span class="pre">ckc</span></code>: Cole-Karkkainen solver with Cowan
+coefficients (see Cowan - PRST-AB 16, 041303 (2013))</li>
 </ul>
 </div></blockquote>
 </dd>
 </dl>
 </li>
-<li><dl>
-<dt><code class="docutils literal notranslate"><span class="pre">interpolation.nox</span></code>, <code class="docutils literal notranslate"><span class="pre">interpolation.noy</span></code>, <code class="docutils literal notranslate"><span class="pre">interpolation.noz</span></code> (<cite>integer</cite>)</dt><dd><p>The order of the shape factors for the macroparticles, for the 3 dimensions of space.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">interpolation.nox</span></code>, <code class="docutils literal notranslate"><span class="pre">interpolation.noy</span></code>, <code class="docutils literal notranslate"><span class="pre">interpolation.noz</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first">The order of the shape factors for the macroparticles, for the 3 dimensions of space.
 Lower-order shape factors result in faster simulations, but more noisy results,</p>
-<p>Note that the implementation in WarpX is more efficient when these 3 numbers are equal,
+<p class="last">Note that the implementation in WarpX is more efficient when these 3 numbers are equal,
 and when they are between 1 and 3.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_dive_cleaning</span></code> (<cite>0</cite> or <cite>1</cite> ; default: 0)</dt><dd><p>Whether to use modified Maxwell equations that progressively eliminate
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_dive_cleaning</span></code> (<cite>0</cite> or <cite>1</cite> ; default: 0)</dt>
+<dd><p class="first last">Whether to use modified Maxwell equations that progressively eliminate
 the error in <span class="math notranslate nohighlight">\(div(E)-\rho\)</span>. This can be useful when using a current
 deposition algorithm which is not strictly charge-conserving, or when
 using mesh refinement. These modified Maxwell equation will cause the error
@@ -851,27 +949,48 @@ domain, where it can be absorbed.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_nodal</span></code> (<cite>0</cite> or <cite>1</cite> ; default: 0)</dt><dd><p>Whether to use a nodal grid (i.e. all fields are defined at the
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_nodal</span></code> (<cite>0</cite> or <cite>1</cite> ; default: 0)</dt>
+<dd><p class="first last">Whether to use a nodal grid (i.e. all fields are defined at the
 same points in space) or a staggered grid (i.e. Yee grid ; different
 fields are defined at different points in space)</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">psatd.nox</span></code>, <code class="docutils literal notranslate"><span class="pre">psatd.noy</span></code>, <code class="docutils literal notranslate"><span class="pre">pstad.noz</span></code> (<cite>integer</cite>) optional (default <cite>16</cite> for all)</dt><dd><p>The order of accuracy of the spatial derivatives, when using the code compiled with a PSATD solver.</p>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_subcycling</span></code> (<cite>0</cite> or <cite>1</cite>; default: 0)</dt>
+<dd><p class="first last">Whether or not to use sub-cycling. Different refinement levels have a
+different cell size, which results in different Courant–Friedrichs–Lewy
+(CFL) limits for the time step. By default, when using mesh refinement,
+the same time step is used for all levels. This time step is
+taken as the CFL limit of the finest level. Hence, for coarser
+levels, the timestep is only a fraction of the CFL limit for this
+level, which may lead to numerical artifacts. With sub-cycling, each level
+evolves with its own time step, set to its own CFL limit. In practice, it
+means that when level 0 performs one iteration, level 1 performs two
+iterations. Currently, this option is only supported when
+<code class="docutils literal notranslate"><span class="pre">amr.max_level</span> <span class="pre">=</span> <span class="pre">1</span></code>. More information can be found at
+<a class="reference external" href="https://ieeexplore.ieee.org/document/8659392">https://ieeexplore.ieee.org/document/8659392</a>.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">psatd.hybrid_mpi_decomposition</span></code> (<cite>0</cite> or <cite>1</cite>; default: 0)</dt><dd><p>Whether to use a different MPI decomposition for the particle-grid operations
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">psatd.nox</span></code>, <code class="docutils literal notranslate"><span class="pre">psatd.noy</span></code>, <code class="docutils literal notranslate"><span class="pre">pstad.noz</span></code> (<cite>integer</cite>) optional (default <cite>16</cite> for all)</dt>
+<dd><p class="first last">The order of accuracy of the spatial derivatives, when using the code compiled with a PSATD solver.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">psatd.hybrid_mpi_decomposition</span></code> (<cite>0</cite> or <cite>1</cite>; default: 0)</dt>
+<dd><p class="first last">Whether to use a different MPI decomposition for the particle-grid operations
 (deposition and gather) and for the PSATD solver. If <cite>1</cite>, the FFT will
 be performed over MPI groups.</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">psatd.ngroups_fft</span></code> (<cite>integer</cite>)</dt><dd><p>The number of MPI groups that are created for the FFT, when using the code compiled with a PSATD solver
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">psatd.ngroups_fft</span></code> (<cite>integer</cite>)</dt>
+<dd><p class="first last">The number of MPI groups that are created for the FFT, when using the code compiled with a PSATD solver
 (and only if <cite>hybrid_mpi_decomposition</cite> is <cite>1</cite>).
 The FFTs are global within one MPI group and use guard cell exchanges in between MPI groups.
 (If <code class="docutils literal notranslate"><span class="pre">ngroups_fft</span></code> is larger than the number of MPI ranks used,
@@ -879,8 +998,9 @@ than the actual number of MPI ranks is used instead.)</p>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">psatd.fftw_plan_measure</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Defines whether the parameters of FFTW plans will be initialized by
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">psatd.fftw_plan_measure</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd><p class="first last">Defines whether the parameters of FFTW plans will be initialized by
 measuring and optimizing performance (<code class="docutils literal notranslate"><span class="pre">FFTW_MEASURE</span></code> mode; activated by default here).
 If <code class="docutils literal notranslate"><span class="pre">psatd.fftw_plan_measure</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, then the best parameters of FFTW
 plans will simply be estimated (<code class="docutils literal notranslate"><span class="pre">FFTW_ESTIMATE</span></code> mode).
@@ -894,22 +1014,22 @@ for more information.</p>
 <div class="section" id="boundary-conditions">
 <h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_pml</span></code> (<cite>0</cite> or <cite>1</cite>; default: 1)</dt><dd><p>Whether to add Perfectly Matched Layers (PML) around the simulation box,
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_pml</span></code> (<cite>0</cite> or <cite>1</cite>; default: 1)</dt>
+<dd>Whether to add Perfectly Matched Layers (PML) around the simulation box,
 and around the refinement patches. See the section <a class="reference internal" href="../theory/PML.html"><span class="doc">Boundary conditions</span></a>
-for more details.</p>
-</dd>
+for more details.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.pml_ncells</span></code> (<cite>int</cite>; default: 10)</dt><dd><p>The depth of the PML, in number of cells.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.pml_ncells</span></code> (<cite>int</cite>; default: 10)</dt>
+<dd>The depth of the PML, in number of cells.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.pml_delta</span></code> (<cite>int</cite>; default: 10)</dt><dd><p>The characteristic depth, in number of cells, over which
-the absorption coefficients of the PML increases.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.pml_delta</span></code> (<cite>int</cite>; default: 10)</dt>
+<dd>The characteristic depth, in number of cells, over which
+the absorption coefficients of the PML increases.</dd>
 </dl>
 </li>
 </ul>
@@ -917,88 +1037,96 @@ the absorption coefficients of the PML increases.</p>
 <div class="section" id="diagnostics-and-output">
 <h2>Diagnostics and output<a class="headerlink" href="#diagnostics-and-output" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">amr.plot_int</span></code> (<cite>integer</cite>)</dt><dd><p>The number of PIC cycles inbetween two consecutive data dumps. Use a
-negative number to disable data dumping.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.plot_int</span></code> (<cite>integer</cite>)</dt>
+<dd>The number of PIC cycles inbetween two consecutive data dumps. Use a
+negative number to disable data dumping.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.dump_plotfiles</span></code> (<cite>0</cite> or <cite>1</cite>) optional</dt><dd><p>Whether to dump the simulation data in
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.dump_plotfiles</span></code> (<cite>0</cite> or <cite>1</cite>) optional</dt>
+<dd>Whether to dump the simulation data in
 <a class="reference external" href="https://amrex-codes.github.io/amrex/docs_html/IO.html">AMReX plotfile</a>
-format. This is <code class="docutils literal notranslate"><span class="pre">1</span></code> by default, unless WarpX is compiled with openPMD support.</p>
-</dd>
+format. This is <code class="docutils literal notranslate"><span class="pre">1</span></code> by default, unless WarpX is compiled with openPMD support.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.dump_openpmd</span></code> (<cite>0</cite> or <cite>1</cite>) optional</dt><dd><p>Whether to dump the simulation data in
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.dump_openpmd</span></code> (<cite>0</cite> or <cite>1</cite>) optional</dt>
+<dd>Whether to dump the simulation data in
 <a class="reference external" href="https://github.com/openPMD">openPMD</a> format.
-When WarpX is compiled with openPMD support, this is <code class="docutils literal notranslate"><span class="pre">1</span></code> by default.</p>
-</dd>
+When WarpX is compiled with openPMD support, this is <code class="docutils literal notranslate"><span class="pre">1</span></code> by default.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> (<cite>0 or 1</cite>)</dt><dd><p>Whether to use the <strong>back-transformed diagnostics</strong> (i.e. diagnostics that
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> (<cite>0 or 1</cite>)</dt>
+<dd>Whether to use the <strong>back-transformed diagnostics</strong> (i.e. diagnostics that
 perform on-the-fly conversion to the laboratory frame, when running
-boosted-frame simulations)</p>
-</dd>
+boosted-frame simulations)</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.num_snapshots_lab</span></code> (<cite>integer</cite>)</dt><dd><p>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
-The number of lab-frame snapshots that will be written.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.num_snapshots_lab</span></code> (<cite>integer</cite>)</dt>
+<dd>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+The number of lab-frame snapshots that will be written.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.dt_snapshots_lab</span></code> (<cite>float</cite>, in seconds)</dt><dd><p>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.dt_snapshots_lab</span></code> (<cite>float</cite>, in seconds)</dt>
+<dd>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
 The time interval inbetween the lab-frame snapshots (where this
-time interval is expressed in the laboratory frame).</p>
-</dd>
+time interval is expressed in the laboratory frame).</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt><dd><p>By default, the fields written in the plot files are averaged on the nodes.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt>
+<dd>By default, the fields written in the plot files are averaged on the nodes.
 When <code class="docutils literal notranslate"><span class="pre">`warpx.plot_raw_fields</span></code> is <cite>1</cite>, then the raw (i.e. unaveraged)
-fields are also saved in the plot files.</p>
-</dd>
+fields are also saved in the plot files.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields_guards</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
-Whether to include the guard cells in the output of the raw fields.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields_guards</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+Whether to include the guard cells in the output of the raw fields.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_finepatch</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Only used when mesh refinement is activated and <code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
-Whether to output the data of the fine patch, in the plot files.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_finepatch</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd>Only used when mesh refinement is activated and <code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+Whether to output the data of the fine patch, in the plot files.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_crsepatch</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Only used when mesh refinement is activated and <code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
-Whether to output the data of the coarse patch, in the plot files.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_crsepatch</span></code> (<cite>0</cite> or <cite>1</cite>)</dt>
+<dd>Only used when mesh refinement is activated and <code class="docutils literal notranslate"><span class="pre">warpx.plot_raw_fields</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+Whether to output the data of the coarse patch, in the plot files.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_coarsening_ratio</span></code> (<cite>int</cite> ; default: <cite>1</cite>)</dt><dd><p>Reduce size of the field output by this ratio in each dimension.
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_coarsening_ratio</span></code> (<cite>int</cite> ; default: <cite>1</cite>)</dt>
+<dd>Reduce size of the field output by this ratio in each dimension.
 (This is done by averaging the field.) <code class="docutils literal notranslate"><span class="pre">plot_coarsening_ratio</span></code> should
-be an integer divisor of <code class="docutils literal notranslate"><span class="pre">blocking_factor</span></code>.</p>
-</dd>
+be an integer divisor of <code class="docutils literal notranslate"><span class="pre">blocking_factor</span></code>.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.particle_plot_vars</span></code> (<cite>strings</cite>, separated by spaces ; default: all)</dt><dd><p>Control which particle variables get written to the plot file. Choices are:
-<cite>w</cite>, <cite>ux</cite>, <cite>uy</cite>, <cite>uz</cite>, <cite>Ex</cite>, <cite>Ey</cite>, <cite>Ez</cite>, <cite>Bx</cite>, <cite>By</cite>, and <cite>Bz</cite>.
-The particle positions and ids are always included.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.plot_file</span></code> (<cite>string</cite>)</dt>
+<dd>Root for output file names. Supports sub-directories. Default <cite>diags/plotfiles/plt</cite></dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">amr.plot_file</span></code> (<cite>string</cite>)</dt><dd><p>Root for output file names. Supports sub-directories. Default <cite>diags/plotfiles/plt</cite></p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_J_field</span></code> (<cite>0</cite> or <cite>1</cite> optional; default <cite>1</cite>)</dt>
+<dd>Whether to plot the current density.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_E_field</span></code> (<cite>0</cite> or <cite>1</cite> optional; default <cite>1</cite>)</dt>
+<dd>Whether to plot the electric field.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_B_field</span></code> (<cite>0</cite> or <cite>1</cite> optional; default <cite>1</cite>)</dt>
+<dd>Whether to plot the magnetic field.</dd>
 </dl>
 </li>
 </ul>
@@ -1007,16 +1135,16 @@ The particle positions and ids are always included.</p>
 <h2>Checkpoints and restart<a class="headerlink" href="#checkpoints-and-restart" title="Permalink to this headline">¶</a></h2>
 <p>WarpX supports checkpoints/restart via AMReX.</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">amr.check_int</span></code> (<cite>integer</cite>)</dt><dd><p>The number of iterations between two consecutive checkpoints. Use a
-negative number to disable checkpoints.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.check_int</span></code> (<cite>integer</cite>)</dt>
+<dd>The number of iterations between two consecutive checkpoints. Use a
+negative number to disable checkpoints.</dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">amr.restart</span></code> (<cite>string</cite>)</dt><dd><p>Name of the checkpoint file to restart from. Returns an error if the folder does not exist
-or if it is not properly formatted.</p>
-</dd>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">amr.restart</span></code> (<cite>string</cite>)</dt>
+<dd>Name of the checkpoint file to restart from. Returns an error if the folder does not exist
+or if it is not properly formatted.</dd>
 </dl>
 </li>
 </ul>
