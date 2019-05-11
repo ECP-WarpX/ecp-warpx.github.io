@@ -24,7 +24,8 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -168,21 +169,21 @@
   <div class="section" id="visualization-with-visit-for-plotfiles">
 <h1>Visualization with Visit (for plotfiles)<a class="headerlink" href="#visualization-with-visit-for-plotfiles" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The openPMD format can also be visualized with Visit, but requires the
+<p class="admonition-title">Note</p>
+<p>The openPMD format can also be visualized with Visit, but requires the
 installation of a specific plugin: see
 <a class="reference external" href="https://github.com/openPMD/openPMD-visit-plugin">this link</a>.</p>
 </div>
 <p>WarpX results can also be visualized by VisIt, an open source visualization and analysis software. VisIT can be downloaded and installed from <a class="reference external" href="https://wci.llnl.gov/simulation/computer-codes/visit">https://wci.llnl.gov/simulation/computer-codes/visit</a>.</p>
 <p>Assuming that you ran a 2D simulation, here are instructions for making a simple plot from a given plotfile:</p>
 <ul class="simple">
-<li>Open the header file: Run VisIt, then select “File” -&gt; “Open file …”, then select the Header file associated with the plotfile of interest (e.g., <code class="docutils literal notranslate"><span class="pre">plt10000/Header</span></code>).</li>
-<li>View the data: Select “Add” -&gt; “Pseudocolor” -&gt; “Ez” and select “Draw”. You can select other variable to draw, such as <code class="docutils literal notranslate"><span class="pre">jx</span></code>, <code class="docutils literal notranslate"><span class="pre">jy</span></code>, <code class="docutils literal notranslate"><span class="pre">jz</span></code>, <code class="docutils literal notranslate"><span class="pre">Ex</span></code>, …</li>
-<li>View the grid structure: Select “Subset”  -&gt; “levels”. Then double clik the text “Subset-levels”, enable the “Wireframe” option, select “Apply”, select “Dismiss”, and then select “Draw”.</li>
-<li>Save the image: Select “File” -&gt; “Set save options”, then customize the image format to your liking, then click “Save”.</li>
+<li><p>Open the header file: Run VisIt, then select “File” -&gt; “Open file …”, then select the Header file associated with the plotfile of interest (e.g., <code class="docutils literal notranslate"><span class="pre">plt10000/Header</span></code>).</p></li>
+<li><p>View the data: Select “Add” -&gt; “Pseudocolor” -&gt; “Ez” and select “Draw”. You can select other variable to draw, such as <code class="docutils literal notranslate"><span class="pre">jx</span></code>, <code class="docutils literal notranslate"><span class="pre">jy</span></code>, <code class="docutils literal notranslate"><span class="pre">jz</span></code>, <code class="docutils literal notranslate"><span class="pre">Ex</span></code>, …</p></li>
+<li><p>View the grid structure: Select “Subset”  -&gt; “levels”. Then double clik the text “Subset-levels”, enable the “Wireframe” option, select “Apply”, select “Dismiss”, and then select “Draw”.</p></li>
+<li><p>Save the image: Select “File” -&gt; “Set save options”, then customize the image format to your liking, then click “Save”.</p></li>
 </ul>
 <p>Your image should look similar to the one below</p>
-<div class="figure">
+<div class="figure align-center">
 <img alt="picture" src="../_images/Ez.png" />
 </div>
 <p>In 3D, you must apply the “Operators” -&gt; “Slicing”
