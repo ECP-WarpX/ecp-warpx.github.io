@@ -24,8 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -199,23 +198,23 @@ single directory (e.g. <code class="docutils literal notranslate"><span class="p
 </div>
 <p>This will generate an executable file in the <code class="docutils literal notranslate"><span class="pre">Bin</span></code> directory.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="first admonition-title">Note</p>
 <p>The compilation options are set in the file <code class="docutils literal notranslate"><span class="pre">GNUmakefile</span></code>. The default
 options correspond to an optimized code for 3D geometry. You can modify the
 options in this file in order to (for instance):</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>Use 2D geometry</p></li>
-<li><p>Disable OpenMP</p></li>
-<li><p>Profile or debug the code</p></li>
-<li><p>Choose a given compiler</p></li>
+<li>Use 2D geometry</li>
+<li>Disable OpenMP</li>
+<li>Profile or debug the code</li>
+<li>Choose a given compiler</li>
 </ul>
 </div></blockquote>
 <p>For a description of these different options, see the <a class="reference external" href="https://amrex-codes.github.io/amrex/docs_html/BuildingAMReX.html">corresponding page</a> in
 the AMReX documentation.</p>
 <p>Alternatively, instead of modifying the file <code class="docutils literal notranslate"><span class="pre">GNUmakefile</span></code>, you can
 directly pass the options in command line ; for instance:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_OMP</span><span class="o">=</span><span class="n">FALSE</span>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_OMP</span><span class="o">=</span><span class="n">FALSE</span>
 </pre></div>
 </div>
 </div>

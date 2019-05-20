@@ -306,6 +306,11 @@ Particle initialization
     ``<species>.plot_vars = none`` to plot no particle data, except 
     particle position.
 
+* ``<species>.do_boosted_frame_diags`` (`0` or `1` optional, default `1`)
+    Only used when ``warpx.do_boosted_frame_diagnostic=1``. When running in a 
+    boosted frame, whether or not to plot back-transformed diagnostics for 
+    this species.
+
 * ``warpx.serialize_ics`` (`0 or 1`)
     Whether or not to use OpenMP threading for particle initialization.
 
@@ -652,6 +657,15 @@ Diagnostics and output
     Only used when ``warpx.do_boosted_frame_diagnostic`` is ``1``.
     The time interval inbetween the lab-frame snapshots (where this
     time interval is expressed in the laboratory frame).
+
+* ``warpx.do_boosted_frame_fields`` (`0 or 1`)
+    Whether to use the **back-transformed diagnostics** for the fields.
+
+* ``warpx.boosted_frame_diag_fields`` (space-separated list of `string`)
+    Which fields to dumped in back-transformed diagnostics. Choices are 
+    'Ex', 'Ey', Ez', 'Bx', 'By', Bz', 'jx', 'jy', jz' and 'rho'. Example: 
+    ``warpx.boosted_frame_diag_fields = Ex Ez By``. By default, all fields 
+    are dumped.
 
 * ``warpx.plot_raw_fields`` (`0` or `1`) optional (default `0`)
     By default, the fields written in the plot files are averaged on the nodes.
