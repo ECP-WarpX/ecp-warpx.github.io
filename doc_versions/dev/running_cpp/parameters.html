@@ -103,6 +103,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="profiling.html">Profiling the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallelization.html">Parallelization in  WarpX</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
@@ -883,12 +884,20 @@ or <code class="docutils literal notranslate"><span class="pre">3</span></code> 
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">algo.charge_deposition</span></code> (<cite>integer</cite>)</dt>
 <dd><p class="first">The algorithm for the charge density deposition:</p>
-<blockquote class="last">
+<blockquote>
 <div><ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">0</span></code>: Vectorized version</li>
 <li><code class="docutils literal notranslate"><span class="pre">1</span></code>: Non-optimized version</li>
 </ul>
 </div></blockquote>
+<div class="last admonition warning">
+<p class="first admonition-title">Warning</p>
+<dl class="last docutils">
+<dt>The vectorized version does not run on GPU. Use</dt>
+<dd><p class="first last"><code class="docutils literal notranslate"><span class="pre">algo.charge_deposition=1</span></code> when running on GPU.</p>
+</dd>
+</dl>
+</div>
 </dd>
 </dl>
 </li>
@@ -1073,6 +1082,13 @@ boosted-frame simulations)</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.lab_data_directory</span></code> (<cite>string</cite>)</dt>
+<dd>The directory in which to save the lab frame data when using the
+<strong>back-transformed diagnostics</strong>. If not specified, the default is
+is <cite>lab_frame_data</cite>.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.num_snapshots_lab</span></code> (<cite>integer</cite>)</dt>
 <dd>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
 The number of lab-frame snapshots that will be written.</dd>
@@ -1148,6 +1164,23 @@ be an integer divisor of <code class="docutils literal notranslate"><span class=
 <li><dl class="first docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.plot_B_field</span></code> (<cite>0</cite> or <cite>1</cite> optional; default <cite>1</cite>)</dt>
 <dd>Whether to plot the magnetic field.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">slice.dom_lo</span></code> and <code class="docutils literal notranslate"><span class="pre">slice.dom_hi</span></code> (<cite>2 floats in 2D</cite>, <cite>3 floats in 3D</cite>; in meters similar to the units of the simulation box.)</dt>
+<dd>The extent of the slice are defined by the co-ordinates of the lower corner (<code class="docutils literal notranslate"><span class="pre">slice.dom_lo</span></code>) and upper corner (<code class="docutils literal notranslate"><span class="pre">slice.dom_hi</span></code>). The slice could be 1D, 2D, or 3D, aligned with the co-ordinate axes and the first axis of the coordinates is x. For example: if for a 3D simulation, an x-z slice is to be extracted at y = 0.0, then the y-value of slice.dom_lo and slice.dom_hi must be equal to 0.0</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">slice.coarsening_ratio</span></code> (<cite>2 integers in 2D</cite>, <cite>3 integers in 3D</cite>; default <cite>1</cite>)</dt>
+<dd>The coarsening ratio input must be greater than 0. Default is 1 in all directions.
+In the directions that is reduced, i.e., for an x-z slice in 3D, the reduced y-dimension has a default coarsening ratio equal to 1.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">slice.plot_int</span></code> (<cite>integer</cite>)</dt>
+<dd>The number of PIC cycles inbetween two consecutive data dumps for the slice. Use a
+negative number to disable slice generation and slice data dumping.</dd>
 </dl>
 </li>
 </ul>
