@@ -24,7 +24,8 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -182,9 +183,9 @@
             
   <div class="section" id="the-electromagnetic-particle-in-cell-method">
 <h1>The electromagnetic Particle-In-Cell method<a class="headerlink" href="#the-electromagnetic-particle-in-cell-method" title="Permalink to this headline">¶</a></h1>
-<div class="figure" id="id1">
+<div class="figure align-center" id="id2">
 <img alt="[fig:PIC] The Particle-In-Cell (PIC) method follows the evolution of a collection of charged macro-particles (positively charged in blue on the left plot, negatively charged in red) that evolve self-consistently with their electromagnetic (or electrostatic) fields. The core PIC algorithm involves four operations at each time step: 1) evolve the velocity and position of the particles using the Newton-Lorentz equations, 2) deposit the charge and/or current densities through interpolation from the particles distributions onto the grid, 3) evolve Maxwell’s wave equations (for electromagnetic) or solve Poisson’s equation (for electrostatic) on the grid, 4) interpolate the fields from the grid onto the particles for the next particle push. Additional “add-ons” operations are inserted between these core operations to account for additional physics (e.g. absorption/emission of particles, addition of external forces to account for accelerator focusing or accelerating component) or numerical effects (e.g. smoothing/filtering of the charge/current densities and/or fields on the grid)." src="../_images/PIC.png" />
-<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">[fig:PIC] The Particle-In-Cell (PIC) method follows the evolution of a collection of charged macro-particles (positively charged in blue on the left plot, negatively charged in red) that evolve self-consistently with their electromagnetic (or electrostatic) fields. The core PIC algorithm involves four operations at each time step: 1) evolve the velocity and position of the particles using the Newton-Lorentz equations, 2) deposit the charge and/or current densities through interpolation from the particles distributions onto the grid, 3) evolve Maxwell’s wave equations (for electromagnetic) or solve Poisson’s equation (for electrostatic) on the grid, 4) interpolate the fields from the grid onto the particles for the next particle push. Additional “add-ons” operations are inserted between these core operations to account for additional physics (e.g. absorption/emission of particles, addition of external forces to account for accelerator focusing or accelerating component) or numerical effects (e.g. smoothing/filtering of the charge/current densities and/or fields on the grid).</span></p>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">[fig:PIC] The Particle-In-Cell (PIC) method follows the evolution of a collection of charged macro-particles (positively charged in blue on the left plot, negatively charged in red) that evolve self-consistently with their electromagnetic (or electrostatic) fields. The core PIC algorithm involves four operations at each time step: 1) evolve the velocity and position of the particles using the Newton-Lorentz equations, 2) deposit the charge and/or current densities through interpolation from the particles distributions onto the grid, 3) evolve Maxwell’s wave equations (for electromagnetic) or solve Poisson’s equation (for electrostatic) on the grid, 4) interpolate the fields from the grid onto the particles for the next particle push. Additional “add-ons” operations are inserted between these core operations to account for additional physics (e.g. absorption/emission of particles, addition of external forces to account for accelerator focusing or accelerating component) or numerical effects (e.g. smoothing/filtering of the charge/current densities and/or fields on the grid).</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <p>In the electromagnetic Particle-In-Cell method (Birdsall and Langdon 1991),
 the electromagnetic fields are solved on a grid, usually using Maxwell’s
@@ -288,9 +289,9 @@ D_{t}\mathbf{B} &amp; = &amp; -\nabla\times\mathbf{E}\label{Eq:Faraday-2}\\
 D_{t}\mathbf{E} &amp; = &amp; \nabla\times\mathbf{B}-\mathbf{J}\label{Eq:Ampere-2}\\
 \left[\nabla\cdot\mathbf{E}\right. &amp; = &amp; \left.\rho\right]\label{Eq:Gauss-2}\\
 \left[\nabla\cdot\mathbf{B}\right. &amp; = &amp; \left.0\right].\label{Eq:divb-2}\end{aligned}\end{split}\]</div>
-<div class="figure" id="id2">
+<div class="figure align-center" id="id3">
 <img alt="[fig:yee_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference &quot;leapfrog&quot; integrator." src="../_images/Yee_grid.png" />
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">[fig:yee_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference “leapfrog” integrator.</span></p>
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">[fig:yee_grid](left) Layout of field components on the staggered “Yee” grid. Current densities and electric fields are defined on the edges of the cells and magnetic fields on the faces. (right) Time integration using a second-order finite-difference “leapfrog” integrator.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <p>The differential operator is defined as <span class="math notranslate nohighlight">\(\nabla=D_{x}\mathbf{\hat{x}}+D_{y}\mathbf{\hat{y}}+D_{z}\mathbf{\hat{z}}\)</span>
 and the finite-difference operators in time and space are defined
@@ -434,7 +435,7 @@ a collocated and a staggered formulation is application-dependent.</p>
 </div>
 </div>
 <div class="section" id="current-deposition">
-<h2>Current deposition<a class="headerlink" href="#current-deposition" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Current deposition<a class="headerlink" href="#current-deposition" title="Permalink to this headline">¶</a></h2>
 <p>The current densities are deposited on the computational grid from
 the particle position and velocities, employing splines of various
 orders (Abe et al. 1986).</p>
@@ -615,7 +616,7 @@ of computational cores for parallel calculations.</p>
 </div><div id="ref-Karkicap06"><p>Karkkainen, M, E Gjonaj, T Lau, and T Weiland. 2006. “Low-Dispersionwake Field Calculation Tools.” In <em>Proc. Of International Computational Accelerator Physics Conference</em>, 35–40. Chamonix, France.</p>
 </div><div id="ref-Langdoncpc92"><p>Langdon, A B. 1992. “On Enforcing Gauss Law in Electromagnetic Particle-in-Cell Codes.” <em>Computer Physics Communications</em> 70 (3): 447–50.</p>
 </div><div id="ref-LehePRSTAB13"><p>Lehe, R, A Lifschitz, C Thaury, V Malka, and X Davoine. 2013. “Numerical growth of emittance in simulations of laser-wakefield acceleration.” <em>Physical Review Special Topics-Accelerators and Beams</em> 16 (2). <a class="reference external" href="https://doi.org/10.1103/PhysRevSTAB.16.021301">https://doi.org/10.1103/PhysRevSTAB.16.021301</a>.</p>
-</div><div id="ref-Liumotl1997"><p>Liu, Qh. 1997. “The PSTD Algorithm: A Time-Domain Method Requiring Only Two Cells Per Wavelength.” <em>Microwave and Optical Technology Letters</em> 15 (3): 158–65. <a href="#id3"><span class="problematic" id="id4">`https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T &lt;https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T&gt;`__</span></a>.</p>
+</div><div id="ref-Liumotl1997"><p>Liu, Qh. 1997. “The PSTD Algorithm: A Time-Domain Method Requiring Only Two Cells Per Wavelength.” <em>Microwave and Optical Technology Letters</em> 15 (3): 158–65. <a href="#id4"><span class="problematic" id="id5">`https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T &lt;https://doi.org/10.1002/(Sici)1098-2760(19970620)15:3&lt;158::Aid-Mop11&gt;3.3.Co;2-T&gt;`__</span></a>.</p>
 </div><div id="ref-Marderjcp87"><p>Marder, B. 1987. “A Method for Incorporating Gauss Law into Electromagnetic Pic Codes.” <em>Journal of Computational Physics</em> 68 (1): 48–55.</p>
 </div><div id="ref-Morsenielson1971"><p>Morse, Rl, and Cw Nielson. 1971. “Numerical Simulation of Weibel Instability in One and 2 Dimensions.” <em>Phys. Fluids</em> 14 (4): 830 –&amp;. <a class="reference external" href="https://doi.org/10.1063/1.1693518">https://doi.org/10.1063/1.1693518</a>.</p>
 </div><div id="ref-Munzjcp2000"><p>Munz, Cd, P Omnes, R Schneider, E Sonnendrucker, and U Voss. 2000. “Divergence Correction Techniques for Maxwell Solvers Based on A Hyperbolic Model.” <em>Journal of Computational Physics</em> 161 (2): 484–511. <a class="reference external" href="https://doi.org/10.1006/Jcph.2000.6507">https://doi.org/10.1006/Jcph.2000.6507</a>.</p>

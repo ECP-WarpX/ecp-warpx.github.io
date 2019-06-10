@@ -24,7 +24,8 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -166,14 +167,14 @@
 to run a simulation.</p>
 <p>In order to run a new simulation:</p>
 <ul class="simple">
-<li>Create a <strong>new directory</strong>, where the simulation will be run.</li>
-<li>Add a <strong>Python script</strong> in the directory.</li>
+<li><p>Create a <strong>new directory</strong>, where the simulation will be run.</p></li>
+<li><p>Add a <strong>Python script</strong> in the directory.</p></li>
 </ul>
 <p>This file contains the numerical and physical parameters that define
 the situation to be simulated.
 Example input files can be found in the section <a class="reference internal" href="examples.html"><span class="doc">Example input files</span></a>.</p>
 <ul class="simple">
-<li><strong>Run</strong> the script with Python:</li>
+<li><p><strong>Run</strong> the script with Python:</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpirun</span> <span class="o">-</span><span class="n">np</span> <span class="o">&lt;</span><span class="n">n_ranks</span><span class="o">&gt;</span> <span class="n">python</span> <span class="o">&lt;</span><span class="n">python_script</span><span class="o">&gt;</span>
 </pre></div>
