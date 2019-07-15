@@ -24,8 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -184,11 +183,11 @@ the parallelization. The main user-defined parameters are
 <div class="section" id="amrex-max-grid-size-and-blocking-factor">
 <h2>AMReX <code class="docutils literal notranslate"><span class="pre">max_grid_size</span></code> and <code class="docutils literal notranslate"><span class="pre">blocking_factor</span></code><a class="headerlink" href="#amrex-max-grid-size-and-blocking-factor" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">amr.max_grid_size</span></code> is the maximum number of points per <strong>grid</strong> along each
-direction (default <code class="docutils literal notranslate"><span class="pre">amr.max_grid_size=32</span></code> in 3D).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">amr.blocking_factor</span></code>: The size of each <strong>grid</strong> must be divisible by the
+<li><code class="docutils literal notranslate"><span class="pre">amr.max_grid_size</span></code> is the maximum number of points per <strong>grid</strong> along each
+direction (default <code class="docutils literal notranslate"><span class="pre">amr.max_grid_size=32</span></code> in 3D).</li>
+<li><code class="docutils literal notranslate"><span class="pre">amr.blocking_factor</span></code>: The size of each <strong>grid</strong> must be divisible by the
 <cite>blocking_factor</cite> along all dimensions (default <code class="docutils literal notranslate"><span class="pre">amr.blocking_factor=8</span></code>).
-Note that the <code class="docutils literal notranslate"><span class="pre">max_grid_size</span></code> also has to be divisible by <code class="docutils literal notranslate"><span class="pre">blocking_factor</span></code>.</p></li>
+Note that the <code class="docutils literal notranslate"><span class="pre">max_grid_size</span></code> also has to be divisible by <code class="docutils literal notranslate"><span class="pre">blocking_factor</span></code>.</li>
 </ul>
 <p>These parameters can have a dramatic impact on the code performance. Each
 <strong>grid</strong> in the decomposition is surrounded by guard cells, thus increasing the
@@ -207,17 +206,17 @@ page on the AMReX documentation.</p>
 <p>The best values for these parameters strongly depends on a number of parameters,
 among which numerical parameters:</p>
 <ul class="simple">
-<li><p>Algorithms used (Maxwell/spectral field solver, filters, order of the
-particle shape factor)</p></li>
-<li><p>Number of guard cells (that depends on the particle shape factor and
-the type and order of the Maxwell solver, the filters used, <cite>etc.</cite>)</p></li>
-<li><p>Number of particles per cell, and the number of species</p></li>
+<li>Algorithms used (Maxwell/spectral field solver, filters, order of the
+particle shape factor)</li>
+<li>Number of guard cells (that depends on the particle shape factor and
+the type and order of the Maxwell solver, the filters used, <cite>etc.</cite>)</li>
+<li>Number of particles per cell, and the number of species</li>
 </ul>
 <p>and MPI decomposition and computer architecture used for the run:</p>
 <ul class="simple">
-<li><p>GPU or CPU</p></li>
-<li><p>Number of OpenMP threads</p></li>
-<li><p>Amount of high-bandwidth memory.</p></li>
+<li>GPU or CPU</li>
+<li>Number of OpenMP threads</li>
+<li>Amount of high-bandwidth memory.</li>
 </ul>
 <p>Below is a list of experience-based parameters
 that were observed to give good performance on given supercomputers.</p>
@@ -229,12 +228,12 @@ solver on Cori KNL for a well load-balanced problem (in our case laser
 wakefield acceleration simulation in a boosted frame in the quasi-linear
 regime), the following set of parameters provided good performance:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">amr.max_grid_size=64</span></code> and <code class="docutils literal notranslate"><span class="pre">amr.blocking_factor=64</span></code> so that the size of
-each grid is fixed to <code class="docutils literal notranslate"><span class="pre">64**3</span></code> (we are not using load-balancing here).</p></li>
-<li><p><strong>8 MPI ranks per KNL node</strong>, with <code class="docutils literal notranslate"><span class="pre">OMP_NUM_THREADS=8</span></code> (that is 64 threads
+<li><code class="docutils literal notranslate"><span class="pre">amr.max_grid_size=64</span></code> and <code class="docutils literal notranslate"><span class="pre">amr.blocking_factor=64</span></code> so that the size of
+each grid is fixed to <code class="docutils literal notranslate"><span class="pre">64**3</span></code> (we are not using load-balancing here).</li>
+<li><strong>8 MPI ranks per KNL node</strong>, with <code class="docutils literal notranslate"><span class="pre">OMP_NUM_THREADS=8</span></code> (that is 64 threads
 per KNL node, i.e. 1 thread per physical core, and 4 cores left to the
-system).</p></li>
-<li><p><strong>2 grids per MPI</strong>, <em>i.e.</em>, 16 grids per KNL node.</p></li>
+system).</li>
+<li><strong>2 grids per MPI</strong>, <em>i.e.</em>, 16 grids per KNL node.</li>
 </ul>
 </div>
 </div>

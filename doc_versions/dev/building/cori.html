@@ -24,8 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -179,24 +178,24 @@
 <p>For the <a class="reference external" href="http://www.nersc.gov/users/computational-systems/cori/">Cori cluster</a> at NERSC,
 you need to type the following command when compiling:</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="first admonition-title">Note</p>
 <p>In order to compile the code with a spectral solver, type</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">cray</span><span class="o">-</span><span class="n">fftw</span>
 </pre></div>
 </div>
-<p>before typing any of the commands below, and add <code class="docutils literal notranslate"><span class="pre">USE_PSATD=TRUE</span></code>
+<p class="last">before typing any of the commands below, and add <code class="docutils literal notranslate"><span class="pre">USE_PSATD=TRUE</span></code>
 at the end of the command containing <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
 </div>
 <p>In order to compile for the <strong>Haswell architecture</strong>:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>with the Intel compiler</p></li>
+<li>with the Intel compiler</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>with the GNU compiler</p></li>
+<li>with the GNU compiler</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">gnu</span>
@@ -206,14 +205,14 @@ at the end of the command containing <code class="docutils literal notranslate">
 <p>In order to compile for the <strong>Knight’s Landing (KNL) architecture</strong>:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>with the Intel compiler</p></li>
+<li>with the Intel compiler</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>with the GNU compiler</p></li>
+<li>with the GNU compiler</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
 <span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
@@ -233,7 +232,7 @@ your modules, most of which won’t work on the GPU nodes.</p>
 </div></blockquote>
 <p>Then, you need to load the following modules:</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">esslurm</span> <span class="n">cuda</span> <span class="n">pgi</span> <span class="n">openmpi</span><span class="o">/</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">ucx</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">modules</span><span class="o">/</span><span class="mf">3.2</span><span class="o">.</span><span class="mf">10.6</span> <span class="n">esslurm</span> <span class="n">cgpu</span><span class="o">/</span><span class="mf">1.0</span> <span class="n">pgi</span><span class="o">/</span><span class="mf">19.5</span> <span class="n">cuda</span><span class="o">/</span><span class="mf">10.1</span> <span class="n">mpich</span><span class="o">/</span><span class="mf">3.3</span><span class="o">-</span><span class="n">pgi</span><span class="o">-</span><span class="mf">19.5</span>
 </pre></div>
 </div>
 </div></blockquote>

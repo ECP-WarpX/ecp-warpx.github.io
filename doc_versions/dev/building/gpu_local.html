@@ -24,8 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -174,16 +173,17 @@
   <div class="section" id="building-warpx-with-gpu-support-linux-only">
 <h1>Building WarpX with GPU support (Linux only)<a class="headerlink" href="#building-warpx-with-gpu-support-linux-only" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>In order to build WarpX on a specific GPU cluster (e.g. Summit),
+<p class="first admonition-title">Warning</p>
+<p class="last">In order to build WarpX on a specific GPU cluster (e.g. Summit),
 look for the corresponding specific instructions, instead
 of those on this page.</p>
 </div>
 <p>In order to build WarpX with GPU support, it necessary to install:</p>
 <ul>
-<li><p>The PGI compiler. The free PGI Community Edition can be installed from
-<a class="reference external" href="https://www.pgroup.com/products/community.htm">this page</a>.</p></li>
-<li><p><a class="reference external" href="https://spack.readthedocs.io/en/latest/index.html">Spack</a>:</p>
+<li><p class="first">The PGI compiler. The free PGI Community Edition can be installed from
+<a class="reference external" href="https://www.pgroup.com/products/community.htm">this page</a>.</p>
+</li>
+<li><p class="first"><a class="reference external" href="https://spack.readthedocs.io/en/latest/index.html">Spack</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/spack/spack.git
 export SPACK_ROOT=/path/to/spack
 . $SPACK_ROOT/share/spack/setup-env.sh

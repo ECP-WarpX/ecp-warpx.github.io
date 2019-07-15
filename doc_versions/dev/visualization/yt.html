@@ -24,8 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -217,12 +216,12 @@ this function <a class="reference external" href="http://yt-project.org/doc/refe
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="first admonition-title">Note</p>
 <p><cite>yt.SlicePlot</cite> creates a 2D plot with the same aspect ratio as the physical
 size of the simulation box. Sometimes this can lead to very elongated plots
 that are difficult to read. You can modify the aspect ratio with the
 <cite>aspect</cite> argument ; for instance:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yt</span><span class="o">.</span><span class="n">SlicePlot</span><span class="p">(</span> <span class="n">ds</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Ex&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">10</span> <span class="p">)</span>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yt</span><span class="o">.</span><span class="n">SlicePlot</span><span class="p">(</span> <span class="n">ds</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Ex&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">10</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div>
