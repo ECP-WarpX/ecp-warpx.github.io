@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Profiling WarpX on GPU &mdash; WarpX  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Inputs and outputs" href="../theory/input_output.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> WarpX
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.05
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../building/building.html">Building/installing WarpX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../running_cpp/running_cpp.html">Running WarpX as an executable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization/visualization.html">Visualizing the simulation results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/theory.html">Theoretical background</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Profiling WarpX on GPU</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-nsight-on-cori-gpu">Install Nsight on Cori GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-a-simulation-with-nsight-profiling-on">Run a simulation with NSight profiling on</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualize-profiler-data">Visualize profiler data</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">WarpX</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Profiling WarpX on GPU</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/profiling/profiling.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="profiling-warpx-on-gpu">
+<h1>Profiling WarpX on GPU<a class="headerlink" href="#profiling-warpx-on-gpu" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="install-nsight-on-cori-gpu">
+<h2>Install Nsight on Cori GPU<a class="headerlink" href="#install-nsight-on-cori-gpu" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">Nsight</span><span class="o">&gt;</span>
+<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">developer</span><span class="o">.</span><span class="n">nvidia</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">rdp</span><span class="o">/</span><span class="n">assets</span><span class="o">/</span><span class="n">Nsight_Systems_2019_3_Linux_installer</span>
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">Nsight_Systems_2019_3_Linux_installer</span>
+<span class="o">./</span><span class="n">Nsight_Systems_2019_3_Linux_installer</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-a-simulation-with-nsight-profiling-on">
+<h2>Run a simulation with NSight profiling on<a class="headerlink" href="#run-a-simulation-with-nsight-profiling-on" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span> <span class="o">-</span><span class="n">n</span> <span class="mi">1</span> <span class="o">-</span><span class="n">c</span> <span class="mi">1</span> <span class="o">--</span><span class="n">gres</span><span class="o">=</span><span class="n">gpu</span><span class="p">:</span><span class="mi">1</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">Nsight</span><span class="o">&gt;/</span><span class="n">NsightSystems</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">public</span><span class="o">-</span><span class="mf">2019.3</span><span class="o">.</span><span class="mf">6.30</span><span class="o">-</span><span class="n">e2e891f</span><span class="o">/</span><span class="n">Target</span><span class="o">-</span><span class="n">x86_64</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">nsys</span> <span class="n">profile</span> <span class="o">--</span><span class="n">stats</span><span class="o">=</span><span class="n">true</span> <span class="o">./&lt;</span><span class="n">WarpX</span> <span class="n">executable</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">input</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="visualize-profiler-data">
+<h2>Visualize profiler data<a class="headerlink" href="#visualize-profiler-data" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">Nsight</span><span class="o">&gt;/</span><span class="n">NsightSystems</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">public</span><span class="o">-</span><span class="mf">2019.3</span><span class="o">.</span><span class="mf">6.30</span><span class="o">-</span><span class="n">e2e891f</span><span class="o">/</span><span class="n">Host</span><span class="o">-</span><span class="n">x86_64</span>
+<span class="o">./</span><span class="n">nsight</span><span class="o">-</span><span class="n">sys</span>
+</pre></div>
+</div>
+<p>and browse for the <code class="docutils literal notranslate"><span class="pre">&lt;...&gt;.qdrep</span></code> file generated when you ran your code with <cite>nsys</cite></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../theory/input_output.html" class="btn btn-neutral float-left" title="Inputs and outputs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, WarpX collaboration
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
