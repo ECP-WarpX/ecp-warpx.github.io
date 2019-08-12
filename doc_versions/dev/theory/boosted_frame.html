@@ -24,7 +24,8 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -60,7 +61,7 @@
             
             
               <div class="version">
-                19.05
+                19.08
               </div>
             
           
@@ -172,9 +173,9 @@
   <div class="section" id="moving-window-and-optimal-lorentz-boosted-frame">
 <h1>Moving window and optimal Lorentz boosted frame<a class="headerlink" href="#moving-window-and-optimal-lorentz-boosted-frame" title="Permalink to this headline">¶</a></h1>
 <p>The simulations of plasma accelerators from first principles are extremely computationally intensive, due to the need to resolve the evolution of a driver (laser or particle beam) and an accelerated particle beam into a plasma structure that is orders of magnitude longer and wider than the accelerated beam. As is customary in the modeling of particle beam dynamics in standard particle accelerators, a moving window is commonly used to follow the driver, the wake and the accelerated beam. This results in huge savings, by avoiding the meshing of the entire plasma that is orders of magnitude longer than the other length scales of interest.</p>
-<div class="figure" id="id1">
+<div class="figure align-center" id="id1">
 <img alt="[fig:PIC] A first principle simulation of a short driver beam (laser or charged particles) propagating through a plasma that is orders of magnitude longer necessitates a very large number of time steps. Recasting the simulation in a frame of reference that is moving close to the speed of light in the direction of the driver beam leads to simulating a driver beam that appears longer propagating through a plasma that appears shorter than in the laboratory. Thus, this relativistic transformation of space and time reduces the disparity of scales, and thereby the number of time steps to complete the simulation, by orders of magnitude." src="../_images/Boosted_frame.png" />
-<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">[fig:PIC] A first principle simulation of a short driver beam (laser or charged particles) propagating through a plasma that is orders of magnitude longer necessitates a very large number of time steps. Recasting the simulation in a frame of reference that is moving close to the speed of light in the direction of the driver beam leads to simulating a driver beam that appears longer propagating through a plasma that appears shorter than in the laboratory. Thus, this relativistic transformation of space and time reduces the disparity of scales, and thereby the number of time steps to complete the simulation, by orders of magnitude.</span></p>
+<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">[fig:PIC] A first principle simulation of a short driver beam (laser or charged particles) propagating through a plasma that is orders of magnitude longer necessitates a very large number of time steps. Recasting the simulation in a frame of reference that is moving close to the speed of light in the direction of the driver beam leads to simulating a driver beam that appears longer propagating through a plasma that appears shorter than in the laboratory. Thus, this relativistic transformation of space and time reduces the disparity of scales, and thereby the number of time steps to complete the simulation, by orders of magnitude.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <p>Even using a moving window, however, a full PIC simulation of a plasma accelerator can be extraordinarily demanding computationally, as many time steps are needed to resolve the crossing of the short driver beam with the plasma column. As it turns out, choosing an optimal frame of reference that travels close to the speed of light in the direction of the laser or particle beam (as opposed to the usual choice of the laboratory frame) enables speedups by orders of magnitude (Vay 2007; J -L. Vay et al. 2011). This is a result of the properties of Lorentz contraction and dilation of space and time. In the frame of the laboratory, a very short driver (laser or particle) beam propagates through a much longer plasma column, necessitating millions to tens of millions of time steps for parameters in the range of the BELLA or FACET-II experiments. As sketched in Fig. <a class="reference external" href="#fig:PIC">[fig:PIC]</a>, in a frame moving with the driver beam in the plasma at velocity <span class="math notranslate nohighlight">\(v=\beta c\)</span> (where <span class="math notranslate nohighlight">\(c\)</span> is the speed of light in vacuum), the beam length is now elongated by <span class="math notranslate nohighlight">\(\approx(1+\beta)\gamma\)</span> while the plasma contracts by <span class="math notranslate nohighlight">\(\gamma\)</span> (where <span class="math notranslate nohighlight">\(\gamma=1/\sqrt{1-\beta^2}\)</span> is the relativistic factor associated with the frame velocity). The number of time steps that is needed to simulate a “longer” beam through a “shorter” plasma is now reduced by up to <span class="math notranslate nohighlight">\(\approx(1+\beta) \gamma^2\)</span> (a detailed derivation of the speedup is given below).</p>
 <p>The modeling of a plasma acceleration stage in a boosted frame

@@ -24,7 +24,8 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -60,7 +61,7 @@
             
             
               <div class="version">
-                19.05
+                19.08
               </div>
             
           
@@ -178,24 +179,24 @@
 <p>For the <a class="reference external" href="http://www.nersc.gov/users/computational-systems/cori/">Cori cluster</a> at NERSC,
 you need to type the following command when compiling:</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>In order to compile the code with a spectral solver, type</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">load</span> <span class="n">cray</span><span class="o">-</span><span class="n">fftw</span>
 </pre></div>
 </div>
-<p class="last">before typing any of the commands below, and add <code class="docutils literal notranslate"><span class="pre">USE_PSATD=TRUE</span></code>
+<p>before typing any of the commands below, and add <code class="docutils literal notranslate"><span class="pre">USE_PSATD=TRUE</span></code>
 at the end of the command containing <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
 </div>
 <p>In order to compile for the <strong>Haswell architecture</strong>:</p>
 <blockquote>
 <div><ul class="simple">
-<li>with the Intel compiler</li>
+<li><p>with the Intel compiler</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>with the GNU compiler</li>
+<li><p>with the GNU compiler</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">gnu</span>
@@ -205,14 +206,14 @@ at the end of the command containing <code class="docutils literal notranslate">
 <p>In order to compile for the <strong>Knight’s Landing (KNL) architecture</strong>:</p>
 <blockquote>
 <div><ul class="simple">
-<li>with the Intel compiler</li>
+<li><p>with the Intel compiler</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">intel</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>with the GNU compiler</li>
+<li><p>with the GNU compiler</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
 <span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
@@ -258,25 +259,27 @@ and then build your software.</p>
 <p>First, load the appropriate modules:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">swap</span> <span class="n">craype</span><span class="o">-</span><span class="n">haswell</span> <span class="n">craype</span><span class="o">-</span><span class="n">mic</span><span class="o">-</span><span class="n">knl</span>
 <span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
-<span class="n">module</span> <span class="n">load</span> <span class="n">cmake</span><span class="o">/</span><span class="mf">3.11</span><span class="o">.</span><span class="mi">4</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">cmake</span><span class="o">/</span><span class="mf">3.14</span><span class="o">.</span><span class="mi">4</span>
 <span class="n">module</span> <span class="n">load</span> <span class="n">cray</span><span class="o">-</span><span class="n">hdf5</span><span class="o">-</span><span class="n">parallel</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">adios</span><span class="o">/</span><span class="mf">1.13</span><span class="o">.</span><span class="mi">1</span> <span class="n">zlib</span>
+<span class="n">export</span> <span class="n">CRAYPE_LINK_TYPE</span><span class="o">=</span><span class="n">dynamic</span>
 </pre></div>
 </div>
 <p>Then, in the <cite>warpx_directory</cite>, download and build the openPMD API:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">openPMD</span><span class="o">/</span><span class="n">openPMD</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">git</span>
 <span class="n">mkdir</span> <span class="n">openPMD</span><span class="o">-</span><span class="n">api</span><span class="o">-</span><span class="n">build</span>
 <span class="n">cd</span> <span class="n">openPMD</span><span class="o">-</span><span class="n">api</span><span class="o">-</span><span class="n">build</span>
-<span class="n">cmake</span> <span class="o">../</span><span class="n">openPMD</span><span class="o">-</span><span class="n">api</span> <span class="o">-</span><span class="n">DopenPMD_USE_PYTHON</span><span class="o">=</span><span class="n">OFF</span> <span class="o">-</span><span class="n">DopenPMD_USE_JSON</span><span class="o">=</span><span class="n">OFF</span> <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=../</span><span class="n">openPMD</span><span class="o">-</span><span class="n">install</span><span class="o">/</span> <span class="o">-</span><span class="n">DBUILD_SHARED_LIBS</span><span class="o">=</span><span class="n">OFF</span>
+<span class="n">cmake</span> <span class="o">../</span><span class="n">openPMD</span><span class="o">-</span><span class="n">api</span> <span class="o">-</span><span class="n">DopenPMD_USE_PYTHON</span><span class="o">=</span><span class="n">OFF</span> <span class="o">-</span><span class="n">DCMAKE_INSTALL_PREFIX</span><span class="o">=../</span><span class="n">openPMD</span><span class="o">-</span><span class="n">install</span><span class="o">/</span> <span class="o">-</span><span class="n">DCMAKE_INSTALL_RPATH_USE_LINK_PATH</span><span class="o">=</span><span class="n">ON</span> <span class="o">-</span><span class="n">DCMAKE_INSTALL_RPATH</span><span class="o">=</span><span class="s1">&#39;$ORIGIN&#39;</span>
 <span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="o">.</span> <span class="o">--</span><span class="n">target</span> <span class="n">install</span>
 </pre></div>
 </div>
 <p>Finally, compile WarpX:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">../</span><span class="n">WarpX</span>
-<span class="n">export</span> <span class="n">OPENPMD_LIB_PATH</span><span class="o">=../</span><span class="n">openPMD</span><span class="o">-</span><span class="n">install</span><span class="o">/</span><span class="n">lib64</span>
-<span class="n">export</span> <span class="n">OPENPMD_INCLUDE_PATH</span><span class="o">=../</span><span class="n">openPMD</span><span class="o">-</span><span class="n">install</span><span class="o">/</span><span class="n">include</span>
-<span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">16</span> <span class="n">COMP</span><span class="o">=</span><span class="n">gnu</span> <span class="n">USE_OPENPMD</span><span class="o">=</span><span class="n">TRUE</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd ../WarpX
+export PKG_CONFIG_PATH=$PWD/../openPMD-install/lib64/pkgconfig:$PKG_CONFIG_PATH
+make -j 16 COMP=gnu USE_OPENPMD=TRUE
 </pre></div>
 </div>
+<p>In order to run WarpX, load the same modules again.</p>
 </div>
 </div>
 
