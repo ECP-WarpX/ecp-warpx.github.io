@@ -105,6 +105,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="profiling.html">Profiling the code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="parallelization.html">Parallelization in  WarpX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platforms.html">Running on specific platforms</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
@@ -541,7 +542,7 @@ following parameters, in this order: <span class="math notranslate nohighlight">
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_backward_injection</span></code> (<cite>bool</cite>)</dt><dd><p>Inject a backward-propagating beam to reduce the effect of charge-separation
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species_name&gt;.do_backward_propagation</span></code> (<cite>bool</cite>)</dt><dd><p>Inject a backward-propagating beam to reduce the effect of charge-separation
 fields when running in the boosted frame. See examples.</p>
 </dd>
 </dl>
@@ -586,6 +587,31 @@ this species.</p>
 </li>
 <li><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.serialize_ics</span></code> (<cite>0 or 1</cite>)</dt><dd><p>Whether or not to use OpenMP threading for particle initialization.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species&gt;.do_field_ionization</span></code> (<cite>0</cite> or <cite>1</cite>) optional (default <cite>0</cite>)</dt><dd><p>Do field ionization for this species (using the ADK theory).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species&gt;.physical_element</span></code> (<cite>string</cite>)</dt><dd><p>Only read if <cite>do_field_ionization = 1</cite>. Symbol of chemical element for
+this species. Example: for Helium, use <code class="docutils literal notranslate"><span class="pre">physical_element</span> <span class="pre">=</span> <span class="pre">He</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species&gt;.ionization_product_species</span></code> (<cite>string</cite>)</dt><dd><p>Only read if <cite>do_field_ionization = 1</cite>. Name of species in which ionized
+electrons are stored. This species must be created as a regular species
+in the input file (in particular, it must be in <cite>particles.species_names</cite>).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;species&gt;.ionization_initial_level</span></code> (<cite>int</cite>) optional (default <cite>0</cite>)</dt><dd><p>Only read if <cite>do_field_ionization = 1</cite>. Initial ionization level of the
+species (must be smaller than the atomic number of chemical element given
+in <cite>physical_element</cite>).</p>
 </dd>
 </dl>
 </li>
@@ -1031,7 +1057,15 @@ When WarpX is compiled with openPMD support, this is <code class="docutils liter
 </dl>
 </li>
 <li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> (<cite>0 or 1</cite>)</dt><dd><p>Whether to use the <strong>back-transformed diagnostics</strong> (i.e. diagnostics that
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.openpmd_backend</span></code> (<code class="docutils literal notranslate"><span class="pre">h5</span></code>, <code class="docutils literal notranslate"><span class="pre">bp</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code>) optional</dt><dd><p>I/O backend for
+<a class="reference external" href="https://github.com/openPMD">openPMD</a> dumps.
+When WarpX is compiled with openPMD support, this is <code class="docutils literal notranslate"><span class="pre">h5</span></code> by default.
+<code class="docutils literal notranslate"><span class="pre">json</span></code> only works with serial/single-rank jobs.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> (<cite>0</cite> or <cite>1</cite>)</dt><dd><p>Whether to use the <strong>back-transformed diagnostics</strong> (i.e. diagnostics that
 perform on-the-fly conversion to the laboratory frame, when running
 boosted-frame simulations)</p>
 </dd>
@@ -1054,6 +1088,15 @@ The number of lab-frame snapshots that will be written.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">warpx.dt_snapshots_lab</span></code> (<cite>float</cite>, in seconds)</dt><dd><p>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
 The time interval inbetween the lab-frame snapshots (where this
 time interval is expressed in the laboratory frame).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">warpx.dz_snapshots_lab</span></code> (<cite>float</cite>, in meters)</dt><dd><p>Only used when <code class="docutils literal notranslate"><span class="pre">warpx.do_boosted_frame_diagnostic</span></code> is <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+Distance between the lab-frame snapshots (expressed in the laboratory
+frame). <code class="docutils literal notranslate"><span class="pre">dt_snapshots_lab</span></code> is then computed by
+<code class="docutils literal notranslate"><span class="pre">dt_snapshots_lab</span> <span class="pre">=</span> <span class="pre">dz_snapshots_lab/c</span></code>. Either <cite>dt_snapshots_lab</cite>
+or <cite>dz_snapshot_lab</cite> is required.</p>
 </dd>
 </dl>
 </li>

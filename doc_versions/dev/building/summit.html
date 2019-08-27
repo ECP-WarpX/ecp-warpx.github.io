@@ -186,28 +186,8 @@ correct branch:</p>
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">USE_GPU</span><span class="o">=</span><span class="n">TRUE</span> <span class="n">COMP</span><span class="o">=</span><span class="n">pgi</span>
 </pre></div>
 </div>
-<p>In order to submit a simulation, create a file <cite>submission_script</cite> with
-the following text (replace bracketed variables):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
-#BSUB -J &lt;jobName&gt;
-#BSUB -W &lt;requestedTime&gt;
-#BSUB -nnodes &lt;numberOfNodes&gt;
-#BSUB -P &lt;accountNumber&gt;
-
-module load pgi
-module load cuda
-
-omp=1
-export OMP_NUM_THREADS=${omp}
-num_nodes=$(( $(printf &#39;%s\n&#39; ${LSB_HOSTS} | sort -u | wc -l) - 1 ))
-
-jsrun -n ${num_nodes} -a 6 -g 6 -c 6 --bind=packed:${omp} --smpiargs=&quot;-gpu&quot; &lt;warpxExecutable&gt; &lt;inputScript&gt;
-</pre></div>
-</div>
-<p>Then run</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bsub</span> <span class="n">submission_script</span>
-</pre></div>
-</div>
+<p>See <a class="reference internal" href="../running_cpp/platforms.html"><span class="doc">Running on specific platforms</span></a> for more information on how to run
+WarpX on Summit.</p>
 </div>
 
 

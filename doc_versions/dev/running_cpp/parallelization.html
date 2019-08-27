@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Running WarpX from Python" href="../running_python/running_python.html" />
+    <link rel="next" title="Running on specific platforms" href="platforms.html" />
     <link rel="prev" title="Profiling the code" href="profiling.html" /> 
 </head>
 
@@ -94,9 +94,9 @@
 <li class="toctree-l2"><a class="reference internal" href="profiling.html">Profiling the code</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Parallelization in  WarpX</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#amrex-max-grid-size-and-blocking-factor">AMReX <code class="docutils literal notranslate"><span class="pre">max_grid_size</span></code> and <code class="docutils literal notranslate"><span class="pre">blocking_factor</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rule-of-thumb-for-3d-runs-on-nersc-cori-knl">Rule of thumb for 3D runs on NERSC Cori KNL</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="platforms.html">Running on specific platforms</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../running_python/running_python.html">Running WarpX from Python</a></li>
@@ -219,23 +219,11 @@ the type and order of the Maxwell solver, the filters used, <cite>etc.</cite>)</
 <li><p>Number of OpenMP threads</p></li>
 <li><p>Amount of high-bandwidth memory.</p></li>
 </ul>
-<p>Below is a list of experience-based parameters
-that were observed to give good performance on given supercomputers.</p>
-</div>
-<div class="section" id="rule-of-thumb-for-3d-runs-on-nersc-cori-knl">
-<h2>Rule of thumb for 3D runs on NERSC Cori KNL<a class="headerlink" href="#rule-of-thumb-for-3d-runs-on-nersc-cori-knl" title="Permalink to this headline">¶</a></h2>
-<p>For a 3D simulation with a few (1-4) particles per cell using FDTD Maxwell
-solver on Cori KNL for a well load-balanced problem (in our case laser
-wakefield acceleration simulation in a boosted frame in the quasi-linear
-regime), the following set of parameters provided good performance:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">amr.max_grid_size=64</span></code> and <code class="docutils literal notranslate"><span class="pre">amr.blocking_factor=64</span></code> so that the size of
-each grid is fixed to <code class="docutils literal notranslate"><span class="pre">64**3</span></code> (we are not using load-balancing here).</p></li>
-<li><p><strong>8 MPI ranks per KNL node</strong>, with <code class="docutils literal notranslate"><span class="pre">OMP_NUM_THREADS=8</span></code> (that is 64 threads
-per KNL node, i.e. 1 thread per physical core, and 4 cores left to the
-system).</p></li>
-<li><p><strong>2 grids per MPI</strong>, <em>i.e.</em>, 16 grids per KNL node.</p></li>
-</ul>
+<p>Because these parameters put additional contraints on the domain size for a
+simulation, it can be cumbersome to calculate the number of cells and the
+physical size of the computational domain for a given resolution. This
+<a class="reference download internal" download="" href="../_downloads/f2e2d9e648bb9a598a9c104a20ecf19a/compute_domain.py"><code class="xref download docutils literal notranslate"><span class="pre">Python</span> <span class="pre">script</span></code></a> does it
+automatically.</p>
 </div>
 </div>
 
@@ -247,7 +235,7 @@ system).</p></li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../running_python/running_python.html" class="btn btn-neutral float-right" title="Running WarpX from Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="platforms.html" class="btn btn-neutral float-right" title="Running on specific platforms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="profiling.html" class="btn btn-neutral float-left" title="Profiling the code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

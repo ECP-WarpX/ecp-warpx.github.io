@@ -221,6 +221,8 @@ at the end of the command containing <code class="docutils literal notranslate">
 </pre></div>
 </div>
 </div></blockquote>
+<p>See <a class="reference internal" href="../running_cpp/platforms.html"><span class="doc">Running on specific platforms</span></a> for more information on how to run
+WarpX on Cori.</p>
 </div>
 <div class="section" id="gpu-build">
 <h2>GPU Build<a class="headerlink" href="#gpu-build" title="Permalink to this headline">¶</a></h2>
@@ -261,7 +263,7 @@ and then build your software.</p>
 <span class="n">module</span> <span class="n">swap</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">intel</span> <span class="n">PrgEnv</span><span class="o">-</span><span class="n">gnu</span>
 <span class="n">module</span> <span class="n">load</span> <span class="n">cmake</span><span class="o">/</span><span class="mf">3.14</span><span class="o">.</span><span class="mi">4</span>
 <span class="n">module</span> <span class="n">load</span> <span class="n">cray</span><span class="o">-</span><span class="n">hdf5</span><span class="o">-</span><span class="n">parallel</span>
-<span class="n">module</span> <span class="n">load</span> <span class="n">adios</span><span class="o">/</span><span class="mf">1.13</span><span class="o">.</span><span class="mi">1</span> <span class="n">zlib</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">adios</span><span class="o">/</span><span class="mf">1.13</span><span class="o">.</span><span class="mi">1</span>
 <span class="n">export</span> <span class="n">CRAYPE_LINK_TYPE</span><span class="o">=</span><span class="n">dynamic</span>
 </pre></div>
 </div>
