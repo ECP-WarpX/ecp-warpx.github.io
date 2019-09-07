@@ -29,7 +29,8 @@
       var warpx_rtd_id = 496616;
       /* see https://docs.readthedocs.io/en/stable/api/v2.html#project-versions */
       $.ajax({
-         url: "https://readthedocs.org/api/v2/project/" + warpx_rtd_id.toString() + "/active_versions/"
+         url: "https://readthedocs.org/api/v2/project/" + warpx_rtd_id.toString() + "/active_versions/",
+         method: 'GET'
       }).then(function(data) {
          $.each(data.versions, function(index, value) {
            var version_name = value.slug;
