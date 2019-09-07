@@ -23,6 +23,29 @@
       <link rel="stylesheet" href="css/style.css" />
       <link rel="stylesheet" href="css/style-xlarge.css" />
     </noscript>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      /* curl https://readthedocs.org/api/v2/project/?slug=warpx | jq '.results[0].id' */
+      var warpx_rtd_id = 496616;
+      /* see https://docs.readthedocs.io/en/stable/api/v2.html#project-versions */
+      $.ajax({
+         url: "https://readthedocs.org/api/v2/project/" + warpx_rtd_id.toString() + "/active_versions/"
+      }).then(function(data) {
+         $.each(data.versions, function(index, value) {
+           var version_name = value.slug;
+           if(version_name != "latest") {
+             $('ul#earlier').append(
+                 '<li><a href="https://warpx.readthedocs.io/en/' +
+                 version_name +
+                 '" class="button big">' +
+                 version_name +
+                 '</a></li>'
+             );
+           }
+         });
+      });
+    });
+  </script>
   </head>
   <body class="landing">
 
@@ -34,30 +57,12 @@
       <p>Latest version
       <ul class="actions">
 	<li>
-	  <a href="./doc_versions/dev/index.html" class="button big">dev</a>
+	  <a href="https://warpx.readthedocs.io" class="button big">dev</a>
 	</li>
       </ul>
       <br> <br>
       <p>Earlier versions
-      <ul class="actions">
-	<li>
-	  <a href="./doc_versions/hackathon/index.html" class="button big">hackathon</a>
-	</li>
-	<li>
-	  <a href="./doc_versions/18.11/index.html" class="button big">18.11</a>
-	</li>
-	<li>
-	  <a href="./doc_versions/19.02/index.html" class="button big">19.02</a>
-	</li>
-	<li>
-	  <a href="./doc_versions/19.04/index.html" class="button big">19.04</a>
-	</li>
-	<li>
-	  <a href="./doc_versions/19.05/index.html" class="button big">19.05</a>
-	</li>
-	<li>
-	  <a href="./doc_versions/19.06/index.html" class="button big">19.06</a>
-	</li>
+      <ul class="actions" id="earlier">
       </ul>
     </section>
 
