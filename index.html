@@ -25,15 +25,23 @@
     </noscript>
   <script type="text/javascript">
     $(document).ready(function(){
+      /* work-around for https://github.com/readthedocs/readthedocs.org/issues/6152
+       * via https://www.npmjs.com/package/cors-anywhere */
+      $.ajaxPrefilter(function(options) {
+        if (options.crossDomain && jQuery.support.cors) {
+          options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+        }
+      });
+
       /* curl https://readthedocs.org/api/v2/project/?slug=warpx | jq '.results[0].id' */
       var warpx_rtd_id = 496616;
       /* see https://docs.readthedocs.io/en/stable/api/v2.html#project-versions */
       $.ajax({
 	 crossDomain: true,
          url: "https://readthedocs.org/api/v2/project/" + warpx_rtd_id.toString() + "/active_versions/",
-         method: 'GET'
-      }).then(function(data) {
-         $.each(data.versions, function(index, value) {
+	 //dataType: "jsonp",
+         success: function(data) {
+           $.each(data.versions, function(index, value) {
            var version_name = value.slug;
            if(version_name != "latest") {
              $('ul#earlier').append(
@@ -44,7 +52,11 @@
                  '</a></li>'
              );
            }
-         });
+           });
+         },
+	 error: function () {
+            console.error('Error loading the RTD API endpoint');
+         },
       });
     });
   </script>
